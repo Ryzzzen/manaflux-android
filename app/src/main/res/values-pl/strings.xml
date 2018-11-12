@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_settings"> USTAWIENIA </string>
+    <string name="button_scan">ZESKANUJ</string>
+    <string name="button_qr">ZAPISZ IP</string>
+    <string name="select_ip">WYBIERZ IP</string>
+    <string name="dashboard_status">null</string>
+    <string name="no_barcode_detected">Nie wykryto kodu QR</string>
+
+</resources>

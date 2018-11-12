@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name" translatable="false">Manaflux</string>
+    <string name="app_title" translatable="false">MANAFLUX</string>
+
+    <string name="img_underline" translatable="false">UNDERLINE</string>
+
+    <string name="button_settings" translatable="true">SETTINGS</string>
+    <string name="button_scan" translatable="true">SCAN</string>
+
+    <string name="button_qr">SAVE IP</string>
+    <string name="select_ip">SELECT IP</string>
+    <string name="no_barcode_detected">No QR Detected</string>
+
+    <string name="dashboard_status" translatable="true">null</string>
+</resources>
