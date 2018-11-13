@@ -19,6 +19,11 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
     private static final String TAG = "HttpGetRequest";
+    TextView statusLabel;
+    
+    public HttpGetRequest(TextView sL) {
+        statusLabel = sL;
+    }
 
 
     @Override
@@ -68,6 +73,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             summonerInfo = new JSONObject(String.valueOf(result));
             String summonerName = summonerInfo.getString("summonerName");
             Log.d(TAG, summonerName);
+            statusLabel.setText(summonerName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
