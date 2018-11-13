@@ -2,12 +2,14 @@ package com.github.ryzzzen.manaflux_android.ActivityHandler;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.github.ryzzzen.manaflux_android.ConnectionHandler.HttpGetRequest;
 import com.github.ryzzzen.manaflux_android.R;
 
 public class DashboardActivity extends Activity {
-    TextView statusLabel;
+    public TextView statusLabel;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
