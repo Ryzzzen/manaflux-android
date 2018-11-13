@@ -18,6 +18,7 @@ public class DashboardActivity extends Activity {
         statusLabel = findViewById(R.id.buttonAction);
         HttpGetRequest task = new HttpGetRequest(statusLabel);
         task.execute("http://" + ipAddress + ":4500/summoner");
+        task.setSummonerName(statusLabel);
 
     }
 }

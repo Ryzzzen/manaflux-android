@@ -1,5 +1,6 @@
 package com.github.ryzzzen.manaflux_android.ConnectionHandler;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -20,7 +21,8 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
     private static final String TAG = "HttpGetRequest";
-    TextView statusLabel;
+    public String summonerName;
+    public TextView statusLabel;
     
     public HttpGetRequest(TextView sL) {
         statusLabel = sL;
@@ -74,9 +76,12 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             summonerInfo = new JSONObject(String.valueOf(result));
             String summonerName = summonerInfo.getString("summonerName");
             Log.d(TAG, summonerName);
-            statusLabel.setText(summonerName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setSummonerName(TextView label) {
+        label.setText(summonerName);
     }
 }
