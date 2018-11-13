@@ -2,6 +2,7 @@ package com.github.ryzzzen.manaflux_android.ConnectionHandler;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.github.ryzzzen.manaflux_android.R;
 
