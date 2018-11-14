@@ -16,7 +16,7 @@ public class DashboardActivity extends Activity {
         setContentView(R.layout.activity_dashboard);
         String ipAddress = getIntent().getStringExtra("ip_address");
 		
-		nameView = findViewById(R.id.summonerNaem_view);
+	nameView = findViewById(R.id.summonerNaem_view);
         
         HttpGetRequest task = new HttpGetRequest();
         task.execute("http://" + ipAddress + ":4500/summoner");
