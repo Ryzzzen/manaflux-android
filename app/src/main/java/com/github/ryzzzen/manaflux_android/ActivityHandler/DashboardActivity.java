@@ -15,10 +15,10 @@ public class DashboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         String ipAddress = getIntent().getStringExtra("ip_address");
-        statusLabel = findViewById(R.id.buttonAction);
-        HttpGetRequest task = new HttpGetRequest(statusLabel);
+		
+        nameView = findViewById(R.id.name_label);
+        HttpGetRequest task = new HttpGetRequest();
         task.execute("http://" + ipAddress + ":4500/summoner");
-        task.setSummonerName(statusLabel);
 
     }
 }

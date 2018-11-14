@@ -5,10 +5,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.github.ryzzzen.manaflux_android.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.github.ryzzzen.manaflux_android.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,12 +21,8 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
     private static final String TAG = "HttpGetRequest";
+    public JSONObject summonerInfo;
     public String summonerName;
-    public TextView statusLabel;
-    
-    public HttpGetRequest(TextView sL) {
-        statusLabel = sL;
-    }
 
 
     @Override
@@ -71,17 +67,15 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String result){
         super.onPostExecute(result);
-        JSONObject summonerInfo;
         try {
             summonerInfo = new JSONObject(String.valueOf(result));
-            String summonerName = summonerInfo.getString("summonerName");
+            summonerName = summonerInfo.getString("summonerName");
             Log.d(TAG, summonerName);
+			TextView nameView = (TextView) findViewById(R.id.name_label);
+            nameView.setText(summonerNamet);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void setSummonerName(TextView label) {
-        label.setText(summonerName);
-    }
 }
