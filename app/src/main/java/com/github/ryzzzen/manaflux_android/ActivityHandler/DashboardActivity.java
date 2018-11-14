@@ -8,7 +8,7 @@ import com.github.ryzzzen.manaflux_android.ConnectionHandler.HttpGetRequest;
 import com.github.ryzzzen.manaflux_android.R;
 
 public class DashboardActivity extends Activity {
-    public TextView statusLabel;
+	public TextView nameView;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,9 +16,14 @@ public class DashboardActivity extends Activity {
         setContentView(R.layout.activity_dashboard);
         String ipAddress = getIntent().getStringExtra("ip_address");
 		
-        nameView = findViewById(R.id.name_label);
+		nameView = findViewById(R.id.summonerNaem_view);
+        
         HttpGetRequest task = new HttpGetRequest();
         task.execute("http://" + ipAddress + ":4500/summoner");
 
     }
+	
+	public setName(String name) {
+		nameView.setText(name);
+	}
 }

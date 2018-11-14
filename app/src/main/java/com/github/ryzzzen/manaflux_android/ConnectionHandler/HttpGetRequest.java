@@ -71,8 +71,9 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             summonerInfo = new JSONObject(String.valueOf(result));
             summonerName = summonerInfo.getString("summonerName");
             Log.d(TAG, summonerName);
-			TextView nameView = (TextView) findViewById(R.id.name_label);
-            nameView.setText(summonerNamet);
+			TextView nameView = (TextView) nameView.findViewById();
+            DashboardActivity dashboard = new DashboardActivity();
+			dashboard.setName(summonerName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
