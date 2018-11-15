@@ -1,14 +1,10 @@
 package com.github.ryzzzen.manaflux_android.ConnectionHandler;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.github.ryzzzen.manaflux_android.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,13 +12,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
 public class HttpGetRequest extends AsyncTask<String, Void, String> {
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
     private static final String TAG = "HttpGetRequest";
-    public JSONObject summonerInfo;
-    public String summonerName;
 
 
     @Override
@@ -68,15 +63,12 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result){
         super.onPostExecute(result);
         try {
-            summonerInfo = new JSONObject(String.valueOf(result));
-            summonerName = summonerInfo.getString("summonerName");
+            JSONObject summonerInfo = new JSONObject(String.valueOf(result));
+            String summonerName = summonerInfo.getString("summonerName");
             Log.d(TAG, summonerName);
-			TextView nameView = (TextView) nameView.findViewById();
-            DashboardActivity dashboard = new DashboardActivity();
-			dashboard.setName(summonerName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
 
+    }
 }
