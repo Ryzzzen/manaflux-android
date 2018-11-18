@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.github.ryzzzen.manaflux_android" >
+    package="com.github.kko7.manaflux_android" >
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -33,8 +33,7 @@
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:name="android.support.FILE_PROVIDER_PATHS" />
         </provider>
 
         <meta-data
@@ -53,7 +52,9 @@
         <activity android:name=".ActivityHandler.ScanActivity"
             tools:ignore="InnerclassSeparator" />
         <activity android:name=".ActivityHandler.DashboardActivity"
-            tools:ignore="InnerclassSeparator"/>
+            tools:ignore="InnerclassSeparator" />
+        <activity android:name=".ActivityHandler.ChangeActivity"
+            tools:ignore="InnerclassSeparator" />
     </application>
 
 </manifest>

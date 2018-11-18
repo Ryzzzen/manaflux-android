@@ -1,15 +1,23 @@
 <resources>
-    <string name="app_name" translatable="false">Manaflux</string>
-    <string name="app_title" translatable="false">MANAFLUX</string>
+    <string name="app_name">Manaflux</string>
+    <string name="app_title">MANAFLUX</string>
 
-    <string name="img_underline" translatable="false">UNDERLINE</string>
+    <string name="main_settings">SETTINGS</string>
+    <string name="main_edit">EDIT</string>
+    <string name="main_connect">CONNECT</string>
+    <string name="main_add">ADD</string>
 
-    <string name="button_settings" translatable="true">SETTINGS</string>
-    <string name="button_scan" translatable="true">SCAN</string>
+    <string name="qr_save">SAVE IP</string>
+    <string name="qr_select">SELECT IP</string>
+    <string name="qr_not_detected">No QR Detected</string>
 
-    <string name="button_qr">SAVE IP</string>
-    <string name="select_ip">SELECT IP</string>
-    <string name="no_barcode_detected">No QR Detected</string>
+    <string name="edit_title">Edit/Add PC</string>
+    <string name="edit_save">SAVE</string>
+    <string name="edit_input">IP address</string>
+    <string name="edit_scan">SCAN</string>
+    <string name="edit_pc">PC name</string>
 
-    <string name="dashboard_status" translatable="true">null</string>
+    <string name="description_underline">underline</string>
+    <string name="description_close">close</string>
+    <string name="description_save">save</string>
 </resources>

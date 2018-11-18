@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/default_bg" >
+
+    <ImageView
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:contentDescription="@string/description_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_clear_white" />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        android:paddingTop="14dp"
+        android:text="@string/edit_title"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/save_button"
+        app:layout_constraintStart_toEndOf="@+id/close_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_save_white" />
+
+    <EditText
+        android:id="@+id/ip_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="444dp"
+        android:ems="10"
+        android:hint="@string/edit_input"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        android:textColorHighlight="#C89C3C"
+        android:textColorLink="#C89C3C"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/scan_button"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor"
+        tools:targetApi="o" />
+
+    <com.github.kko7.manaflux_android.layout.CustomButtonView
+        android:id="@+id/scan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="451dp"
+        android:background="@drawable/button_bg"
+        android:text="@string/edit_scan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ip_edit" />
+
+    <EditText
+        android:id="@+id/name_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="132dp"
+        android:ems="10"
+        android:hint="@string/edit_pc"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ip_edit"
+        tools:ignore="LabelFor"
+        tools:targetApi="o" />
+
+</android.support.constraint.ConstraintLayout>

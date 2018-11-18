@@ -3,12 +3,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.github.ryzzzen.manaflux_android"
+        applicationId "com.github.kko7.manaflux_android"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 0
         versionName "0.0.1-dev"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

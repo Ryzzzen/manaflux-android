@@ -7,82 +7,119 @@
     android:background="@mipmap/default_bg"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="25dp">
 
-    <com.github.ryzzzen.manaflux_android.Layout.CustomButtonView
-        android:id="@+id/settings_button"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="96dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/button_bg"
-        android:onClick="gotoSettings"
-        android:text="@string/button_settings"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <com.github.ryzzzen.manaflux_android.Layout.CustomButtonView
-        android:id="@+id/scan_button"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="174dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="90dp"
-        android:background="@drawable/button_bg"
-        android:text="@string/button_scan"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="33sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <com.github.ryzzzen.manaflux_android.Layout.CustomTextView
+    <com.github.kko7.manaflux_android.layout.CustomTextView
         android:id="@+id/title"
-        android:layout_width="250dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="340dp"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="1dp"
         android:text="@string/app_title"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="45sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/settings_button"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/underline"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:textAllCaps="true" />
+        app:textAllCaps="false" />
 
     <ImageView
         android:id="@+id/underline"
         android:layout_width="312dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="279dp"
-        android:contentDescription="@string/img_underline"
-        app:layout_constraintBottom_toTopOf="@+id/settings_button"
+        android:layout_height="47dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="18dp"
+        android:contentDescription="@string/description_underline"
+        app:layout_constraintBottom_toTopOf="@+id/listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/underline" />
+        app:srcCompat="@mipmap/underline"
+        tools:layout_centerVertical="true" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="384dp"
+        android:layout_height="235dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/underline">
+
+    </ListView>
+
+    <com.github.kko7.manaflux_android.layout.CustomButtonView
+        android:id="@+id/settings_button"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="144dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_bg"
+        android:padding="4dp"
+        android:text="@string/main_settings"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:textSize="14sp" />
+
+    <com.github.kko7.manaflux_android.layout.CustomButtonView
+        android:id="@+id/edit_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_bg"
+        android:text="@string/main_edit"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/settings_button"
+        app:layout_constraintEnd_toStartOf="@+id/connect_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
+
+    <com.github.kko7.manaflux_android.layout.CustomButtonView
+        android:id="@+id/connect_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_bg"
+        android:text="@string/main_connect"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/settings_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_button"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
+
+    <com.github.kko7.manaflux_android.layout.CustomButtonView
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="147dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/main_add"
+        android:background="@drawable/button_bg"
+        app:layout_constraintBottom_toTopOf="@+id/settings_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_button"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
 
 </android.support.constraint.ConstraintLayout>
