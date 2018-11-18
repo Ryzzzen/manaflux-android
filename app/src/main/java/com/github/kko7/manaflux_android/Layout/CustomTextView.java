@@ -1,4 +1,4 @@
-package com.github.ryzzzen.manaflux_android.Layout;
+package com.github.kko7.manaflux_android.Layout;
 
 import android.content.Context;
 import android.graphics.Typeface;

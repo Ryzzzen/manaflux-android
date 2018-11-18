@@ -10,7 +10,7 @@
     tools:context=".MainActivity"
     tools:layout_editor_absoluteY="25dp">
 
-    <com.github.kko7.manaflux_android.layout.CustomTextView
+    <com.github.kko7.manaflux_android.Layout.CustomTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="43dp"
@@ -56,7 +56,7 @@
 
     </ListView>
 
-    <com.github.kko7.manaflux_android.layout.CustomButtonView
+    <com.github.kko7.manaflux_android.Layout.CustomButtonView
         android:id="@+id/settings_button"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="144dp"
@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:textSize="14sp" />
 
-    <com.github.kko7.manaflux_android.layout.CustomButtonView
+    <com.github.kko7.manaflux_android.Layout.CustomButtonView
         android:id="@+id/edit_button"
         android:layout_width="100dp"
         android:layout_height="50dp"
@@ -91,7 +91,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView" />
 
-    <com.github.kko7.manaflux_android.layout.CustomButtonView
+    <com.github.kko7.manaflux_android.Layout.CustomButtonView
         android:id="@+id/connect_button"
         android:layout_width="100dp"
         android:layout_height="50dp"
@@ -107,7 +107,7 @@
         app:layout_constraintStart_toEndOf="@+id/edit_button"
         app:layout_constraintTop_toBottomOf="@+id/listView" />
 
-    <com.github.kko7.manaflux_android.layout.CustomButtonView
+    <com.github.kko7.manaflux_android.Layout.CustomButtonView
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

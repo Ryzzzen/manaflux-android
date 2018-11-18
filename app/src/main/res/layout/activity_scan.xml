@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.github.kko7.manaflux_android.layout.CustomTextView
+        <com.github.kko7.manaflux_android.Layout.CustomTextView
             android:id="@+id/txtBarcodeValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             tools:layout_centerInParent="false"
             tools:layout_width="match_parent" />
 
-        <com.github.kko7.manaflux_android.layout.CustomButtonView
+        <com.github.kko7.manaflux_android.Layout.CustomButtonView
             android:id="@+id/buttonAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

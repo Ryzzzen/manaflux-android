@@ -59,7 +59,7 @@
         tools:ignore="LabelFor"
         tools:targetApi="o" />
 
-    <com.github.kko7.manaflux_android.layout.CustomButtonView
+    <com.github.kko7.manaflux_android.Layout.CustomButtonView
         android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

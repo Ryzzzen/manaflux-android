@@ -1,9 +1,8 @@
-package com.github.ryzzzen.manaflux_android.Layout;
+package com.github.kko7.manaflux_android.Layout;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-
 
 public class CustomButtonView extends android.support.v7.widget.AppCompatButton  {
 
