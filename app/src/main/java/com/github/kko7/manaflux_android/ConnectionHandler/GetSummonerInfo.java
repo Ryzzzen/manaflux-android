@@ -3,8 +3,6 @@ package com.github.kko7.manaflux_android.ConnectionHandler;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.github.kko7.manaflux_android.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

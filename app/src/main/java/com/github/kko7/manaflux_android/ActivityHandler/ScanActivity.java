@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.R;
-
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -45,13 +43,6 @@ public class ScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-        if (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(ScanActivity.this,
-                    new String[]{Manifest.permission.CAMERA},
-                    REQUEST_CAMERA_PERMISSION);
-        }
 
         initViews();
     }
@@ -67,8 +58,7 @@ public class ScanActivity extends AppCompatActivity {
 
                 if (intentData.length() > 0) {
                     if (isIP)
-                        startActivity(new Intent(ScanActivity.this, DashboardActivity.class).putExtra("ip_address", intentData));
-
+                        startActivity(new Intent(ScanActivity.this, getIntent().getStringExtra("type").equals("add") ? AddActivity.class : EditActivity.class).putExtra("ip_address", intentData));
                 }
             }
         });

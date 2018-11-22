@@ -33,12 +33,9 @@
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS" />
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
         </provider>
-
-        <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode" />
 
         <activity android:name=".MainActivity" >
             <intent-filter>
@@ -53,8 +50,9 @@
             tools:ignore="InnerclassSeparator" />
         <activity android:name=".ActivityHandler.DashboardActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".ActivityHandler.ChangeActivity"
+        <activity android:name=".ActivityHandler.AddActivity"
             tools:ignore="InnerclassSeparator" />
+        <activity android:name=".ActivityHandler.EditActivity" />
     </application>
 
 </manifest>
