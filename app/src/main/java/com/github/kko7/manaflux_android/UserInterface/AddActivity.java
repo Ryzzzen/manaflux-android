@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.ActivityHandler;
+package com.github.kko7.manaflux_android.UserInterface;
 
 import android.content.Intent;
 import android.os.Bundle;

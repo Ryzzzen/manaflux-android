@@ -14,9 +14,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.github.kko7.manaflux_android.ActivityHandler.AddActivity;
-import com.github.kko7.manaflux_android.ActivityHandler.EditActivity;
-import com.github.kko7.manaflux_android.ActivityHandler.SettingsActivity;
+import com.github.kko7.manaflux_android.UserInterface.AddActivity;
+import com.github.kko7.manaflux_android.UserInterface.EditActivity;
+import com.github.kko7.manaflux_android.UserInterface.SettingsActivity;
 import com.github.kko7.manaflux_android.Database.DBHandler;
 
 import java.util.ArrayList;

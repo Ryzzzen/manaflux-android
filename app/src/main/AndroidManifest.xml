@@ -44,15 +44,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityHandler.SettingsActivity"
+        <activity android:name=".UserInterface.SettingsActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".ActivityHandler.ScanActivity"
+        <activity android:name=".UserInterface.ScanActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".ActivityHandler.DashboardActivity"
+        <activity android:name=".UserInterface.DashboardActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".ActivityHandler.AddActivity"
+        <activity android:name=".UserInterface.AddActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".ActivityHandler.EditActivity" />
+        <activity android:name=".UserInterface.EditActivity"
+            tools:ignore="InnerclassSeparator" />
     </application>
 
 </manifest>
