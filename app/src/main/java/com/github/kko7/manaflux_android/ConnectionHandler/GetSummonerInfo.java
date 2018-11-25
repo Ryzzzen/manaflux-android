@@ -1,10 +1,6 @@
 package com.github.kko7.manaflux_android.ConnectionHandler;
 
 import android.os.AsyncTask;
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +12,6 @@ public class GetSummonerInfo extends AsyncTask<String, Void, String> {
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
-    private static final String TAG = "HttpGetRequest";
-
 
     @Override
     protected String doInBackground(String... urls){
@@ -51,13 +45,6 @@ public class GetSummonerInfo extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String result){
         super.onPostExecute(result);
-        JSONObject summonerInfo;
-        try {
-            summonerInfo = new JSONObject(String.valueOf(result));
-            String summonerName = summonerInfo.getString("summonerName");
-            Log.d(TAG, summonerName);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
+
 }

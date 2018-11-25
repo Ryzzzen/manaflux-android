@@ -3,54 +3,70 @@ package com.github.kko7.manaflux_android.UserInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.Database.DBHandler;
+import com.github.kko7.manaflux_android.Database.Device.Device;
+import com.github.kko7.manaflux_android.Database.Device.DeviceRepo;
 import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
 
-public class EditActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity implements android.view.View.OnClickListener{
 
-    private static final String TAG = "Edit";
-    EditText address;
-    EditText name;
-    ImageButton saveButton;
-    ImageButton closeButton;
+    ImageButton btnSave, btnClose;
+    Button btnDelete;
+    EditText editTextAddress, editTextName;
+    private int _Device_Id = 0;
+    DeviceRepo repo = new DeviceRepo(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        saveButton = findViewById(R.id.save_button);
-        address = findViewById(R.id.ip_edit);
-        closeButton = findViewById(R.id.close_button);
-        name = findViewById(R.id.name_edit);
-        address.setText(getIntent().getStringExtra("ip_address"));
-        final String deviceID = getIntent().getStringExtra("deviceID");
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            String deviceAddress = address.getText().toString();
-            String deviceName = name.getText().toString();
-            DBHandler dbHandler = new DBHandler(EditActivity.this);
-            dbHandler.UpdateDeviceDetails(Integer.parseInt(deviceID), deviceAddress, deviceName);
-            startActivity(new Intent(EditActivity.this, MainActivity.class));
-            Log.d(TAG, "Device added IP: " + deviceAddress + " NAME: " + deviceName);
-                }
+        btnSave = findViewById(R.id.save_button);
+        btnDelete = findViewById(R.id.delete_button);
+        btnClose = findViewById(R.id.close_button);
 
-            }
-        );
+        editTextAddress = findViewById(R.id.ip_edit);
+        editTextName = findViewById(R.id.name_edit);
 
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EditActivity.this, MainActivity.class));
-            }
-        });
+        btnSave.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
+        btnClose.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        _Device_Id = intent.getIntExtra("deviceID", 0);
+        DeviceRepo repo = new DeviceRepo(this);
+        Device device;
+        device = repo.getDeviceById(_Device_Id);
+
+        editTextAddress.setText(device.address);
+        editTextName.setText(device.name);
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view == findViewById(R.id.save_button)){
+
+            Device device = new Device();
+            device.address = editTextAddress.getText().toString();
+            device.name = editTextName.getText().toString();
+            device.device_ID = _Device_Id;
+
+
+             repo.update(device);
+             Toast.makeText(this,"Device Record updated",Toast.LENGTH_SHORT).show();
+             startActivity(new Intent(EditActivity.this, MainActivity.class));
+        }else if (view == findViewById(R.id.delete_button)){
+            repo.delete(_Device_Id);
+            Toast.makeText(this, "Device Record Deleted", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(EditActivity.this, MainActivity.class));
+        }else if (view == findViewById(R.id.close_button)){
+            startActivity(new Intent(EditActivity.this, MainActivity.class));
+        }
+    }
 }

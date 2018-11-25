@@ -16,6 +16,7 @@
     <string name="edit_input">IP address</string>
     <string name="edit_scan">SCAN</string>
     <string name="edit_pc">PC name</string>
+    <string name="edit_delete">Delete</string>
 
     <string name="description_underline">underline</string>
     <string name="description_close">close</string>

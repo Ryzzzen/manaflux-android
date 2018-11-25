@@ -17,16 +17,24 @@
         tools:ignore="InefficientWeight,UselessParent">
 
         <TextView
+            android:id="@+id/device_Id"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/ip_text"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/name_text"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textAlignment="center" />
     </LinearLayout>
 
 </LinearLayout>

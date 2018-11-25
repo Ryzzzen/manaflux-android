@@ -58,7 +58,7 @@ public class ScanActivity extends AppCompatActivity {
 
                 if (intentData.length() > 0) {
                     if (isIP)
-                        startActivity(new Intent(ScanActivity.this, getIntent().getStringExtra("type").equals("add") ? AddActivity.class : EditActivity.class).putExtra("ip_address", intentData));
+                        startActivity(new Intent(ScanActivity.this, AddActivity.class).putExtra("ip_address", intentData));
                 }
             }
         });

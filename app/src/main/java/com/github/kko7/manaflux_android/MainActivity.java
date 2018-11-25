@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
+import com.github.kko7.manaflux_android.Database.Device.DeviceRepo;
 import com.github.kko7.manaflux_android.UserInterface.AddActivity;
+import com.github.kko7.manaflux_android.UserInterface.DashboardActivity;
 import com.github.kko7.manaflux_android.UserInterface.EditActivity;
 import com.github.kko7.manaflux_android.UserInterface.SettingsActivity;
-import com.github.kko7.manaflux_android.Database.DBHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     Button editButton;
     Button connectButton;
     Button settingsButton;
+    TextView device_Id;
     Button addButton;
-    String selectedID;
+    int selectedID;
     ListView mListView;
 
     @Override
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, EditActivity.class).putExtra("deviceID", selectedID));
+                Log.d(TAG, String.valueOf(selectedID));
             }
         });
 
@@ -66,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddActivity.class));
+            }
+        });
+
+        connectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DashboardActivity.class).putExtra("deviceID", selectedID));
             }
         });
     }
@@ -81,16 +92,19 @@ public class MainActivity extends AppCompatActivity {
     
     protected void initList() {
 
-        DBHandler db = new DBHandler(this);
-        ArrayList<HashMap<String, String>> devicesList = db.GetDevices();
+        DeviceRepo repo = new DeviceRepo(this);
+
+        ArrayList<HashMap<String, String>> devicesList =  repo.getDevicesList();
         ListAdapter listAdapter = new SimpleAdapter(MainActivity.this, devicesList, R.layout.list_adapter, new String[]{"address", "name"}, new int[]{R.id.ip_text, R.id.name_text});
         mListView.setAdapter(listAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                device_Id = view.findViewById(R.id.device_Id);
+                int deviceId = (int) id;
                 view.setSelected(true);
-                selectedID = String.valueOf(arg3);
+                selectedID = deviceId + 1;
                 editButton.setVisibility(View.VISIBLE);
                 connectButton.setVisibility(View.VISIBLE);
                 addButton.setVisibility(View.GONE);
