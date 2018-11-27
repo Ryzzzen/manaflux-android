@@ -4,104 +4,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/default_bg">
+    android:background="@mipmap/default_bg"
+    tools:layout_editor_absoluteY="25dp">
 
-    <ImageButton
-        android:id="@+id/close_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="384dp"
         android:layout_height="48dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/description_close"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_clear_white" />
-
-    <TextView
-        android:id="@+id/title_text"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginEnd="38dp"
-        android:paddingTop="14dp"
-        android:text="@string/edit_title"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/save_button"
-        app:layout_constraintStart_toEndOf="@+id/close_button"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/description_save"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_save_white" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button">
+
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/description_close"
+            app:srcCompat="@drawable/ic_clear_white" />
+
+        <TextView
+            android:id="@+id/edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="33"
+            android:paddingTop="10dp"
+            android:text="@string/edit_title"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/save_button"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/description_save"
+            app:srcCompat="@drawable/ic_save_white" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/ip_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="444dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="-1dp"
         android:ems="10"
         android:hint="@string/edit_input"
         android:importantForAutofill="no"
-        android:inputType="text"
-        android:textColor="@android:color/white"
-        android:textColorHighlight="#C89C3C"
-        android:textColorLink="#C89C3C"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/scan_button"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/name_edit"
+        app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="LabelFor"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:targetApi="o" />
 
     <com.github.kko7.manaflux_android.Layout.CustomButtonView
-        android:id="@+id/scan_button"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="451dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="440dp"
         android:background="@drawable/button_bg"
         android:text="@string/edit_scan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ip_edit" />
+        app:layout_constraintStart_toEndOf="@+id/ip_edit"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <EditText
+        android:id="@+id/name_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginBottom="217dp"
+        android:ems="10"
+        android:hint="@string/edit_pc"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ip_edit"
+        tools:targetApi="o" />
 
     <com.github.kko7.manaflux_android.Layout.CustomButtonView
         android:id="@+id/delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginBottom="84dp"
         android:background="@drawable/button_bg"
         android:text="@string/edit_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scan_button" />
-
-    <EditText
-        android:id="@+id/name_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="132dp"
-        android:ems="10"
-        android:hint="@string/edit_pc"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ip_edit"
-        tools:ignore="LabelFor"
-        tools:targetApi="o" />
+        app:layout_constraintTop_toBottomOf="@+id/name_edit" />
 
 </android.support.constraint.ConstraintLayout>

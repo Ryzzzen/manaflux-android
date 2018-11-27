@@ -1,24 +1,20 @@
-package com.github.kko7.manaflux_android.Layout;
+package com.github.kko7.manaflux_android.CustomElements;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
-public class CustomButtonView extends android.support.v7.widget.AppCompatButton  {
-
-    public CustomButtonView(Context context) {
-        super( context );
-        setFont();
-
-    }
-
-    public CustomButtonView(Context context, AttributeSet attrs) {
-        super( context, attrs );
+public class TextView extends android.support.v7.widget.AppCompatTextView {
+    public TextView(Context context) {
+        super(context);
         setFont();
     }
-
-    public CustomButtonView(Context context, AttributeSet attrs, int defStyle) {
-        super( context, attrs, defStyle );
+    public TextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        setFont();
+    }
+    public TextView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         setFont();
     }
 
@@ -29,5 +25,4 @@ public class CustomButtonView extends android.support.v7.widget.AppCompatButton 
         Typeface bold = Typeface.createFromAsset( getContext().getAssets(), "fonts/Beaufort_Bold.ttf" );
         setTypeface( bold, Typeface.BOLD );
     }
-
 }
