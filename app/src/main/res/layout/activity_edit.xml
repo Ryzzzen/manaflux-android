@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/default_bg"
-    tools:layout_editor_absoluteY="25dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="384dp"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:weightSum="100"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        android:weightSum="100">
 
         <ImageButton
             android:id="@+id/close_button"
@@ -48,68 +43,57 @@
             app:srcCompat="@drawable/ic_save_white" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/ip_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="-1dp"
-        android:ems="10"
-        android:hint="@string/edit_input"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/name_edit"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:targetApi="o" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
 
-    <com.github.kko7.manaflux_android.Layout.CustomButtonView
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="440dp"
-        android:background="@drawable/button_bg"
-        android:text="@string/edit_scan"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ip_edit"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        <EditText
+            android:id="@+id/ip_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:ems="10"
+            android:hint="@string/edit_input"
+            android:importantForAutofill="no"
+            tools:targetApi="o"
+            android:inputType="" />
+
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/scan_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:text="@string/edit_scan"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/name_edit"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="137dp"
-        android:layout_marginBottom="217dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/edit_pc"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/delete_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ip_edit"
-        tools:targetApi="o" />
+        android:inputType=""
+        android:importantForAutofill="no" tools:targetApi="o" />
 
-    <com.github.kko7.manaflux_android.Layout.CustomButtonView
+    <com.github.kko7.manaflux_android.CustomElements.ButtonView
         android:id="@+id/delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="150dp"
         android:background="@drawable/button_bg"
-        android:text="@string/edit_delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_edit" />
+        android:text="@string/edit_delete" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
