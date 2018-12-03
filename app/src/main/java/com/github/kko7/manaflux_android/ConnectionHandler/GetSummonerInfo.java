@@ -14,14 +14,14 @@ public class GetSummonerInfo extends AsyncTask<String, Void, String> {
     private static final int CONNECTION_TIMEOUT = 15000;
 
     @Override
-    protected String doInBackground(String... urls){
-        String url= urls[0];
+    protected String doInBackground(String... urls) {
+        String url = urls[0];
         StringBuilder result;
         String inputLine;
         try {
             URL myUrl = new URL(url);
-            HttpURLConnection connection =(HttpURLConnection)
-            myUrl.openConnection();
+            HttpURLConnection connection = (HttpURLConnection)
+                    myUrl.openConnection();
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
@@ -29,21 +29,20 @@ public class GetSummonerInfo extends AsyncTask<String, Void, String> {
             InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
             BufferedReader reader = new BufferedReader(streamReader);
             StringBuilder stringBuilder = new StringBuilder();
-            while((inputLine = reader.readLine()) != null){
+            while ((inputLine = reader.readLine()) != null) {
                 stringBuilder.append(inputLine);
             }
             reader.close();
             streamReader.close();
             result = stringBuilder;
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             result = null;
         }
         return String.valueOf(result);
     }
 
-    protected void onPostExecute(String result){
+    protected void onPostExecute(String result) {
         super.onPostExecute(result);
     }
 

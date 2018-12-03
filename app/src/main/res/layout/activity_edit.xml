@@ -7,41 +7,46 @@
     android:background="@mipmap/default_bg"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="384dp"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp">
 
         <ImageButton
             android:id="@+id/close_button"
-            android:layout_width="24dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="33"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/description_close"
-            app:srcCompat="@drawable/ic_clear_white" />
-
-        <TextView
-            android:id="@+id/edit_title"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="33"
-            android:paddingTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_clear_white"
+            android:contentDescription="@string/description_close" />
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/save_button"
+            android:layout_toEndOf="@+id/close_button"
             android:text="@string/edit_title"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="24sp"
+            android:paddingTop="7dp" />
 
         <ImageButton
             android:id="@+id/save_button"
-            android:layout_width="24dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="33"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/description_save"
-            app:srcCompat="@drawable/ic_save_white" />
-    </LinearLayout>
+            app:srcCompat="@drawable/ic_save_white"
+            android:contentDescription="@string/description_save" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,24 +55,22 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/ip_edit"
+            android:id="@+id/address_edit"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
             android:ems="10"
             android:hint="@string/edit_input"
             android:importantForAutofill="no"
-            tools:targetApi="o"
-            android:inputType="" />
+            android:inputType=""
+            tools:targetApi="o" />
 
         <com.github.kko7.manaflux_android.CustomElements.ButtonView
             android:id="@+id/scan_button"
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="1"
+            android:layout_marginEnd="25dp"
             android:background="@drawable/button_bg"
             android:text="@string/edit_scan"
             android:textAlignment="center"
@@ -88,11 +91,11 @@
 
     <com.github.kko7.manaflux_android.CustomElements.ButtonView
         android:id="@+id/delete_button"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginEnd="120dp"
         android:background="@drawable/button_bg"
         android:text="@string/edit_delete" />
 

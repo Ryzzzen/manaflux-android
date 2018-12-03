@@ -9,64 +9,89 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.Database.Device.Device;
-import com.github.kko7.manaflux_android.Database.Device.DeviceRepo;
-import com.github.kko7.manaflux_android.MainActivity;
+import com.github.kko7.manaflux_android.Database.DBAdapter;
 import com.github.kko7.manaflux_android.R;
 
-public class EditActivity extends AppCompatActivity implements android.view.View.OnClickListener{
+import java.util.Objects;
 
-    ImageButton btnSave, btnClose;
-    Button btnDelete;
-    EditText editTextAddress, editTextName;
-    private int _Device_Id = 0;
-    DeviceRepo repo = new DeviceRepo(this);
+public class EditActivity extends AppCompatActivity {
+
+    EditText addressTxt, nameTxt;
+    ImageButton closeBtn, saveBtn;
+    Button deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        btnSave = findViewById(R.id.save_button);
-        btnDelete = findViewById(R.id.delete_button);
-        btnClose = findViewById(R.id.close_button);
+        Intent i = getIntent();
 
-        editTextAddress = findViewById(R.id.ip_edit);
-        editTextName = findViewById(R.id.name_edit);
+        final String address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
+        final String name = i.getExtras().getString("NAME");
+        final int id = i.getExtras().getInt("ID");
 
-        btnSave.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
-        btnClose.setOnClickListener(this);
+        saveBtn = findViewById(R.id.save_button);
+        closeBtn = findViewById(R.id.close_button);
+        deleteBtn = findViewById(R.id.delete_button);
+        addressTxt = findViewById(R.id.address_edit);
+        nameTxt = findViewById(R.id.name_edit);
 
-        Intent intent = getIntent();
-        _Device_Id = intent.getIntExtra("deviceID", 0);
-        DeviceRepo repo = new DeviceRepo(this);
-        Device device;
-        device = repo.getDeviceById(_Device_Id);
+        addressTxt.setText(address);
+        nameTxt.setText(name);
 
-        editTextAddress.setText(device.address);
-        editTextName.setText(device.name);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update(id, nameTxt.getText().toString(), addressTxt.getText().toString());
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete(id);
+            }
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == findViewById(R.id.save_button)){
+    private void update(int id, String newAddress, String newName) {
+        DBAdapter db = new DBAdapter(this);
+        db.openDB();
+        long result = db.UPDATE(id, newAddress, newName);
 
-            Device device = new Device();
-            device.address = editTextAddress.getText().toString();
-            device.name = editTextName.getText().toString();
-            device.device_ID = _Device_Id;
-
-
-             repo.update(device);
-             Toast.makeText(this,"Device Record updated",Toast.LENGTH_SHORT).show();
-             startActivity(new Intent(EditActivity.this, MainActivity.class));
-        }else if (view == findViewById(R.id.delete_button)){
-            repo.delete(_Device_Id);
-            Toast.makeText(this, "Device Record Deleted", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(EditActivity.this, MainActivity.class));
-        }else if (view == findViewById(R.id.close_button)){
-            startActivity(new Intent(EditActivity.this, MainActivity.class));
+        if (result > 0) {
+            addressTxt.setText(newAddress);
+            nameTxt.setText(newName);
+            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Unable to Update", Toast.LENGTH_SHORT).show();
         }
+
+        db.close();
+        finish();
     }
+
+    private void delete(int id) {
+        DBAdapter db = new DBAdapter(this);
+        db.openDB();
+        long result = db.Delete(id);
+
+        if (result >= 0) {
+            this.finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "Unable to Update", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
+    }
+
 }

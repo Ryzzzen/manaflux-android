@@ -4,30 +4,30 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
-public class ButtonView extends android.support.v7.widget.AppCompatButton  {
+public class ButtonView extends android.support.v7.widget.AppCompatButton {
 
     public ButtonView(Context context) {
-        super( context );
+        super(context);
         setFont();
 
     }
 
     public ButtonView(Context context, AttributeSet attrs) {
-        super( context, attrs );
+        super(context, attrs);
         setFont();
     }
 
     public ButtonView(Context context, AttributeSet attrs, int defStyle) {
-        super( context, attrs, defStyle );
+        super(context, attrs, defStyle);
         setFont();
     }
 
     private void setFont() {
-        Typeface normal = Typeface.createFromAsset(getContext().getAssets(),"fonts/Beaufort.ttf");
-        setTypeface( normal, Typeface.NORMAL );
+        Typeface normal = Typeface.createFromAsset(getContext().getAssets(), "fonts/Beaufort.ttf");
+        setTypeface(normal, Typeface.NORMAL);
 
-        Typeface bold = Typeface.createFromAsset( getContext().getAssets(), "fonts/Beaufort_Bold.ttf" );
-        setTypeface( bold, Typeface.BOLD );
+        Typeface bold = Typeface.createFromAsset(getContext().getAssets(), "fonts/Beaufort_Bold.ttf");
+        setTypeface(bold, Typeface.BOLD);
     }
 
 }

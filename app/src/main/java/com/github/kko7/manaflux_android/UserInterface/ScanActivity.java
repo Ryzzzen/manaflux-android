@@ -57,8 +57,9 @@ public class ScanActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (intentData.length() > 0) {
-                    if (isIP)
-                        startActivity(new Intent(ScanActivity.this, AddActivity.class).putExtra("ip_address", intentData));
+                    if (isIP) {
+                        startActivity(new Intent(ScanActivity.this, EditActivity.class).putExtra("ip_address", intentData));
+                    }
                 }
             }
         });
@@ -123,20 +124,19 @@ public class ScanActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            String ipAddress =  String.valueOf((barcodes.valueAt(0).displayValue));
+                            String ipAddress = String.valueOf((barcodes.valueAt(0).displayValue));
                             Log.d(TAG, ipAddress);
                             Pattern pattern = Pattern.compile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$");
                             Matcher mat = pattern.matcher(ipAddress);
 
-                            if(mat.matches()){
+                            if (mat.matches()) {
                                 txtBarcodeValue.removeCallbacks(null);
                                 intentData = ipAddress;
                                 txtBarcodeValue.setText(intentData);
                                 isIP = true;
                                 btnAction.setText(getString(R.string.qr_save));
 
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(getApplicationContext(), "IP Address is not valid", Toast.LENGTH_LONG).show();
                             }
                         }

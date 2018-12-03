@@ -21,4 +21,9 @@
     <string name="description_underline">underline</string>
     <string name="description_close">close</string>
     <string name="description_save">save</string>
+    <string name="retrieve">Retrieve</string>
+    <string name="device_info">DEVICE INFO</string>
+    <string name="address">Address</string>
+    <string name="save">Save</string>
+    <string name="name">Name</string>
 </resources>

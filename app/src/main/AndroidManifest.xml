@@ -44,16 +44,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserInterface.SettingsActivity"
-            tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.ScanActivity"
-            tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.DashboardActivity"
-            tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.AddActivity"
-            tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.EditActivity"
-            tools:ignore="InnerclassSeparator" />
+        <activity android:name=".UserInterface.ScanActivity" />
+        <activity android:name=".UserInterface.EditActivity" />
+        <activity android:name=".UserInterface.DashboardActivity" />
     </application>
 
 </manifest>
