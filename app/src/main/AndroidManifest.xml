@@ -12,11 +12,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
 
     <application
         android:allowBackup="true"
@@ -32,9 +30,11 @@
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
+
         </provider>
 
         <activity android:name=".MainActivity" >
@@ -44,9 +44,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserInterface.ScanActivity" />
-        <activity android:name=".UserInterface.EditActivity" />
-        <activity android:name=".UserInterface.DashboardActivity" />
+        <activity
+            android:name=".UserInterface.ScanActivity"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".UserInterface.EditActivity"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".UserInterface.DashboardActivity"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".UserInterface.SettingsActivity"
+            tools:ignore="InnerclassSeparator" />
     </application>
 
 </manifest>
