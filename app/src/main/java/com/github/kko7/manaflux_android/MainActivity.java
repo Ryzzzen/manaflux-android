@@ -3,6 +3,7 @@ package com.github.kko7.manaflux_android;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,12 +17,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Database.Adapter;
 import com.github.kko7.manaflux_android.Database.DBAdapter;
 import com.github.kko7.manaflux_android.Database.Device;
 import com.github.kko7.manaflux_android.UserInterface.SettingsActivity;
+import com.github.kko7.manaflux_android.UserInterface.SharedPrefs;
 
 import java.util.ArrayList;
 
@@ -29,27 +32,28 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CAMERA_PERMISSION = 201;
+    SharedPrefs sharedPrefs;
     Adapter adapter;
     ArrayList<Device> devices = new ArrayList<>();
     Button settingsButton, addButton, saveBtn, retrieveBtn;
     EditText nameEditTxt, addressEditTxt;
     RecyclerView mRecyclerView;
+    RelativeLayout layout;
     Dialog d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        addButton = findViewById(R.id.add_button);
-        settingsButton = findViewById(R.id.settings_button);
-        mRecyclerView = findViewById(R.id.recyclerView);
-        initViews();
+        layout = findViewById(R.id.main_layout);
+        sharedPrefs = SharedPrefs.getInstance(this);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.d(TAG, "onCreate: Started.");
+        initViews();
+        setBackground();
     }
 
     protected void initButtons() {
-
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,15 +80,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void initList() {
+        adapter = new Adapter(this, devices);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new Adapter(this, devices);
-        mRecyclerView.setVisibility(View.VISIBLE);
         retrieve();
     }
 
     protected void initViews() {
-        addButton.setVisibility(View.VISIBLE);
+        addButton = findViewById(R.id.add_button);
+        settingsButton = findViewById(R.id.settings_button);
+        mRecyclerView = findViewById(R.id.recyclerView);
         checkPerms();
         initList();
     }
@@ -163,10 +168,19 @@ public class MainActivity extends AppCompatActivity {
         retrieve();
     }
 
+    protected void setBackground() {
+        String value = sharedPrefs.getDataString("background");
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        Log.d(TAG, String.valueOf(id));
+
+        layout.setBackgroundResource(id);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         retrieve();
+        setBackground();
     }
 
 }

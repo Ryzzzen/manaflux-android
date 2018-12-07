@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:id="@+id/settings_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/default_bg"
     android:visibility="visible">
+
+    <com.github.kko7.manaflux_android.CustomElements.TextView
+        android:id="@+id/settings_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Settings"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
+    <com.github.kko7.manaflux_android.CustomElements.TextView
+        android:id="@+id/background_text"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="88dp"
+        android:text="Background"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="22sp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/background_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="234dp"
+        android:layout_marginTop="88dp" />
 
 </RelativeLayout>
