@@ -23,8 +23,8 @@ import android.widget.Toast;
 import com.github.kko7.manaflux_android.Database.Adapter;
 import com.github.kko7.manaflux_android.Database.DBAdapter;
 import com.github.kko7.manaflux_android.Database.Device;
+import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.UserInterface.SettingsActivity;
-import com.github.kko7.manaflux_android.UserInterface.SharedPrefs;
 
 import java.util.ArrayList;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    SharedPrefs sharedPrefs;
+    PrefsHelper prefsHelper;
     Adapter adapter;
     ArrayList<Device> devices = new ArrayList<>();
     Button settingsButton, addButton, saveBtn, retrieveBtn;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         layout = findViewById(R.id.main_layout);
-        sharedPrefs = SharedPrefs.getInstance(this);
+        prefsHelper = PrefsHelper.getInstance(this);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.d(TAG, "onCreate: Started.");
         initViews();
@@ -169,9 +169,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void setBackground() {
-        String value = sharedPrefs.getDataString("background");
+        String value = prefsHelper.getDataString("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        Log.d(TAG, String.valueOf(id));
 
         layout.setBackgroundResource(id);
     }

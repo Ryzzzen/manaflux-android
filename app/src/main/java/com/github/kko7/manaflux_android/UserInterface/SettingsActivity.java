@@ -9,19 +9,20 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "Settings";
-    SharedPrefs sharedPrefs;
+    PrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         Log.d(TAG, "onCreate: Started.");
-        sharedPrefs = SharedPrefs.getInstance(this);
+        prefsHelper = PrefsHelper.getInstance(this);
         setBackground();
         initList();
     }
@@ -31,30 +32,30 @@ public class SettingsActivity extends AppCompatActivity {
         String[] items = new String[]{"Default", "Red", "Purple"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
-        spinner.setSelection(sharedPrefs.getDataInt("spinner"));
+        spinner.setSelection(prefsHelper.getDataInt("spinner"));
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        sharedPrefs.saveDataString("background", "default");
-                        sharedPrefs.saveDataInt("spinner", 0);
+                        prefsHelper.saveDataString("background", "default");
+                        prefsHelper.saveDataInt("spinner", 0);
                         setBackground();
                         break;
                     case 1:
-                        sharedPrefs.saveDataString("background", "red");
-                        sharedPrefs.saveDataInt("spinner", 1);
+                        prefsHelper.saveDataString("background", "red");
+                        prefsHelper.saveDataInt("spinner", 1);
                         setBackground();
                         break;
                     case 2:
-                        sharedPrefs.saveDataString("background", "purple");
-                        sharedPrefs.saveDataInt("spinner", 2);
+                        prefsHelper.saveDataString("background", "purple");
+                        prefsHelper.saveDataInt("spinner", 2);
                         setBackground();
                         break;
                     default:
-                        sharedPrefs.saveDataString("background", "default");
-                        sharedPrefs.saveDataInt("spinner", 0);
+                        prefsHelper.saveDataString("background", "default");
+                        prefsHelper.saveDataInt("spinner", 0);
                         setBackground();
                         break;
 
@@ -69,9 +70,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     protected void setBackground() {
-        String value = (sharedPrefs.getDataString("background"));
+        String value = (prefsHelper.getDataString("background"));
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-
         RelativeLayout layout = findViewById(R.id.settings_layout);
         layout.setBackgroundResource(id);
     }

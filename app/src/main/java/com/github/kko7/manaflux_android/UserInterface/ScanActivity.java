@@ -22,12 +22,18 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ScanActivity extends AppCompatActivity {
 
     private static final String TAG = "ScanActivity";
+    //Intent i = getIntent();
+
+    //final String address = i.getExtras().getString("ADDRESS");
+    //final String name = i.getExtras().getString("NAME");
+    //final int id = i.getExtras().getInt("ID");
 
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
@@ -44,9 +50,9 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        initViews();
+        //initViews(); TODO App crashes after this
     }
-
+/*
     private void initViews() {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
@@ -58,7 +64,12 @@ public class ScanActivity extends AppCompatActivity {
 
                 if (intentData.length() > 0) {
                     if (isIP) {
-                        startActivity(new Intent(ScanActivity.this, EditActivity.class).putExtra("ip_address", intentData));
+                        Intent intent = new Intent(ScanActivity.this, EditActivity.class);
+                        intent.putExtra("ip_address", intentData);
+                        intent.putExtra("ADDRESS", address);
+                        intent.putExtra("NAME", name);
+                        intent.putExtra("ID", id);
+                        startActivity(intent);
                     }
                 }
             }
@@ -159,4 +170,5 @@ public class ScanActivity extends AppCompatActivity {
         super.onResume();
         initialiseDetectorsAndSources();
     }
+    */
 }

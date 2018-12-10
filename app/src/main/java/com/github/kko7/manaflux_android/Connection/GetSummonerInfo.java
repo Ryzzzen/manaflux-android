@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.ConnectionHandler;
+package com.github.kko7.manaflux_android.Connection;
 
 import android.os.AsyncTask;
 

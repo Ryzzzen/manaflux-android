@@ -18,7 +18,7 @@ public class EditActivity extends AppCompatActivity {
 
     EditText addressTxt, nameTxt;
     ImageButton closeBtn, saveBtn;
-    Button deleteBtn;
+    Button deleteBtn, connectBtn, scanBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +27,17 @@ public class EditActivity extends AppCompatActivity {
 
         Intent i = getIntent();
 
-        final String address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
+        final String address1 = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
+        final String address2 = Objects.requireNonNull(i.getExtras()).getString("ip_address");
+        final String address = address2 != null ? address2 : address1;
         final String name = i.getExtras().getString("NAME");
         final int id = i.getExtras().getInt("ID");
 
         saveBtn = findViewById(R.id.save_button);
         closeBtn = findViewById(R.id.close_button);
         deleteBtn = findViewById(R.id.delete_button);
+        scanBtn = findViewById(R.id.scan_button);
+        connectBtn = findViewById(R.id.connect_button);
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
 
@@ -44,6 +48,24 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 update(id, nameTxt.getText().toString(), addressTxt.getText().toString());
+            }
+        });
+
+        //scanBtn.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        Intent intent = new Intent(EditActivity.this, ScanActivity.class);
+        //        intent.putExtra("ADDRESS", address);
+        //        intent.putExtra("NAME", name);
+        //        intent.putExtra("ID", id);
+        //        startActivity(intent);
+        //    }
+        //});
+
+        connectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditActivity.this, DashboardActivity.class));
             }
         });
 
@@ -69,8 +91,6 @@ public class EditActivity extends AppCompatActivity {
         long result = db.UPDATE(id, newAddress, newName);
 
         if (result > 0) {
-            addressTxt.setText(newAddress);
-            nameTxt.setText(newName);
             Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), "Unable to Update", Toast.LENGTH_SHORT).show();
@@ -86,7 +106,7 @@ public class EditActivity extends AppCompatActivity {
         long result = db.Delete(id);
 
         if (result >= 0) {
-            this.finish();
+            finish();
         } else {
             Toast.makeText(getApplicationContext(), "Unable to Update", Toast.LENGTH_SHORT).show();
         }

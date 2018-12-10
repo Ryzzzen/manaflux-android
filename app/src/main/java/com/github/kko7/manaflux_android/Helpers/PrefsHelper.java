@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.UserInterface;
+package com.github.kko7.manaflux_android.Helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,18 +7,18 @@ import com.github.kko7.manaflux_android.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class SharedPrefs {
-    private static SharedPrefs sharedPrefs;
+public class PrefsHelper {
+    private static PrefsHelper prefsHelper;
     private SharedPreferences sharedPreferences;
 
-    public static SharedPrefs getInstance(Context context) {
-        if (sharedPrefs == null) {
-            sharedPrefs = new SharedPrefs(context);
+    public static PrefsHelper getInstance(Context context) {
+        if (prefsHelper == null) {
+            prefsHelper = new PrefsHelper(context);
         }
-        return sharedPrefs;
+        return prefsHelper;
     }
 
-    private SharedPrefs(Context context) {
+    private PrefsHelper(Context context) {
         sharedPreferences = context.getSharedPreferences("Background", MODE_PRIVATE);
     }
 

@@ -99,4 +99,11 @@
         android:background="@drawable/button_bg"
         android:text="@string/edit_delete" />
 
+    <com.github.kko7.manaflux_android.CustomElements.ButtonView
+        android:id="@+id/connect_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:text="Button" />
+
 </LinearLayout>
