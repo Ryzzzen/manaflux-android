@@ -50,7 +50,7 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        //initViews(); TODO App crashes after this
+        //initViews(); TODO
     }
 /*
     private void initViews() {

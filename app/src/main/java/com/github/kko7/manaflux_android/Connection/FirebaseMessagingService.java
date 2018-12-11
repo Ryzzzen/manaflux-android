@@ -16,7 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Objects;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    private static final String TAG = "FirebaseMessagingServic";
+    private static final String TAG = "FirebaseMessagingService";
 
     public FirebaseMessagingService() {
     }
@@ -35,6 +35,18 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     @Override
     public void onDeletedMessages() {
         //TODO
+    }
+
+    @Override
+    public void onNewToken(String token) {
+        Log.d(TAG, "Refreshed token: " + token);
+
+        sendRegistrationToServer(token);
+    }
+
+    private void sendRegistrationToServer(String token) {
+        HttpPost httpPost = new HttpPost(token);
+        httpPost.execute("http://192.168.0.111:4500/phone-token");
     }
 
     private void sendNotification(String title, String messageBody) {

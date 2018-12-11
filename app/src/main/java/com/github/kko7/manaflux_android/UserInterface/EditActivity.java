@@ -26,7 +26,6 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         Intent i = getIntent();
-
         final String address1 = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
         final String address2 = Objects.requireNonNull(i.getExtras()).getString("ip_address");
         final String address = address2 != null ? address2 : address1;

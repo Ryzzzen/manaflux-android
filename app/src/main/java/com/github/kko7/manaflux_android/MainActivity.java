@@ -32,20 +32,19 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    PrefsHelper prefsHelper;
-    Adapter adapter;
     ArrayList<Device> devices = new ArrayList<>();
     Button settingsButton, addButton, saveBtn, retrieveBtn;
     EditText nameEditTxt, addressEditTxt;
     RecyclerView mRecyclerView;
     RelativeLayout layout;
+    PrefsHelper prefsHelper;
+    Adapter adapter;
     Dialog d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        layout = findViewById(R.id.main_layout);
         prefsHelper = PrefsHelper.getInstance(this);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.d(TAG, "onCreate: Started.");
@@ -90,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         addButton = findViewById(R.id.add_button);
         settingsButton = findViewById(R.id.settings_button);
         mRecyclerView = findViewById(R.id.recyclerView);
+        layout = findViewById(R.id.main_layout);
         checkPerms();
         initList();
     }
