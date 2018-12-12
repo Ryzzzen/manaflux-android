@@ -8,20 +8,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GetSummonerInfo extends AsyncTask<String, Void, String> {
+public class HttpGet extends AsyncTask<String, Void, String> {
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
 
     @Override
-    protected String doInBackground(String... urls) {
-        String url = urls[0];
+    protected String doInBackground(String... params) {
+        String url = params[0];
         StringBuilder result;
         String inputLine;
         try {
             URL myUrl = new URL(url);
             HttpURLConnection connection = (HttpURLConnection)
-                    myUrl.openConnection();
+            myUrl.openConnection();
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);

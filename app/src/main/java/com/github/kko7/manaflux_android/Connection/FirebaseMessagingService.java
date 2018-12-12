@@ -16,7 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Objects;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    private static final String TAG = "FirebaseMessagingService";
+    private static final String TAG = "FirebaseMessaging";
 
     public FirebaseMessagingService() {
     }
@@ -45,8 +45,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
 
     private void sendRegistrationToServer(String token) {
-        HttpPost httpPost = new HttpPost(token);
-        httpPost.execute("http://192.168.0.111:4500/phone-token");
+        HttpPost httpPost = new HttpPost();
+        httpPost.execute("IP GOES HERE "/*TODO */, token);
     }
 
     private void sendNotification(String title, String messageBody) {
