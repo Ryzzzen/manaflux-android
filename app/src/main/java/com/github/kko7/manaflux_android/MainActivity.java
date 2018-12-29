@@ -1,7 +1,6 @@
 package com.github.kko7.manaflux_android;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initViews();
         checkDevice();
     }
 
@@ -29,9 +27,5 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(MainActivity.this, LoadActivity.class);
         }
         startActivity(intent);
-    }
-
-    protected void initViews() {
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }
