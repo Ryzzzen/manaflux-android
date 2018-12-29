@@ -34,4 +34,7 @@
     <string name="other_add">Add</string>
     <string name="other_scan">SCAN</string>
     <string name="edit_select">Select</string>
+    <string name="settings_delete_device">Delete device</string>
+    <string name="settings_delete">Delete</string>
+    <string name="settings_delete_all">Delete all</string>
 </resources>

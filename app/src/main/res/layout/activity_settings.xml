@@ -16,27 +16,90 @@
         android:textAlignment="center"
         android:textSize="25sp" />
 
-    <com.github.kko7.manaflux_android.CustomElements.TextView
-        android:id="@+id/background_text"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="88dp"
-        android:text="@string/settings_background"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="22sp" />
+        android:layout_marginTop="81dp"
+        android:orientation="horizontal">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/background_text"
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/background"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/settings_background"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="131dp"
+        android:orientation="horizontal">
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/device_title"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:text="@string/settings_delete_device"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/delete_device"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/button_bg"
+            android:text="@string/settings_delete"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="181dp"
+        android:orientation="horizontal">
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/all_title"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:text="@string/settings_delete_all"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/delete_all"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/button_bg"
+            android:text="@string/settings_delete"
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </RelativeLayout>

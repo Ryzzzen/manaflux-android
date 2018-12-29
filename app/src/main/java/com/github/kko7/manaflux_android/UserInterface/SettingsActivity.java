@@ -1,21 +1,26 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "Settings";
     PrefsHelper prefsHelper;
+    Button deleteDeviceBtn, deleteAllBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         prefsHelper = PrefsHelper.getInstance(this);
         setBackground();
         initList();
+        initButtons();
     }
 
     protected void initList() {
@@ -91,5 +97,24 @@ public class SettingsActivity extends AppCompatActivity {
         layout.setBackgroundResource(id);
     }
 
+    protected void initButtons() {
+        deleteDeviceBtn = findViewById(R.id.delete_device);
+        deleteDeviceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefsHelper.saveString("deviceID", "");
+                prefsHelper.saveString("deviceNAME", "");
+                startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+            }
+        });
+
+        deleteAllBtn = findViewById(R.id.delete_all);
+        deleteAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Not ready yet", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
 }
