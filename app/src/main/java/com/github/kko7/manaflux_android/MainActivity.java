@@ -6,20 +6,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.UserInterface.DashboardActivity;
+import com.github.kko7.manaflux_android.UserInterface.LoadActivity;
 import com.github.kko7.manaflux_android.UserInterface.SelectActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     Intent intent;
-    PrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initViews();
         checkDevice();
-        prefsHelper = PrefsHelper.getInstance(this);
     }
 
     protected void checkDevice() {
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         if (deviceIP == null || deviceIP.equals("")) {
             intent = new Intent(MainActivity.this, SelectActivity.class);
         } else {
-            intent = new Intent(MainActivity.this, DashboardActivity.class);
+            intent = new Intent(MainActivity.this, LoadActivity.class);
         }
         startActivity(intent);
     }

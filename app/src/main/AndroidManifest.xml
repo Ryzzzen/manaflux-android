@@ -63,6 +63,9 @@
         <activity
             android:name=".UserInterface.OtherDevicesActivity"
             tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".UserInterface.LoadActivity"
+            tools:ignore="InnerclassSeparator" />
 
         <service
             android:name=".Connection.FirebaseMessagingService"

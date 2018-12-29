@@ -16,7 +16,7 @@ public class SelectActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     RelativeLayout layout;
     PrefsHelper prefsHelper;
-    Button settingsButton, otherButton;
+    Button otherButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,6 @@ public class SelectActivity extends AppCompatActivity {
 
     protected void initViews() {
         prefsHelper = PrefsHelper.getInstance(this);
-        settingsButton = findViewById(R.id.add_button);
         otherButton = findViewById(R.id.other_button);
         layout = findViewById(R.id.select_layout);
     }

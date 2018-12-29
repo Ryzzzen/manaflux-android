@@ -1,6 +1,5 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -102,9 +100,10 @@ public class SettingsActivity extends AppCompatActivity {
         deleteDeviceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefsHelper.saveString("deviceID", "");
-                prefsHelper.saveString("deviceNAME", "");
-                startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+                //prefsHelper.saveString("deviceID", "");
+                //prefsHelper.saveString("deviceNAME", "");
+                //startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+                Toast.makeText(SettingsActivity.this, "Not ready", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -112,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
         deleteAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Not ready yet", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Not ready", Toast.LENGTH_LONG).show();
             }
         });
     }
