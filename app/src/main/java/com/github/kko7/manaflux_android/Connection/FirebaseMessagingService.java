@@ -9,8 +9,10 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
+
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Objects;
@@ -18,8 +20,11 @@ import java.util.Objects;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMessaging";
 
-    public FirebaseMessagingService() {
-    }
+    public FirebaseMessagingService() { }
+
+    PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
+    String deviceIP = prefsHelper.getString("DeviceIP");
+    String tokenIP = "http://" + deviceIP + ":4500/phone-token/";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -41,12 +46,16 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshed token: " + token);
 
-        sendRegistrationToServer(token);
+        try {
+            sendTokenToServer(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void sendRegistrationToServer(String token) {
-        HttpPost httpPost = new HttpPost();
-        httpPost.execute("IP GOES HERE "/*TODO */, token);
+    private void sendTokenToServer(String token) throws Exception {
+        HttpPost httpPost = new HttpPost(tokenIP, token);
+        httpPost.run();
     }
 
     private void sendNotification(String title, String messageBody) {
@@ -57,7 +66,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this)
+                new NotificationCompat.Builder(this /* support for oreo */)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(title)
                         .setContentText(messageBody)
