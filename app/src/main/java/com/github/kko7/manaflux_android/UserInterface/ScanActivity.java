@@ -167,4 +167,5 @@ public class ScanActivity extends AppCompatActivity {
         super.onResume();
         initialiseDetectorsAndSources();
     }
+
 }

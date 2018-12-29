@@ -32,4 +32,5 @@ public class DashboardActivity extends Activity {
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);
     }
+
 }

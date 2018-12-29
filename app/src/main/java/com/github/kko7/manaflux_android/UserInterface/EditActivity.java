@@ -29,7 +29,6 @@ public class EditActivity extends AppCompatActivity {
     LinearLayout layout;
     PrefsHelper prefsHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +89,12 @@ public class EditActivity extends AppCompatActivity {
         nameTxt.setText(name);
     }
 
+    private void setBackground() {
+        String value = prefsHelper.getBackground("background");
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        layout.setBackgroundResource(id);
+    }
+
     private void update(int id, String newAddress, String newName) {
         DBAdapter db = new DBAdapter(this);
         db.openDB();
@@ -119,9 +124,4 @@ public class EditActivity extends AppCompatActivity {
         db.close();
     }
 
-    private void setBackground() {
-        String value = prefsHelper.getBackground("background");
-        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        layout.setBackgroundResource(id);
-    }
 }
