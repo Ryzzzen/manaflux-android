@@ -18,7 +18,7 @@ public class EditActivity extends AppCompatActivity {
 
     EditText addressTxt, nameTxt;
     ImageButton closeBtn, saveBtn;
-    Button deleteBtn, connectBtn, scanBtn;
+    Button deleteBtn, scanBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,7 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         Intent i = getIntent();
-        final String address1 = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
-        final String address2 = Objects.requireNonNull(i.getExtras()).getString("ip_address");
-        final String address = address2 != null ? address2 : address1;
+        final String address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
         final String name = i.getExtras().getString("NAME");
         final int id = i.getExtras().getInt("ID");
 
@@ -36,7 +34,6 @@ public class EditActivity extends AppCompatActivity {
         closeBtn = findViewById(R.id.close_button);
         deleteBtn = findViewById(R.id.delete_button);
         scanBtn = findViewById(R.id.scan_button);
-        connectBtn = findViewById(R.id.connect_button);
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
 
@@ -60,13 +57,6 @@ public class EditActivity extends AppCompatActivity {
         //        startActivity(intent);
         //    }
         //});
-
-        connectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EditActivity.this, DashboardActivity.class));
-            }
-        });
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
