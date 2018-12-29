@@ -1,8 +1,10 @@
 package com.github.kko7.manaflux_android.Connection;
+
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -16,7 +18,7 @@ public final class HttpGet {
     private final OkHttpClient client = new OkHttpClient();
     private final String url;
 
-    public HttpGet(String url){
+    public HttpGet(String url) {
         this.url = url;
     }
 
@@ -37,7 +39,7 @@ public final class HttpGet {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
 
-                    Log.d(TAG, responseBody.string());
+                    Log.d(TAG, Objects.requireNonNull(responseBody).string());
                 }
             }
         });

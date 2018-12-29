@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.github.kko7.manaflux_android" >
+    package="com.github.kko7.manaflux_android">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
         android:name="android.hardware.camera"
@@ -33,11 +34,11 @@
 
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
 
         </provider>
 
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,9 +57,11 @@
         <activity
             android:name=".UserInterface.SettingsActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.SelectActivity"
+        <activity
+            android:name=".UserInterface.SelectActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.OtherDevicesActivity"
+        <activity
+            android:name=".UserInterface.OtherDevicesActivity"
             tools:ignore="InnerclassSeparator" />
 
         <service

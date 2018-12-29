@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void checkDevice() {
         PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
         String deviceIP = prefsHelper.getString("DeviceIP");
-        if(deviceIP == null || deviceIP.equals("")) {
+        if (deviceIP == null || deviceIP.equals("")) {
             intent = new Intent(MainActivity.this, SelectActivity.class);
         } else {
             intent = new Intent(MainActivity.this, DashboardActivity.class);

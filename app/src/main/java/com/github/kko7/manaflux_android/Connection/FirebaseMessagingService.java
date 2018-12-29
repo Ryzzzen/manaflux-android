@@ -19,7 +19,8 @@ import java.util.Objects;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMessaging";
 
-    public FirebaseMessagingService() { }
+    public FirebaseMessagingService() {
+    }
 
     PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
     String deviceIP = prefsHelper.getString("DeviceIP");

@@ -34,7 +34,7 @@ public class SelectActivity extends AppCompatActivity {
         layout.setBackgroundResource(id);
     }
 
-    protected void initButtons(){
+    protected void initButtons() {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +43,7 @@ public class SelectActivity extends AppCompatActivity {
         });
     }
 
-    protected void initViews(){
+    protected void initViews() {
         prefsHelper = PrefsHelper.getInstance(this);
         settingsButton = findViewById(R.id.settings_button);
         layout = findViewById(R.id.select_layout);

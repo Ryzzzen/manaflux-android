@@ -87,7 +87,8 @@
         android:ems="10"
         android:hint="@string/edit_pc"
         android:inputType=""
-        android:importantForAutofill="no" tools:targetApi="o" />
+        android:importantForAutofill="no"
+        tools:targetApi="o" />
 
     <com.github.kko7.manaflux_android.CustomElements.ButtonView
         android:id="@+id/delete_button"
@@ -98,12 +99,5 @@
         android:layout_marginEnd="120dp"
         android:background="@drawable/button_bg"
         android:text="@string/edit_delete" />
-
-    <com.github.kko7.manaflux_android.CustomElements.ButtonView
-        android:id="@+id/connect_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_bg"
-        android:text="Button" />
 
 </LinearLayout>
