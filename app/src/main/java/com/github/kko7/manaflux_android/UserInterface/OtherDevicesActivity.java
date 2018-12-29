@@ -43,32 +43,36 @@ public class OtherDevicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other);
         Log.d(TAG, "onCreate: Started.");
-        initViews();
+        init();
+        initButtons();
         initList();
         setBackground();
     }
 
-    protected void initList() {
+    private void initList() {
         adapter = new Adapter(this, devices);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         retrieve();
     }
 
-    protected void initViews() {
+    private void init() {
         prefsHelper = PrefsHelper.getInstance(this);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mRecyclerView = findViewById(R.id.otherList);
         layout = findViewById(R.id.other_layout);
         addButton = findViewById(R.id.add_button);
         scanButton = findViewById(R.id.scan_button);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
+    private void initButtons() {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
             }
         });
+
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +150,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
         retrieve();
     }
 
-    protected void setBackground() {
+    private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);

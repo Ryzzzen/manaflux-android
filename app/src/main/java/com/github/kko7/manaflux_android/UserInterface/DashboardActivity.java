@@ -1,6 +1,7 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
@@ -16,12 +17,17 @@ public class DashboardActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        layout = findViewById(R.id.dashboard_layout);
-        prefsHelper = PrefsHelper.getInstance(this);
+        init();
         setBackground();
     }
 
-    protected void setBackground() {
+    private void init() {
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        layout = findViewById(R.id.dashboard_layout);
+        prefsHelper = PrefsHelper.getInstance(this);
+    }
+
+    private void setBackground() {
         String value = prefsHelper.getString("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);

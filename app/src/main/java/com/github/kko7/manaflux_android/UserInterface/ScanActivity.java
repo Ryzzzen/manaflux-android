@@ -1,6 +1,7 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
 import android.Manifest;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -32,24 +33,26 @@ public class ScanActivity extends AppCompatActivity {
     public BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnAction;
-    String name;
-    String ip;
     boolean isIP = false;
+    Button btnAction;
+    String name, ip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-
-        initViews();
+        init();
+        initButtons();
     }
 
-    private void initViews() {
+    private void init() {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.buttonAction);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
+    private void initButtons() {
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +67,6 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void initialiseDetectorsAndSources() {
-
         Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
         barcodeDetector = new BarcodeDetector.Builder(this)
@@ -90,8 +92,6 @@ public class ScanActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -103,7 +103,6 @@ public class ScanActivity extends AppCompatActivity {
                 cameraSource.stop();
             }
         });
-
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -138,14 +137,12 @@ public class ScanActivity extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
             }
         });
     }
 
     private void save(String address, String name) {
-
         DBAdapter db = new DBAdapter(this);
         db.openDB();
         long result = db.ADD(address, name);

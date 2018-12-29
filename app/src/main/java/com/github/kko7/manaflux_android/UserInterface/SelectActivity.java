@@ -1,6 +1,7 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,18 +24,19 @@ public class SelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         Log.d(TAG, "onCreate: Started.");
-        initViews();
+        init();
         initButtons();
         setBackground();
     }
 
-    protected void setBackground() {
-        String value = prefsHelper.getBackground("background");
-        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        layout.setBackgroundResource(id);
+    private void init() {
+        prefsHelper = PrefsHelper.getInstance(this);
+        otherButton = findViewById(R.id.other_button);
+        layout = findViewById(R.id.select_layout);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    protected void initButtons() {
+    private void initButtons() {
         otherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,10 +45,10 @@ public class SelectActivity extends AppCompatActivity {
         });
     }
 
-    protected void initViews() {
-        prefsHelper = PrefsHelper.getInstance(this);
-        otherButton = findViewById(R.id.other_button);
-        layout = findViewById(R.id.select_layout);
+    private void setBackground() {
+        String value = prefsHelper.getBackground("background");
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        layout.setBackgroundResource(id);
     }
 
     @Override
@@ -54,6 +56,5 @@ public class SelectActivity extends AppCompatActivity {
         super.onResume();
         setBackground();
     }
-
 
 }

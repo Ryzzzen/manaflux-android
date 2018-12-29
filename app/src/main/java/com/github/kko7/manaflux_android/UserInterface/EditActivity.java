@@ -1,6 +1,7 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,33 +19,40 @@ import java.util.Objects;
 
 public class EditActivity extends AppCompatActivity {
 
+    Intent i = getIntent();
+    final String address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
+    final String name = i.getExtras().getString("NAME");
+    final int id = i.getExtras().getInt("ID");
     EditText addressTxt, nameTxt;
     ImageButton closeBtn, saveBtn;
     Button deleteBtn, selectBtn;
     LinearLayout layout;
     PrefsHelper prefsHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        init();
+        initButtons();
+        initOther();
+        setBackground();
+    }
+
+    private void init() {
         prefsHelper = PrefsHelper.getInstance(this);
-        layout = findViewById(R.id.edit_layout);
-
-        Intent i = getIntent();
-        final String address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
-        final String name = i.getExtras().getString("NAME");
-        final int id = i.getExtras().getInt("ID");
-
         saveBtn = findViewById(R.id.save_button);
         closeBtn = findViewById(R.id.close_button);
         deleteBtn = findViewById(R.id.delete_button);
         selectBtn = findViewById(R.id.select_button);
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
+        layout = findViewById(R.id.edit_layout);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
-        addressTxt.setText(address);
-        nameTxt.setText(name);
+    private void initButtons() {
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +74,6 @@ public class EditActivity extends AppCompatActivity {
                 finish();
             }
         });
-        setBackground();
 
         selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +83,11 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(new Intent(EditActivity.this, DashboardActivity.class));
             }
         });
-        setBackground();
+    }
+
+    private void initOther() {
+        addressTxt.setText(address);
+        nameTxt.setText(name);
     }
 
     private void update(int id, String newAddress, String newName) {
@@ -108,7 +119,7 @@ public class EditActivity extends AppCompatActivity {
         db.close();
     }
 
-    protected void setBackground() {
+    private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);

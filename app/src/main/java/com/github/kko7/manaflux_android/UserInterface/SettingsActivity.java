@@ -1,5 +1,6 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,20 +20,47 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "Settings";
     PrefsHelper prefsHelper;
     Button deleteDeviceBtn, deleteAllBtn;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         Log.d(TAG, "onCreate: Started.");
-        prefsHelper = PrefsHelper.getInstance(this);
-        setBackground();
-        initList();
+        init();
         initButtons();
+        initSpinner();
+        setBackground();
     }
 
-    protected void initList() {
-        Spinner spinner = findViewById(R.id.spinner);
+    protected void init() {
+        prefsHelper = PrefsHelper.getInstance(this);
+        deleteDeviceBtn = findViewById(R.id.delete_device);
+        deleteAllBtn = findViewById(R.id.delete_all);
+        spinner = findViewById(R.id.spinner);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    protected void initButtons() {
+        deleteDeviceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //prefsHelper.saveString("deviceID", "");
+                //prefsHelper.saveString("deviceNAME", "");
+                //startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+                Toast.makeText(SettingsActivity.this, "Not ready", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        deleteAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Not ready", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    protected void initSpinner() {
         String[] items = new String[]{"Default", "Red", "Purple", "Green", "Gray", "Dark Red",};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
@@ -93,27 +121,6 @@ public class SettingsActivity extends AppCompatActivity {
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         RelativeLayout layout = findViewById(R.id.settings_layout);
         layout.setBackgroundResource(id);
-    }
-
-    protected void initButtons() {
-        deleteDeviceBtn = findViewById(R.id.delete_device);
-        deleteDeviceBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //prefsHelper.saveString("deviceID", "");
-                //prefsHelper.saveString("deviceNAME", "");
-                //startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-                Toast.makeText(SettingsActivity.this, "Not ready", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        deleteAllBtn = findViewById(R.id.delete_all);
-        deleteAllBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Not ready", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
 }
