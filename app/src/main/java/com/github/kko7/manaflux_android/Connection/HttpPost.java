@@ -1,43 +1,36 @@
 package com.github.kko7.manaflux_android.Connection;
 
-import android.os.AsyncTask;
+import java.io.IOException;
+import java.util.Objects;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-public class HttpPost extends AsyncTask<String, Void, Void> {
-    private static final String TAG = "HttpPost";
+public final class HttpPost {
+    private static final MediaType MEDIA_TYPE_PLAIN = MediaType.get("text/plain; charset=utf-8");
+    private final OkHttpClient client = new OkHttpClient();
+    private final String url;
+    private final String token;
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
+    HttpPost(String url, String token) {
+        this.url = url;
+        this.token = token;
     }
 
-    @Override
-    protected Void doInBackground(String... params) {
-        String urlString = params[0];
-        String data = params[1];
-        OutputStream out;
+    public void run() throws Exception {
 
-        try {
-            URL url = new URL(urlString);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            out = new BufferedOutputStream(urlConnection.getOutputStream());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(MEDIA_TYPE_PLAIN, token))
+                .build();
 
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-            writer.write(data);
-            writer.flush();
-            writer.close();
-            out.close();
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-            urlConnection.connect();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(Objects.requireNonNull(response.body()).string());
         }
-        return null;
     }
 }

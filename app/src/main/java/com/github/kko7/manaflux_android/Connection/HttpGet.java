@@ -1,49 +1,45 @@
 package com.github.kko7.manaflux_android.Connection;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
-import android.os.AsyncTask;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-public class HttpGet extends AsyncTask<String, Void, String> {
-    private static final String REQUEST_METHOD = "GET";
-    private static final int READ_TIMEOUT = 15000;
-    private static final int CONNECTION_TIMEOUT = 15000;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
-    @Override
-    protected String doInBackground(String... params) {
-        String url = params[0];
-        StringBuilder result;
-        String inputLine;
-        try {
-            URL myUrl = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection)
-            myUrl.openConnection();
-            connection.setRequestMethod(REQUEST_METHOD);
-            connection.setReadTimeout(READ_TIMEOUT);
-            connection.setConnectTimeout(CONNECTION_TIMEOUT);
-            connection.connect();
-            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(streamReader);
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((inputLine = reader.readLine()) != null) {
-                stringBuilder.append(inputLine);
+public final class HttpGet {
+    private final String TAG = "HttpGet";
+    private final OkHttpClient client = new OkHttpClient();
+    private final String url;
+
+    public HttpGet(String url){
+        this.url = url;
+    }
+
+    public void run() throws Exception {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
             }
-            reader.close();
-            streamReader.close();
-            result = stringBuilder;
-        } catch (IOException e) {
-            e.printStackTrace();
-            result = null;
-        }
-        return String.valueOf(result);
-    }
 
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-    }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
 
+                    Log.d(TAG, responseBody.string());
+                }
+            }
+        });
+    }
 }
