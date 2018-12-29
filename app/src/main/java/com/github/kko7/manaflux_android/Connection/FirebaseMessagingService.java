@@ -39,7 +39,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     @Override
     public void onDeletedMessages() {
-        //TODO
     }
 
     @Override
@@ -66,7 +65,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this /* support for oreo */)
+                new NotificationCompat.Builder(this, "default")
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(title)
                         .setContentText(messageBody)
