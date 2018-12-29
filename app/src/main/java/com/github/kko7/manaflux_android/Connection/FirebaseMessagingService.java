@@ -12,7 +12,6 @@ import android.util.Log;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
-
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Objects;

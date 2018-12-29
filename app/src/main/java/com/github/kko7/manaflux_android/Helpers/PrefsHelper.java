@@ -3,8 +3,6 @@ package com.github.kko7.manaflux_android.Helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.github.kko7.manaflux_android.R;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public class PrefsHelper {
