@@ -18,7 +18,7 @@ public class EditActivity extends AppCompatActivity {
 
     EditText addressTxt, nameTxt;
     ImageButton closeBtn, saveBtn;
-    Button deleteBtn, scanBtn;
+    Button deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,6 @@ public class EditActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.save_button);
         closeBtn = findViewById(R.id.close_button);
         deleteBtn = findViewById(R.id.delete_button);
-        scanBtn = findViewById(R.id.scan_button);
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
 
@@ -46,17 +45,6 @@ public class EditActivity extends AppCompatActivity {
                 update(id, nameTxt.getText().toString(), addressTxt.getText().toString());
             }
         });
-
-        //scanBtn.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        Intent intent = new Intent(EditActivity.this, ScanActivity.class);
-        //        intent.putExtra("ADDRESS", address);
-        //        intent.putExtra("NAME", name);
-        //        intent.putExtra("ID", id);
-        //        startActivity(intent);
-        //    }
-        //});
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
