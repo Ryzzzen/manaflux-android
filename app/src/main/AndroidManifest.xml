@@ -56,12 +56,14 @@
         <activity
             android:name=".UserInterface.SettingsActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.SelectActivity" />
-        <activity android:name=".UserInterface.OtherDevicesActivity" />
+        <activity android:name=".UserInterface.SelectActivity"
+            tools:ignore="InnerclassSeparator" />
+        <activity android:name=".UserInterface.OtherDevicesActivity"
+            tools:ignore="InnerclassSeparator" />
 
         <service
             android:name=".Connection.FirebaseMessagingService"
-            tools:ignore="InnerclassSeparator">
+            tools:ignore="ExportedService,InnerclassSeparator">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
