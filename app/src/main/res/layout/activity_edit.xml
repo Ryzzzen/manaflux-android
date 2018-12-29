@@ -67,13 +67,14 @@
             tools:targetApi="o" />
 
         <com.github.kko7.manaflux_android.CustomElements.ButtonView
-            android:id="@+id/scan_button"
+            android:id="@+id/select_button"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="25dp"
+            android:layout_marginBottom="7dp"
             android:background="@drawable/button_bg"
-            android:text="@string/edit_scan"
+            android:text="@string/edit_select"
             android:textAlignment="center"
             android:textAllCaps="true" />
 
