@@ -1,6 +1,6 @@
 package com.github.kko7.manaflux_android.Database;
 
-public class Constants {
+class Constants {
     static final String ROW_ID = "id";
     static final String ADDRESS = "address";
     static final String NAME = "name";

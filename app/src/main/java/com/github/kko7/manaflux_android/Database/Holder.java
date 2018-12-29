@@ -8,10 +8,10 @@ import com.github.kko7.manaflux_android.R;
 
 public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView addressTxt, nameTxt;
-    public ItemClickListener itemClickListener;
+    TextView addressTxt, nameTxt;
+    private ItemClickListener itemClickListener;
 
-    public Holder(View itemView) {
+    Holder(View itemView) {
         super(itemView);
 
         addressTxt = itemView.findViewById(R.id.addressTxt_row);
@@ -25,7 +25,7 @@ public class Holder extends RecyclerView.ViewHolder implements View.OnClickListe
     }
 
 
-    public void setItemClickListener(ItemClickListener ic) {
+    void setItemClickListener(ItemClickListener ic) {
         this.itemClickListener = ic;
     }
 }

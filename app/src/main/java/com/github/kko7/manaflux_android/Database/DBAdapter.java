@@ -7,13 +7,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DBAdapter {
-    Context c;
-    SQLiteDatabase db;
-    DBHelper helper;
+    private SQLiteDatabase db;
+    private DBHelper helper;
 
     public DBAdapter(Context ctx) {
-        this.c = ctx;
-        helper = new DBHelper(c);
+        helper = new DBHelper(ctx);
     }
 
     public DBAdapter openDB() {
@@ -35,7 +33,7 @@ public class DBAdapter {
 
     }
 
-    public long add(String address, String name) {
+    public long ADD(String address, String name) {
         try {
             ContentValues cv = new ContentValues();
             cv.put(Constants.ADDRESS, address);
@@ -71,7 +69,7 @@ public class DBAdapter {
         return 0;
     }
 
-    public long Delete(int id) {
+    public long DELETE(int id) {
         try {
             return db.delete(Constants.TB_NAME, Constants.ROW_ID + " =?", new String[]{String.valueOf(id)});
         } catch (SQLException e) {

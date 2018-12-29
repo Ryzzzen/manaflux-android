@@ -15,8 +15,8 @@ import com.github.kko7.manaflux_android.UserInterface.EditActivity;
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Holder> {
-    Context c;
-    ArrayList<Device> devices;
+    private Context c;
+    private ArrayList<Device> devices;
 
     public Adapter(Context ctx, ArrayList<Device> devices) {
         this.c = ctx;
@@ -32,7 +32,7 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.addressTxt.setText(devices.get(position).getAddress());
         holder.nameTxt.setText(devices.get(position).getName());
 
