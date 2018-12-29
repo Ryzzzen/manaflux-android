@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Settings"
+        android:text="@string/settings_title"
         android:textAlignment="center"
         android:textSize="25sp" />
 
@@ -24,18 +24,19 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="88dp"
-        android:text="Background"
+        android:text="@string/settings_background"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="22sp" />
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_alignBottom="@+id/background_text"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="234dp"
-        android:layout_marginTop="88dp" />
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginBottom="16dp" />
 
 </RelativeLayout>
