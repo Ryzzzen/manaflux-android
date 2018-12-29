@@ -19,26 +19,30 @@ public class PrefsHelper {
     }
 
     private PrefsHelper(Context context) {
-        sharedPreferences = context.getSharedPreferences("Background", MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("Settings", MODE_PRIVATE);
     }
 
-    public void saveDataString(String key, String value) {
+    public void saveString(String key, String value) {
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         prefsEditor.putString(key, value);
         prefsEditor.apply();
     }
 
-    public void saveDataInt(String key, int value) {
+    public void saveInt(String key, int value) {
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         prefsEditor.putInt(key, value);
         prefsEditor.apply();
     }
 
-    public String getDataString(String key) {
-        return sharedPreferences.getString(key, String.valueOf(R.mipmap.default_bg));
+    public String getBackground(String key) {
+        return sharedPreferences.getString(key, "default");
     }
 
-    public int getDataInt(String key) {
+    public String getString(String key) {
+        return sharedPreferences.getString(key, null);
+    }
+
+    public int getInt(String key) {
         return sharedPreferences.getInt(key, 0);
     }
 }
