@@ -23,8 +23,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
 
     PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
-    String deviceIP = prefsHelper.getString("DeviceIP");
-    String tokenIP = "http://" + deviceIP + ":4500/phone-token/";
+    String deviceIP = prefsHelper.getString("deviceIP");
+    String tokenIP = "http://" + deviceIP + ":4500/phone-token";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -49,6 +49,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
 
     private void sendTokenToServer(String token) throws Exception {
+        prefsHelper.saveString("token", token);
         HttpPost httpPost = new HttpPost(tokenIP, token);
         httpPost.run();
     }
