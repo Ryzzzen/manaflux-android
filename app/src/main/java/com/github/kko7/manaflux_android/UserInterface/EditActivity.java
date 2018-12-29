@@ -20,7 +20,7 @@ public class EditActivity extends AppCompatActivity {
 
     EditText addressTxt, nameTxt;
     ImageButton closeBtn, saveBtn;
-    Button deleteBtn;
+    Button deleteBtn, selectBtn;
     LinearLayout layout;
     PrefsHelper prefsHelper;
 
@@ -39,6 +39,7 @@ public class EditActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.save_button);
         closeBtn = findViewById(R.id.close_button);
         deleteBtn = findViewById(R.id.delete_button);
+        selectBtn = findViewById(R.id.select_button);
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
 
@@ -63,6 +64,16 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        setBackground();
+
+        selectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefsHelper.saveString("deviceIP", address);
+                prefsHelper.saveString("deviceNAME", name);
+                startActivity(new Intent(EditActivity.this, DashboardActivity.class));
             }
         });
         setBackground();

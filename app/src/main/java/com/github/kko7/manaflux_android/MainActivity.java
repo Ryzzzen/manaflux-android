@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.github.kko7.manaflux_android.Connection.FirebaseMessagingService;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.UserInterface.DashboardActivity;
 import com.github.kko7.manaflux_android.UserInterface.SelectActivity;
@@ -14,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
     Intent intent;
     PrefsHelper prefsHelper;
-    FirebaseMessagingService firebaseMessagingService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void checkDevice() {
         PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
-        String deviceIP = prefsHelper.getString("DeviceIP");
+        String deviceIP = prefsHelper.getString("deviceIP");
         if (deviceIP == null || deviceIP.equals("")) {
             intent = new Intent(MainActivity.this, SelectActivity.class);
         } else {
