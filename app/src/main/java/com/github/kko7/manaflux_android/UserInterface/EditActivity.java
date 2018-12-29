@@ -102,7 +102,7 @@ public class EditActivity extends AppCompatActivity {
     private void delete(int id) {
         DBAdapter db = new DBAdapter(this);
         db.openDB();
-        long result = db.Delete(id);
+        long result = db.DELETE(id);
 
         if (result >= 0) {
             finish();

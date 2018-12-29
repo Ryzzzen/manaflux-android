@@ -22,7 +22,7 @@ public class DashboardActivity extends Activity {
     }
 
     protected void setBackground() {
-        String value = prefsHelper.getDataString("background");
+        String value = prefsHelper.getString("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);
     }
