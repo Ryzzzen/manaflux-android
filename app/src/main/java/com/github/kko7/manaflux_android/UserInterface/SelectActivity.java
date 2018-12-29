@@ -35,13 +35,6 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     protected void initButtons() {
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SelectActivity.this, SettingsActivity.class));
-            }
-        });
-
         otherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
