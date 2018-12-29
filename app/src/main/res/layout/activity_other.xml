@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/select_layout"
+    android:id="@+id/other_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/default_bg">
@@ -24,12 +24,12 @@
         android:layout_alignParentStart="true"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="@string/select_on_lan"
+        android:text="@string/other_devices"
         android:textAllCaps="true"
         android:textSize="20sp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/lanList"
+        android:id="@+id/otherList"
         android:layout_width="match_parent"
         android:layout_height="315dp"
         android:layout_below="@+id/other_title"
@@ -39,23 +39,23 @@
 
     <com.github.kko7.manaflux_android.CustomElements.ButtonView
         android:id="@+id/add_button"
-        android:layout_width="130dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="60dp"
         android:layout_marginBottom="66dp"
         android:background="@drawable/button_bg"
-        android:text="@string/select_settings" />
+        android:text="@string/other_add" />
 
     <com.github.kko7.manaflux_android.CustomElements.ButtonView
-        android:id="@+id/other_button"
-        android:layout_width="130dp"
+        android:id="@+id/scan_button"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/add_button"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="60dp"
         android:background="@drawable/button_bg"
-        android:text="@string/select_other" />
+        android:text="@string/other_scan" />
 
 </RelativeLayout>

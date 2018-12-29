@@ -30,4 +30,7 @@
     <string name="select_refresh">Refresh</string>
     <string name="settings_background">Background</string>
     <string name="settings_title">Settings</string>
+    <string name="other_devices">Other devices</string>
+    <string name="other_add">Add</string>
+    <string name="other_scan">SCAN</string>
 </resources>

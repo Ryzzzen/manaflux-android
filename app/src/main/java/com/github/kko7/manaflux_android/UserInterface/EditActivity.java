@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Database.DBAdapter;
+import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 
 import java.util.Objects;
@@ -19,11 +21,15 @@ public class EditActivity extends AppCompatActivity {
     EditText addressTxt, nameTxt;
     ImageButton closeBtn, saveBtn;
     Button deleteBtn;
+    LinearLayout layout;
+    PrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        prefsHelper = PrefsHelper.getInstance(this);
+        layout = findViewById(R.id.edit_layout);
 
         Intent i = getIntent();
         final String address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
@@ -59,7 +65,7 @@ public class EditActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        setBackground();
     }
 
     private void update(int id, String newAddress, String newName) {
@@ -91,4 +97,9 @@ public class EditActivity extends AppCompatActivity {
         db.close();
     }
 
+    protected void setBackground() {
+        String value = prefsHelper.getBackground("background");
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        layout.setBackgroundResource(id);
+    }
 }

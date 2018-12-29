@@ -1,23 +1,31 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.kko7.manaflux_android.Database.DBAdapter;
 import com.github.kko7.manaflux_android.R;
 import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+
+import java.io.IOException;
 
 public class ScanActivity extends AppCompatActivity {
 
     private static final String TAG = "ScanActivity";
-    //Intent i = getIntent();
-
-    //final String address = i.getExtras().getString("ADDRESS");
-    //final String name = i.getExtras().getString("NAME");
-    //final int id = i.getExtras().getInt("ID");
 
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
@@ -25,18 +33,18 @@ public class ScanActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     Button btnAction;
-    String intentData = "";
+    String name;
+    String ip;
     boolean isIP = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        //initViews(); TODO
+        initViews();
     }
-/*
+
     private void initViews() {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
@@ -46,14 +54,9 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (intentData.length() > 0) {
+                if (ip.length() > 0 && name.length() > 0) {
                     if (isIP) {
-                        Intent intent = new Intent(ScanActivity.this, EditActivity.class);
-                        intent.putExtra("ip_address", intentData);
-                        intent.putExtra("ADDRESS", address);
-                        intent.putExtra("NAME", name);
-                        intent.putExtra("ID", id);
-                        startActivity(intent);
+                        save(ip, name);
                     }
                 }
             }
@@ -119,20 +122,19 @@ public class ScanActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            String ipAddress = String.valueOf((barcodes.valueAt(0).displayValue));
-                            Log.d(TAG, ipAddress);
-                            Pattern pattern = Pattern.compile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$");
-                            Matcher mat = pattern.matcher(ipAddress);
+                            String data = String.valueOf((barcodes.valueAt(0).displayValue));
+                            Log.d(TAG, data);
 
-                            if (mat.matches()) {
+                            if (data.equals("")) {
+                                Toast.makeText(getApplicationContext(), "IP Address is not valid", Toast.LENGTH_LONG).show();
+                            } else {
                                 txtBarcodeValue.removeCallbacks(null);
-                                intentData = ipAddress;
-                                txtBarcodeValue.setText(intentData);
+                                String[] data1 = data.split(":", 2);
+                                ip = data1[0];
+                                name = data1[1];
                                 isIP = true;
                                 btnAction.setText(getString(R.string.qr_save));
-
-                            } else {
-                                Toast.makeText(getApplicationContext(), "IP Address is not valid", Toast.LENGTH_LONG).show();
+                                txtBarcodeValue.setText(data);
                             }
                         }
                     });
@@ -142,6 +144,20 @@ public class ScanActivity extends AppCompatActivity {
         });
     }
 
+    private void save(String address, String name) {
+
+        DBAdapter db = new DBAdapter(this);
+        db.openDB();
+        long result = db.ADD(address, name);
+
+        if (result > 0) {
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "Unable To Insert", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
+    }
 
     @Override
     protected void onPause() {
@@ -154,5 +170,4 @@ public class ScanActivity extends AppCompatActivity {
         super.onResume();
         initialiseDetectorsAndSources();
     }
-    */
 }

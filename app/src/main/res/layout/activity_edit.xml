@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/default_bg"
@@ -22,8 +23,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_clear_white"
-            android:contentDescription="@string/description_close" />
+            android:contentDescription="@string/description_close"
+            app:srcCompat="@drawable/ic_clear_white" />
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
             android:id="@+id/edit_title"
@@ -32,10 +33,10 @@
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/save_button"
             android:layout_toEndOf="@+id/close_button"
+            android:paddingTop="7dp"
             android:text="@string/edit_title"
             android:textAlignment="center"
-            android:textSize="24sp"
-            android:paddingTop="7dp" />
+            android:textSize="24sp" />
 
         <ImageButton
             android:id="@+id/save_button"
@@ -44,8 +45,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_save_white"
-            android:contentDescription="@string/description_save" />
+            android:contentDescription="@string/description_save"
+            app:srcCompat="@drawable/ic_save_white" />
     </RelativeLayout>
 
     <LinearLayout
@@ -86,8 +87,8 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/edit_pc"
-        android:inputType=""
         android:importantForAutofill="no"
+        android:inputType=""
         tools:targetApi="o" />
 
     <com.github.kko7.manaflux_android.CustomElements.ButtonView

@@ -16,7 +16,7 @@ public class SelectActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     RelativeLayout layout;
     PrefsHelper prefsHelper;
-    Button settingsButton, otherButton, refreshButton;
+    Button settingsButton, otherButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,19 @@ public class SelectActivity extends AppCompatActivity {
                 startActivity(new Intent(SelectActivity.this, SettingsActivity.class));
             }
         });
+
+        otherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SelectActivity.this, OtherDevicesActivity.class));
+            }
+        });
     }
 
     protected void initViews() {
         prefsHelper = PrefsHelper.getInstance(this);
-        settingsButton = findViewById(R.id.settings_button);
+        settingsButton = findViewById(R.id.add_button);
+        otherButton = findViewById(R.id.other_button);
         layout = findViewById(R.id.select_layout);
     }
 

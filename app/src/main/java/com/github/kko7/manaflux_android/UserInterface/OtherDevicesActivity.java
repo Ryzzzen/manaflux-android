@@ -1,6 +1,7 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -28,7 +29,8 @@ public class OtherDevicesActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     ArrayList<Device> devices = new ArrayList<>();
-    Button addButton, saveBtn, retrieveBtn;
+    Button addButton, scanButton;
+    Button saveBtn, retrieveBtn; //dialog
     EditText nameEditTxt, addressEditTxt;
     RecyclerView mRecyclerView;
     RelativeLayout layout;
@@ -39,7 +41,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select);
+        setContentView(R.layout.activity_other);
         Log.d(TAG, "onCreate: Started.");
         initViews();
         initList();
@@ -56,9 +58,23 @@ public class OtherDevicesActivity extends AppCompatActivity {
     protected void initViews() {
         prefsHelper = PrefsHelper.getInstance(this);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        mRecyclerView = findViewById(R.id.lanList);
-        layout = findViewById(R.id.select_layout);
+        mRecyclerView = findViewById(R.id.otherList);
+        layout = findViewById(R.id.other_layout);
+        addButton = findViewById(R.id.add_button);
+        scanButton = findViewById(R.id.scan_button);
 
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OtherDevicesActivity.this, ScanActivity.class));
+            }
+        });
     }
 
     private void showDialog() {
@@ -75,6 +91,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
+                d.hide();
             }
         });
 
@@ -141,6 +158,5 @@ public class OtherDevicesActivity extends AppCompatActivity {
         retrieve();
         setBackground();
     }
-
 
 }
