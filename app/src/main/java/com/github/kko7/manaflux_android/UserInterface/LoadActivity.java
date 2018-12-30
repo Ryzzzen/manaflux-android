@@ -53,15 +53,6 @@ public class LoadActivity extends AppCompatActivity {
             Log.d(TAG, e.getMessage());
         }
 
-        try {
-            HttpGet httpGet = new HttpGet("http://" + ip + ":4500/summoner");
-            httpGet.run();
-        } catch (Exception e) {
-            status.setText(String.valueOf(e));
-            e.printStackTrace();
-            Log.d(TAG, e.getMessage());
-        }
-
     }
 
 }
