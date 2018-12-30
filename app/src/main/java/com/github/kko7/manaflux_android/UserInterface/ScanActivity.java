@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
@@ -32,8 +33,8 @@ public class ScanActivity extends AppCompatActivity {
     TextView txtBarcodeValue;
     public BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
-    boolean isIP = false;
+    private static final int CAMERA_PERMISSION = 201;
+    boolean isCorrect = false;
     Button btnAction;
     String name, ip;
 
@@ -56,18 +57,15 @@ public class ScanActivity extends AppCompatActivity {
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (ip.length() > 0 && name.length() > 0) {
-                    if (isIP) {
-                        save(ip, name);
-                    }
+                if (isCorrect) {
+                    save(ip, name);
                 }
             }
         });
     }
 
     private void initialiseDetectorsAndSources() {
-        Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Barcode scanner started");
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -82,11 +80,18 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        cameraSource.start(surfaceView.getHolder());
+                    if (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(ScanActivity.this,
+                                Manifest.permission.CAMERA)) {
+                            Toast.makeText(ScanActivity.this, "Camera permission is needed for scanner", Toast.LENGTH_SHORT).show();
+                        } else {
+                            ActivityCompat.requestPermissions(ScanActivity.this,
+                                    new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
+                        }
                     } else {
-                        ActivityCompat.requestPermissions(ScanActivity.this, new
-                                String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                        cameraSource.start(surfaceView.getHolder());
                     }
 
                 } catch (IOException e) {
@@ -125,13 +130,13 @@ public class ScanActivity extends AppCompatActivity {
                             Log.d(TAG, data);
 
                             if (data.equals("")) {
-                                Toast.makeText(getApplicationContext(), "IP Address is not valid", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Invalid data", Toast.LENGTH_LONG).show();
                             } else {
                                 txtBarcodeValue.removeCallbacks(null);
                                 String[] data1 = data.split(":", 2);
                                 ip = data1[0];
                                 name = data1[1];
-                                isIP = true;
+                                isCorrect = true;
                                 btnAction.setText(getString(R.string.qr_save));
                                 txtBarcodeValue.setText(data);
                             }

@@ -28,12 +28,6 @@ public class MainActivity extends AppCompatActivity {
             String deviceIP = prefsHelper.getString("deviceIP");
             String deviceNAME = prefsHelper.getString("deviceNAME");
 
-            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                Log.d("MainActivity", "Camera perm = OK");
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 201);
-            }
-
             if (deviceIP == null || deviceIP.equals("") || deviceNAME == null || deviceNAME.equals("")) {
                 intent = new Intent(MainActivity.this, SelectActivity.class);
             } else {
