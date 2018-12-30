@@ -129,8 +129,11 @@ public class OtherDevicesActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(adapter);
         }
 
-        db.close();
+        if (devices.size() == 0) {
+            adapter.notifyDataSetChanged();
+        }
 
+        db.close();
     }
 
     private void save(String address, String name) {

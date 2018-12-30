@@ -19,10 +19,11 @@ import java.util.Objects;
 
 public class EditActivity extends AppCompatActivity {
 
-    Intent i = getIntent();
-    final String address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
-    final String name = i.getExtras().getString("NAME");
-    final int id = i.getExtras().getInt("ID");
+    Intent i;
+    String address;
+    String name;
+    int id;
+
     EditText addressTxt, nameTxt;
     ImageButton closeBtn, saveBtn;
     Button deleteBtn, selectBtn;
@@ -40,6 +41,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void init() {
+        i = getIntent();
         prefsHelper = PrefsHelper.getInstance(this);
         saveBtn = findViewById(R.id.save_button);
         closeBtn = findViewById(R.id.close_button);
@@ -48,6 +50,9 @@ public class EditActivity extends AppCompatActivity {
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
         layout = findViewById(R.id.edit_layout);
+        address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
+        name = Objects.requireNonNull(Objects.requireNonNull(i).getExtras()).getString("NAME");
+        id = i.getExtras().getInt("ID");
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 

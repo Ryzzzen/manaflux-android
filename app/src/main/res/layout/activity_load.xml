@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/load_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/default_bg">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="304dp"
+        android:layout_height="121dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="184dp"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+</RelativeLayout>
