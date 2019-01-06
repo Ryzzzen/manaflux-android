@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class LoadActivity extends AppCompatActivity implements HttpListener {
 
