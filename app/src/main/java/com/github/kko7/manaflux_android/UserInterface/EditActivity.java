@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Database.DBAdapter;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
 
 import java.util.Objects;
@@ -84,7 +85,7 @@ public class EditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 prefsHelper.saveString("deviceIP", address);
                 prefsHelper.saveString("deviceNAME", name);
-                startActivity(new Intent(EditActivity.this, DashboardActivity.class));
+                startActivity(new Intent(EditActivity.this, MainActivity.class));
             }
         });
     }
