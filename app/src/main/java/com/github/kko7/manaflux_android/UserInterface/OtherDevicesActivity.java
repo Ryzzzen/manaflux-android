@@ -1,10 +1,14 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,7 +80,20 @@ public class OtherDevicesActivity extends AppCompatActivity {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OtherDevicesActivity.this, ScanActivity.class));
+
+                if (ContextCompat.checkSelfPermission(OtherDevicesActivity.this, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(OtherDevicesActivity.this,
+                            Manifest.permission.CAMERA)) {
+                        Toast.makeText(OtherDevicesActivity.this, "Camera permission is needed for scanner", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ActivityCompat.requestPermissions(OtherDevicesActivity.this,
+                                new String[]{Manifest.permission.CAMERA}, 201);
+                    }
+                } else {
+                    startActivity(new Intent(OtherDevicesActivity.this, ScanActivity.class));
+                }
             }
         });
     }
