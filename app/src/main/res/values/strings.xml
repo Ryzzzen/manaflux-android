@@ -12,6 +12,7 @@
     <string name="edit_scan">SCAN</string>
     <string name="edit_pc">PC name</string>
     <string name="edit_delete">Delete</string>
+    <string name="edit_select">Select</string>
 
     <string name="description_underline">underline</string>
     <string name="description_close">close</string>
@@ -28,13 +29,17 @@
     <string name="select_settings">Settings</string>
     <string name="select_other">Other devices</string>
     <string name="select_refresh">Refresh</string>
-    <string name="settings_background">Background</string>
-    <string name="settings_title">Settings</string>
+
     <string name="other_devices">Other devices</string>
     <string name="other_add">Add</string>
     <string name="other_scan">SCAN</string>
-    <string name="edit_select">Select</string>
+
+    <string name="settings_background">Background</string>
+    <string name="settings_title">Settings</string>
     <string name="settings_delete_device">Delete device</string>
     <string name="settings_delete">Delete</string>
     <string name="settings_delete_all">Delete all</string>
+
+    <string name="error_again">Try again</string>
+    <string name="error_unexpected">Unexpected error</string>
 </resources>

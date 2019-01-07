@@ -1,19 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/load_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/default_bg">
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/status_text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.github.kko7.manaflux_android.CustomElements.GifView
+        android:id="@+id/loading_gif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="191dp"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:visibility="gone" />
+        android:visibility="visible">
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/error_title"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="@string/error_unexpected"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="95dp"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            tools:text="Message: Not found" />
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/text_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="155dp"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            tools:text="Code: 404" />
+
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/refresh_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="140dp"
+            android:layout_marginEnd="140dp"
+            android:layout_marginBottom="202dp"
+            android:background="@drawable/button_bg"
+            android:text="@string/error_again" />
+    </RelativeLayout>
 </RelativeLayout>
