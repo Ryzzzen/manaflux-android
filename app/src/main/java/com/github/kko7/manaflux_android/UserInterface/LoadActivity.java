@@ -112,7 +112,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, exception);
+                Log.d(TAG, exception.toString());
                 //TODO display on screen
             }
         });
