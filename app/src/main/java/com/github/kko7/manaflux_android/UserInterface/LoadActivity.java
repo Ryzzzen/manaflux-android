@@ -109,11 +109,11 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
     }
 
     @Override
-    public void onFailure(final String exception) {
+    public void onFailure(final IOException exception) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, exception);
+                Log.d(TAG, exception.toString());
                 //TODO display on screen
             }
         });
