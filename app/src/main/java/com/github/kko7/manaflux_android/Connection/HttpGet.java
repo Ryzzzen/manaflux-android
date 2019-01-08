@@ -29,8 +29,8 @@ public final class HttpGet {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                listener.onFailure(e);
+            public void onFailure(@NonNull Call call, @NonNull IOException e, Throwable t) {
+                listener.onFailure(e, t);
             }
 
             @Override
