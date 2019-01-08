@@ -20,7 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import okhttp3.Response;
 
@@ -109,7 +108,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
     }
 
     @Override
-    public void onFailure(final String exception) {
+    public void onFailure(final IOException exception) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
