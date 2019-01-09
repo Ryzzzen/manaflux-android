@@ -61,7 +61,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     protected void initSpinner() {
-        String[] items = new String[]{"Default", "Red", "Purple", "Green", "Gray", "Dark Red",};
+        String[] items = new String[]{
+                getString(R.string.background_default), //default
+                getString(R.string.background_red), //red
+                getString(R.string.background_purple), //purple
+                getString(R.string.background_green), //green
+                getString(R.string.background_purple), //purple
+                getString(R.string.background_dark_red)}; // dark red
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
         spinner.setSelection(prefsHelper.getInt("spinner"));

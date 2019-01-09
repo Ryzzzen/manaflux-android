@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dashboard_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/default_bg">
 
     <Button
         android:id="@+id/spellButton"
@@ -35,13 +36,13 @@
         android:id="@+id/profile_image_round_corner"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:scaleType="fitCenter"
-        android:padding="2dp"
-        android:background="@null"
-        android:adjustViewBounds="true"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/test"
         android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="141dp" />
+        android:layout_marginTop="141dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/test" />
 </RelativeLayout>

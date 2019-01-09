@@ -107,9 +107,9 @@ public class EditActivity extends AppCompatActivity {
         long result = db.UPDATE(id, newAddress, newName);
 
         if (result > 0) {
-            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.db_success), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Unable to Update", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
         }
 
         db.close();
@@ -124,7 +124,7 @@ public class EditActivity extends AppCompatActivity {
         if (result >= 0) {
             finish();
         } else {
-            Toast.makeText(getApplicationContext(), "Unable to Update", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
         }
 
         db.close();

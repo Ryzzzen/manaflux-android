@@ -18,11 +18,11 @@
     <string name="description_close">close</string>
     <string name="description_save">save</string>
 
-    <string name="dialog_retrieve">Retrieve</string>
     <string name="dialog_info">DEVICE INFO</string>
     <string name="dialog_address">Address</string>
     <string name="dialog_save">Save</string>
     <string name="dialog_name">Name</string>
+    <string name="dialog_null">Can not be empty</string>
 
     <string name="select_device">Select device</string>
     <string name="select_on_lan">Devices on Lan</string>
@@ -33,6 +33,7 @@
     <string name="other_devices">Other devices</string>
     <string name="other_add">Add</string>
     <string name="other_scan">SCAN</string>
+    <string name="other_permission">Camera permission is needed</string>
 
     <string name="settings_background">Background</string>
     <string name="settings_title">Settings</string>
@@ -42,4 +43,15 @@
 
     <string name="error_again">Try again</string>
     <string name="error_unexpected">Unexpected error</string>
+
+    <string name="background_default">Default</string>
+    <string name="background_red">Red</string>
+    <string name="background_purple">Purple</string>
+    <string name="background_green">Green</string>
+    <string name="background_gray">Gray</string>
+    <string name="background_dark_red">Dark red</string>
+
+    <string name="db_fail">Unable to save</string>
+    <string name="db_success">"Updated Successfully"</string>
+    <string name="error_details">Details</string>
 </resources>

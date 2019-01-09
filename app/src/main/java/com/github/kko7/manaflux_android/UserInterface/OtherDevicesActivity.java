@@ -34,7 +34,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ArrayList<Device> devices = new ArrayList<>();
     Button addButton, scanButton;
-    Button saveBtn, retrieveBtn; //dialog
+    Button saveBtn; //dialog
     EditText nameEditTxt, addressEditTxt;
     RecyclerView mRecyclerView;
     RelativeLayout layout;
@@ -86,7 +86,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
 
                     if (ActivityCompat.shouldShowRequestPermissionRationale(OtherDevicesActivity.this,
                             Manifest.permission.CAMERA)) {
-                        Toast.makeText(OtherDevicesActivity.this, "Camera permission is needed for scanner", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OtherDevicesActivity.this, getString(R.string.other_permission), Toast.LENGTH_SHORT).show();
                     } else {
                         ActivityCompat.requestPermissions(OtherDevicesActivity.this,
                                 new String[]{Manifest.permission.CAMERA}, 201);
@@ -106,20 +106,17 @@ public class OtherDevicesActivity extends AppCompatActivity {
         addressEditTxt = d.findViewById(R.id.addressEditTxt);
         nameEditTxt = d.findViewById(R.id.nameEditTxt);
         saveBtn = d.findViewById(R.id.saveBtn);
-        retrieveBtn = d.findViewById(R.id.retrieveBtn);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
-                d.hide();
-            }
-        });
+                if(nameEditTxt.getText().toString().equals("") || addressEditTxt.getText().toString().equals("")) {
+                    Toast.makeText(OtherDevicesActivity.this, getString(R.string.dialog_null), Toast.LENGTH_SHORT).show();
+                } else {
+                    save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
+                    d.hide();
+                }
 
-        retrieveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retrieve();
             }
         });
 
@@ -163,7 +160,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
             addressEditTxt.setText("");
             nameEditTxt.setText("");
         } else {
-            Toast.makeText(getApplicationContext(), "Unable To Insert", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
         }
 
         db.close();

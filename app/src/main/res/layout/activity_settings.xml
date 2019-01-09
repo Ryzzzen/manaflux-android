@@ -3,6 +3,7 @@
     android:id="@+id/settings_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/default_bg"
     android:visibility="visible">
 
     <com.github.kko7.manaflux_android.CustomElements.TextView

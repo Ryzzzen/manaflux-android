@@ -27,13 +27,13 @@ public final class HttpGet {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                listener.onFailure(e);
+            public void onFailure(@NonNull Call call, @NonNull IOException exception) {
+                listener.onFailure(call, exception);
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response){
-               listener.onResponse(response);
+               listener.onResponse(call, response);
             }
         });
     }

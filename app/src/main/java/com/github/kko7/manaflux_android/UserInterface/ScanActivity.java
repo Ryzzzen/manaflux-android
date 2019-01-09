@@ -31,7 +31,7 @@ public class ScanActivity extends AppCompatActivity {
 
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
-    public BarcodeDetector barcodeDetector;
+    public BarcodeDetector qrDetector;
     private CameraSource cameraSource;
     private static final int CAMERA_PERMISSION = 201;
     boolean isCorrect = false;
@@ -67,11 +67,11 @@ public class ScanActivity extends AppCompatActivity {
     private void initialiseDetectorsAndSources() {
         Log.d(TAG, "Barcode scanner started");
 
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        qrDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 
-        cameraSource = new CameraSource.Builder(this, barcodeDetector)
+        cameraSource = new CameraSource.Builder(this, qrDetector)
                 .setRequestedPreviewSize(1920, 1080)
                 .setAutoFocusEnabled(true)
                 .build();
@@ -109,7 +109,7 @@ public class ScanActivity extends AppCompatActivity {
             }
         });
 
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+        qrDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
                 Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
@@ -117,8 +117,8 @@ public class ScanActivity extends AppCompatActivity {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                if (barcodes.size() != 0) {
+                final SparseArray<Barcode> qr = detections.getDetectedItems();
+                if (qr.size() != 0) {
 
 
                     txtBarcodeValue.post(new Runnable() {
@@ -126,7 +126,7 @@ public class ScanActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            String data = String.valueOf((barcodes.valueAt(0).displayValue));
+                            String data = String.valueOf((qr.valueAt(0).displayValue));
                             Log.d(TAG, data);
 
                             if (data.equals("")) {

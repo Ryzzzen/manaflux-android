@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 
-public class SelectActivity extends AppCompatActivity {
+public class LanDevicesActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     RelativeLayout layout;
@@ -40,7 +40,7 @@ public class SelectActivity extends AppCompatActivity {
         otherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SelectActivity.this, OtherDevicesActivity.class));
+                startActivity(new Intent(LanDevicesActivity.this, OtherDevicesActivity.class));
             }
         });
     }

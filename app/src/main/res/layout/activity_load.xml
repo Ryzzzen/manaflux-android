@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/load_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:layout_centerHorizontal="false"
+    android:layout_centerVertical="true"
+    android:gravity="center">
 
     <com.github.kko7.manaflux_android.CustomElements.GifView
         android:id="@+id/loading_gif"
@@ -20,16 +24,18 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
+        android:background="@mipmap/default_bg"
         android:visibility="visible">
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
             android:id="@+id/error_title"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
             android:layout_marginTop="28dp"
             android:gravity="center"
             android:text="@string/error_unexpected"
@@ -37,22 +43,22 @@
             android:textSize="24sp" />
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
-            android:id="@+id/text_message"
+            android:id="@+id/text_error1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
             android:layout_marginTop="95dp"
             android:textAlignment="center"
             android:textSize="24sp"
             tools:text="Message: Not found" />
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
-            android:id="@+id/text_code"
+            android:id="@+id/text_error2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
             android:layout_marginTop="155dp"
             android:textAlignment="center"
             android:textSize="24sp"
@@ -60,14 +66,29 @@
 
         <com.github.kko7.manaflux_android.CustomElements.ButtonView
             android:id="@+id/refresh_button"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="140dp"
-            android:layout_marginEnd="140dp"
-            android:layout_marginBottom="202dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="80dp"
             android:background="@drawable/button_bg"
+            android:padding="5dp"
             android:text="@string/error_again" />
+
+        <!-- static text -->
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/details_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/refresh_button"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/refresh_button"
+            android:background="@drawable/button_bg"
+            android:padding="5dp"
+            android:text="@string/error_details"
+            android:textAlignment="center"
+            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 </RelativeLayout>
