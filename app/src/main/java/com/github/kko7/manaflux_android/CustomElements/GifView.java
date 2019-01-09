@@ -1,9 +1,9 @@
 package com.github.kko7.manaflux_android.CustomElements;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Movie;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -11,71 +11,65 @@ import java.io.InputStream;
 
 public class GifView extends View {
 
-    private InputStream mInputStream;
-    private Movie mMovie;
-    private int mWidth, mHeight;
-    private long mStart;
-    private Context mContext;
+    private Movie gifMovie;
+    private int movieWidth, movieHeight;
+    private long mMovieStart;
 
     public GifView(Context context) {
         super(context);
-        this.mContext = context;
-    }
+   }
 
     public GifView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     public GifView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.mContext = context;
-        if (attrs.getAttributeName(1).equals("background")) {
-            int id = Integer.parseInt(attrs.getAttributeValue(1).substring(1));
-            setGifImageResource(id);
-        }
     }
 
-    private void init() {
+    @SuppressLint("ResourceType")
+    private void init(Context context, int resource){
         setFocusable(true);
-        mMovie = Movie.decodeStream(mInputStream);
-        mWidth = mMovie.width();
-        mHeight = mMovie.height();
+        InputStream gifInputStream = context.getResources()
+                .openRawResource(resource);
 
-        requestLayout();
+        gifMovie = Movie.decodeStream(gifInputStream);
+        movieWidth = gifMovie.width();
+        movieHeight = gifMovie.height();
+    }
+
+    public void startGif(int resource){
+        init(getContext(), resource);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(mWidth, mHeight);
+        setMeasuredDimension(movieWidth, movieHeight);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
 
-        long now = SystemClock.uptimeMillis();
-
-        if (mStart == 0) {
-            mStart = now;
+        long now = android.os.SystemClock.uptimeMillis();
+        if (mMovieStart == 0) {
+            mMovieStart = now;
         }
 
-        if (mMovie != null) {
+        if (gifMovie != null) {
 
-            int duration = mMovie.duration();
-            if (duration == 0) {
-                duration = 1000;
+            int dur = gifMovie.duration();
+            if (dur == 0) {
+                dur = 1000;
             }
 
-            int relTime = (int) ((now - mStart) % duration);
+            int relTime = (int)((now - mMovieStart) % dur);
 
-            mMovie.setTime(relTime);
+            gifMovie.setTime(relTime);
 
-            mMovie.draw(canvas, 0, 0);
+            gifMovie.draw(canvas, 0, 0);
             invalidate();
-        }
-    }
 
-    public void setGifImageResource(int id) {
-        mInputStream = mContext.getResources().openRawResource(id);
-        init();
+        }
+
     }
 }
