@@ -42,7 +42,16 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
 
     private void saveToken(String token) {
-        prefsHelper.saveString("token", token);
+        try {
+            HttpPost httpPost = new HttpPost("http://" + prefsHelper.getString("deviceIP") + ":4500/phone-token", token);
+            httpPost.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "Cant send token");
+        } finally {
+            prefsHelper.saveString("phone-token", token);
+        }
+
     }
 
     private void sendNotification(String title, String messageBody) {

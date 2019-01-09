@@ -14,20 +14,18 @@ import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.Connection.HttpGet;
 import com.github.kko7.manaflux_android.Connection.HttpListener;
+import com.github.kko7.manaflux_android.Connection.HttpPost;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 import java.util.Objects;
 
 import okhttp3.Call;
@@ -42,6 +40,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
     Button refreshButton, detailsButton;
     String ip, name, token;
     Dialog d;
+    HttpPost httpPost;
     GifView loading_gif;
 
     @Override
@@ -67,6 +66,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         ip = prefsHelper.getString("deviceIP");
         name = prefsHelper.getString("deviceNAME");
         token = prefsHelper.getString("token");
+        httpPost = new HttpPost("http://" + ip + ":4500/phone-token", token);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         loading_gif.setVisibility(View.VISIBLE);
         error_layout.setVisibility(View.GONE);
         try {
-            HttpGet httpGet = new HttpGet("http:/" + ip + ":4500/summoner", this);
+            HttpGet httpGet = new HttpGet("http://" + ip + ":4500/summoner", this);
             httpGet.run();
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,11 +113,12 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                     }
                 });
             } else {
+                httpPost.run();
                 JSONObject data = new JSONObject(Objects.requireNonNull(response.body()).string());
                 prefsHelper.saveString("summonerName", data.getString("summonerName"));
                 prefsHelper.saveString("summonerLevel", data.getString("summonerLevel"));
             }
-        } catch (JSONException | IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
