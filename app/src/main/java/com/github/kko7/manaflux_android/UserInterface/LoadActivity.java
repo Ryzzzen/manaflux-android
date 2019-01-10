@@ -2,6 +2,7 @@ package com.github.kko7.manaflux_android.UserInterface;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +116,8 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                 JSONObject data = new JSONObject(Objects.requireNonNull(response.body()).string());
                 prefsHelper.saveString("summonerName", data.getString("summonerName"));
                 prefsHelper.saveString("summonerLevel", data.getString("summonerLevel"));
+                //TODO Add more
+                startActivity(new Intent(LoadActivity.this, DashboardActivity.class));
             }
         } catch (Exception e) {
             e.printStackTrace();

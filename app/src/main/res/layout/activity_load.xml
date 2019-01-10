@@ -3,19 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/load_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerInParent="true"
-    android:layout_centerHorizontal="false"
-    android:layout_centerVertical="true"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
     <com.github.kko7.manaflux_android.CustomElements.GifView
         android:id="@+id/loading_gif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="191dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="150dp"
         android:visibility="visible" />
 
     <RelativeLayout
@@ -28,7 +24,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:background="@mipmap/default_bg"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
             android:id="@+id/error_title"
