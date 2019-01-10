@@ -65,8 +65,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         loading_gif.startGif(R.mipmap.loading);
         ip = prefsHelper.getString("deviceIP");
         name = prefsHelper.getString("deviceNAME");
-        token = prefsHelper.getString("token");
-        httpPost = new HttpPost("http://" + ip + ":4500/phone-token", token);
+        token = prefsHelper.getString("phone-token");
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +112,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                     }
                 });
             } else {
+                httpPost = new HttpPost("http://" + ip + ":4500/phone-token", token);
                 httpPost.run();
                 JSONObject data = new JSONObject(Objects.requireNonNull(response.body()).string());
                 prefsHelper.saveString("summonerName", data.getString("summonerName"));
