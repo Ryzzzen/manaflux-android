@@ -89,7 +89,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
     }
 
     private void setBackground() {
-        String value = (prefsHelper.getBackground("background"));
+        String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);
     }

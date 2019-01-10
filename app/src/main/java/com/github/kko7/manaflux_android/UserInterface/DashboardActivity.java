@@ -10,6 +10,7 @@ import com.github.kko7.manaflux_android.R;
 
 public class DashboardActivity extends Activity {
 
+    /* Place holder for navbar and fragments*/
     RelativeLayout layout;
     PrefsHelper prefsHelper;
 
@@ -18,7 +19,7 @@ public class DashboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         init();
-        setBackground();
+        setBackground(); //FIXME Background
     }
 
     private void init() {
