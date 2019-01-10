@@ -50,7 +50,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         Log.d(TAG, "onCreate: Started.");
         init();
         setBackground();
-        checkAll();
+        start();
     }
 
     private void init() {
@@ -71,12 +71,12 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                checkAll();
+                start();
             }
         });
     }
 
-    private void checkAll() {
+    private void start() {
         loading_gif.setVisibility(View.VISIBLE);
         error_layout.setVisibility(View.GONE);
         try {
@@ -85,14 +85,6 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void setError(String message1, String message2){
-        error_layout.setVisibility(View.VISIBLE);
-        loading_gif.setVisibility(View.GONE);
-        error_line1.setText(message1);
-        error_line2.setText(message2);
     }
 
     private void setBackground() {
@@ -108,7 +100,13 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setError("Message: " + response.message(), "Code: " + String.valueOf(response.code()));
+                        showError("Message: " + response.message(), "Code: " + String.valueOf(response.code()));
+                        detailsButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                showDetails(String.valueOf(response));
+                            }
+                        });
                     }
                 });
             } else {
@@ -143,7 +141,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                     error1 = "Other exception";
                     error2 = "Contact developer";
                 }
-                setError(error1, error2);
+                showError(error1, error2);
 
                 detailsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -154,6 +152,14 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                 });
             }
         });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showError(String message1, String message2){
+        error_layout.setVisibility(View.VISIBLE);
+        loading_gif.setVisibility(View.GONE);
+        error_line1.setText(message1);
+        error_line2.setText(message2);
     }
 
     @SuppressLint("SetTextI18n")
