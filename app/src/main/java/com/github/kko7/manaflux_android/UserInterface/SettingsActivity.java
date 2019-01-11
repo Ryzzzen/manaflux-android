@@ -129,4 +129,9 @@ public class SettingsActivity extends AppCompatActivity {
         layout.setBackgroundResource(id);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBackground();
+    }
 }

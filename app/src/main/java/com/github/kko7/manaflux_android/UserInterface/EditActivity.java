@@ -95,13 +95,7 @@ public class EditActivity extends AppCompatActivity {
         nameTxt.setText(name);
     }
 
-    private void setBackground() {
-        String value = prefsHelper.getBackground("background");
-        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        layout.setBackgroundResource(id);
-    }
-
-    private void update(int id, String newAddress, String newName) {
+     void update(int id, String newAddress, String newName) {
         DBAdapter db = new DBAdapter(this);
         db.openDB();
         long result = db.UPDATE(id, newAddress, newName);
@@ -113,10 +107,9 @@ public class EditActivity extends AppCompatActivity {
         }
 
         db.close();
-        finish();
     }
 
-    private void delete(int id) {
+    void delete(int id) {
         DBAdapter db = new DBAdapter(this);
         db.openDB();
         long result = db.DELETE(id);
@@ -128,6 +121,18 @@ public class EditActivity extends AppCompatActivity {
         }
 
         db.close();
+    }
+
+    private void setBackground() {
+        String value = prefsHelper.getBackground("background");
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        layout.setBackgroundResource(id);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBackground();
     }
 
 }

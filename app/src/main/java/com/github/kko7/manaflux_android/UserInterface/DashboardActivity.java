@@ -34,4 +34,10 @@ public class DashboardActivity extends Activity {
         layout.setBackgroundResource(id);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBackground();
+    }
+
 }

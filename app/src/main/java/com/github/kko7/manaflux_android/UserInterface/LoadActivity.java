@@ -174,4 +174,10 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         details.setText(text);
         d.show();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBackground();
+    }
 }
