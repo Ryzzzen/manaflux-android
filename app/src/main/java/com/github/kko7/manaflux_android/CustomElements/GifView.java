@@ -17,7 +17,7 @@ public class GifView extends View {
 
     public GifView(Context context) {
         super(context);
-   }
+    }
 
     public GifView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,7 +28,7 @@ public class GifView extends View {
     }
 
     @SuppressLint("ResourceType")
-    private void init(Context context, int resource){
+    private void init(Context context, int resource) {
         setFocusable(true);
         InputStream gifInputStream = context.getResources()
                 .openRawResource(resource);
@@ -38,7 +38,7 @@ public class GifView extends View {
         movieHeight = gifMovie.height();
     }
 
-    public void startGif(int resource){
+    public void startGif(int resource) {
         init(getContext(), resource);
     }
 
@@ -62,7 +62,7 @@ public class GifView extends View {
                 dur = 1000;
             }
 
-            int relTime = (int)((now - mMovieStart) % dur);
+            int relTime = (int) ((now - mMovieStart) % dur);
 
             gifMovie.setTime(relTime);
 

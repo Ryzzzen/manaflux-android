@@ -111,7 +111,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nameEditTxt.getText().toString().equals("") || addressEditTxt.getText().toString().equals("")) {
+                if (nameEditTxt.getText().toString().equals("") || addressEditTxt.getText().toString().equals("")) {
                     Toast.makeText(OtherDevicesActivity.this, getString(R.string.dialog_null), Toast.LENGTH_SHORT).show();
                 } else {
                     save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
@@ -152,7 +152,6 @@ public class OtherDevicesActivity extends AppCompatActivity {
     }
 
     private void save(String address, String name) {
-
         DBAdapter db = new DBAdapter(this);
         db.openDB();
         long result = db.ADD(address, name);
@@ -182,7 +181,6 @@ public class OtherDevicesActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startActivity(new Intent(OtherDevicesActivity.this, ScanActivity.class));
                     Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
                 }

@@ -32,8 +32,8 @@ public final class HttpGet {
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response){
-               listener.onResponse(call, response);
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                listener.onResponse(call, response);
             }
         });
     }

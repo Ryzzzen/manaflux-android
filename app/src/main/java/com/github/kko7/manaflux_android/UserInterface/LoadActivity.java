@@ -71,7 +71,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 start();
             }
         });
@@ -134,10 +134,10 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
             @Override
             public void run() {
                 String error1, error2;
-                if(exception instanceof SocketTimeoutException){
+                if (exception instanceof SocketTimeoutException) {
                     error1 = "Connect timed out";
                     error2 = "";
-                } else if(exception instanceof UnknownHostException) {
+                } else if (exception instanceof UnknownHostException) {
                     error1 = "Unable to resolve host";
                     error2 = "Host: " + call.request().url().host();
                 } else {
@@ -158,7 +158,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
     }
 
     @SuppressLint("SetTextI18n")
-    private void showError(String message1, String message2){
+    private void showError(String message1, String message2) {
         error_layout.setVisibility(View.VISIBLE);
         loading_gif.setVisibility(View.GONE);
         error_line1.setText(message1);
@@ -166,7 +166,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
     }
 
     @SuppressLint("SetTextI18n")
-    private void showDetails(String text){
+    private void showDetails(String text) {
         d = new Dialog(this);
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
         d.setContentView(R.layout.error_dialog);

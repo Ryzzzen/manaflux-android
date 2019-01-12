@@ -95,7 +95,7 @@ public class EditActivity extends AppCompatActivity {
         nameTxt.setText(name);
     }
 
-     void update(int id, String newAddress, String newName) {
+    void update(int id, String newAddress, String newName) {
         DBAdapter db = new DBAdapter(this);
         db.openDB();
         long result = db.UPDATE(id, newAddress, newName);
