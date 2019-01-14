@@ -28,32 +28,25 @@ import java.io.IOException;
 public class ScanActivity extends AppCompatActivity {
 
     private static final String TAG = "ScanActivity";
-
+    private static final int CAMERA_PERMISSION = 201;
+    public BarcodeDetector qrDetector;
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
-    public BarcodeDetector qrDetector;
-    private CameraSource cameraSource;
-    private static final int CAMERA_PERMISSION = 201;
     boolean isCorrect = false;
     Button btnAction;
     String name, ip;
+    private CameraSource cameraSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-        init();
-        initButtons();
-    }
 
-    private void init() {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.buttonAction);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
 
-    private void initButtons() {
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +56,7 @@ public class ScanActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void initialiseDetectorsAndSources() {
         Log.d(TAG, "Barcode scanner started");

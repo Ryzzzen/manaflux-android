@@ -18,11 +18,10 @@ import java.util.Objects;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMessaging";
+    PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
 
     public FirebaseMessagingService() {
     }
-
-    PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

@@ -48,29 +48,14 @@ public class OtherDevicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other);
         Log.d(TAG, "onCreate: Started.");
-        init();
-        initButtons();
-        initList();
-        setBackground();
-    }
 
-    private void initList() {
-        adapter = new Adapter(this, devices);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        retrieve();
-    }
-
-    private void init() {
         prefsHelper = PrefsHelper.getInstance(this);
         mRecyclerView = findViewById(R.id.otherList);
         layout = findViewById(R.id.other_layout);
         addButton = findViewById(R.id.add_button);
         scanButton = findViewById(R.id.scan_button);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
 
-    private void initButtons() {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +82,13 @@ public class OtherDevicesActivity extends AppCompatActivity {
                 }
             }
         });
+
+        adapter = new Adapter(this, devices);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        retrieve();
+
+        setBackground();
     }
 
     private void showDialog() {

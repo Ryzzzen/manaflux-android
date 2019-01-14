@@ -35,13 +35,6 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        init();
-        initButtons();
-        initOther();
-        setBackground();
-    }
-
-    private void init() {
         i = getIntent();
         prefsHelper = PrefsHelper.getInstance(this);
         saveBtn = findViewById(R.id.save_button);
@@ -55,9 +48,6 @@ public class EditActivity extends AppCompatActivity {
         name = Objects.requireNonNull(Objects.requireNonNull(i).getExtras()).getString("NAME");
         id = i.getExtras().getInt("ID");
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
-
-    private void initButtons() {
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,11 +78,11 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(new Intent(EditActivity.this, MainActivity.class));
             }
         });
-    }
 
-    private void initOther() {
         addressTxt.setText(address);
         nameTxt.setText(name);
+
+        setBackground();
     }
 
     void update(int id, String newAddress, String newName) {

@@ -54,4 +54,7 @@
     <string name="db_fail">Unable to save</string>
     <string name="db_success">"Updated Successfully"</string>
     <string name="error_details">Details</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_statistics">Statistics</string>
+    <string name="menu_settings">Settings</string>
 </resources>

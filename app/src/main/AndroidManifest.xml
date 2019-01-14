@@ -24,8 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        android:fullBackupContent="true"
-        android:hardwareAccelerated="false">
+        android:fullBackupContent="true" >
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -53,16 +52,15 @@
             android:name=".UserInterface.EditActivity"
             tools:ignore="InnerclassSeparator" />
         <activity
-            android:name=".UserInterface.DashboardActivity"
-            tools:ignore="InnerclassSeparator" />
-        <activity
-            android:name=".UserInterface.SettingsActivity"
+            android:name=".UserInterface.Dashboard.DashboardActivity"
+            android:hardwareAccelerated="true"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".UserInterface.OtherDevicesActivity"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".UserInterface.LoadActivity"
+            android:hardwareAccelerated="false"
             tools:ignore="InnerclassSeparator" />
         <activity android:name=".UserInterface.LanDevicesActivity"
             tools:ignore="InnerclassSeparator" />

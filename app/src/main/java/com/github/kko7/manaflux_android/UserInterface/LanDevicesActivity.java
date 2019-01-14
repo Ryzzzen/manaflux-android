@@ -24,25 +24,20 @@ public class LanDevicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         Log.d(TAG, "onCreate: Started.");
-        init();
-        initButtons();
-        setBackground();
-    }
 
-    private void init() {
         prefsHelper = PrefsHelper.getInstance(this);
         otherButton = findViewById(R.id.other_button);
         layout = findViewById(R.id.select_layout);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
 
-    private void initButtons() {
         otherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LanDevicesActivity.this, OtherDevicesActivity.class));
             }
         });
+
+        setBackground();
     }
 
     private void setBackground() {

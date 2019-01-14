@@ -19,6 +19,7 @@ import com.github.kko7.manaflux_android.Connection.HttpPost;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
+import com.github.kko7.manaflux_android.UserInterface.Dashboard.DashboardActivity;
 
 import org.json.JSONObject;
 
@@ -49,12 +50,7 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
         Log.d(TAG, "onCreate: Started.");
-        init();
-        setBackground();
-        start();
-    }
 
-    private void init() {
         prefsHelper = PrefsHelper.getInstance(this);
         layout = findViewById(R.id.load_layout);
         error_layout = findViewById(R.id.error_layout);
@@ -75,6 +71,9 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                 start();
             }
         });
+
+        setBackground();
+        start();
     }
 
     private void start() {

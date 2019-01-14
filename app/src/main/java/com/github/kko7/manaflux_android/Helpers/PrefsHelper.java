@@ -9,15 +9,15 @@ public class PrefsHelper {
     private static PrefsHelper prefsHelper;
     private SharedPreferences sharedPreferences;
 
+    private PrefsHelper(Context context) {
+        sharedPreferences = context.getSharedPreferences("Settings", MODE_PRIVATE);
+    }
+
     public static PrefsHelper getInstance(Context context) {
         if (prefsHelper == null) {
             prefsHelper = new PrefsHelper(context);
         }
         return prefsHelper;
-    }
-
-    private PrefsHelper(Context context) {
-        sharedPreferences = context.getSharedPreferences("Settings", MODE_PRIVATE);
     }
 
     public void saveString(String key, String value) {
