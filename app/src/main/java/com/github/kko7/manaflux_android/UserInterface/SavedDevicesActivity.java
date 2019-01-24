@@ -19,42 +19,49 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.Database.Adapter;
 import com.github.kko7.manaflux_android.Database.DBAdapter;
 import com.github.kko7.manaflux_android.Database.Device;
+import com.github.kko7.manaflux_android.Helpers.DatabaseHelper;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class OtherDevicesActivity extends AppCompatActivity {
+public class SavedDevicesActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = SavedDevicesActivity.class.getSimpleName();
     ArrayList<Device> devices = new ArrayList<>();
     Button addButton, scanButton;
     Button saveBtn; //dialog
     EditText nameEditTxt, addressEditTxt;
     RecyclerView mRecyclerView;
-    RelativeLayout layout;
+    DatabaseHelper dbHelper;
+    CustomLayout layout;
     PrefsHelper prefsHelper;
     Adapter adapter;
-    Dialog d;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_other);
+        setContentView(R.layout.activity_saved_devices);
         Log.d(TAG, "onCreate: Started.");
 
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        dbHelper = new DatabaseHelper(this);
         prefsHelper = PrefsHelper.getInstance(this);
         mRecyclerView = findViewById(R.id.otherList);
         layout = findViewById(R.id.other_layout);
         addButton = findViewById(R.id.add_button);
         scanButton = findViewById(R.id.scan_button);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        adapter = new Adapter(this, devices);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,58 +69,54 @@ public class OtherDevicesActivity extends AppCompatActivity {
                 showDialog();
             }
         });
-
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (ContextCompat.checkSelfPermission(OtherDevicesActivity.this, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(OtherDevicesActivity.this,
-                            Manifest.permission.CAMERA)) {
-                        Toast.makeText(OtherDevicesActivity.this, getString(R.string.other_permission), Toast.LENGTH_SHORT).show();
-                    } else {
-                        ActivityCompat.requestPermissions(OtherDevicesActivity.this,
-                                new String[]{Manifest.permission.CAMERA}, 201);
-                    }
-                } else {
-                    startActivity(new Intent(OtherDevicesActivity.this, ScanActivity.class));
-                }
+                startScan();
             }
         });
-
-        adapter = new Adapter(this, devices);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        retrieve();
-
         setBackground();
+        retrieve();
     }
 
     private void showDialog() {
-        d = new Dialog(this);
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.dialog_layout);
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_device);
 
-        addressEditTxt = d.findViewById(R.id.addressEditTxt);
-        nameEditTxt = d.findViewById(R.id.nameEditTxt);
-        saveBtn = d.findViewById(R.id.saveBtn);
+        addressEditTxt = dialog.findViewById(R.id.addressEditTxt);
+        nameEditTxt = dialog.findViewById(R.id.nameEditTxt);
+        saveBtn = dialog.findViewById(R.id.saveBtn);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (nameEditTxt.getText().toString().equals("") || addressEditTxt.getText().toString().equals("")) {
-                    Toast.makeText(OtherDevicesActivity.this, getString(R.string.dialog_null), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SavedDevicesActivity.this, getString(R.string.dialog_null), Toast.LENGTH_SHORT).show();
                 } else {
-                    save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
-                    d.hide();
+                    dbHelper.save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
+                    dialog.hide();
                 }
 
             }
         });
+        dialog.show();
+    }
 
-        d.show();
+    private void startScan() {
+        if (ContextCompat.checkSelfPermission(SavedDevicesActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(SavedDevicesActivity.this,
+                    Manifest.permission.CAMERA)) {
+                Toast.makeText(SavedDevicesActivity.this, getString(R.string.save_permission), Toast.LENGTH_SHORT).show();
+            } else {
+                ActivityCompat.requestPermissions(SavedDevicesActivity.this,
+                        new String[]{Manifest.permission.CAMERA}, 201);
+            }
+        } else {
+            startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
+        }
     }
 
     private void retrieve() {
@@ -143,26 +146,13 @@ public class OtherDevicesActivity extends AppCompatActivity {
         db.close();
     }
 
-    private void save(String address, String name) {
-        DBAdapter db = new DBAdapter(this);
-        db.openDB();
-        long result = db.ADD(address, name);
-
-        if (result > 0) {
-            addressEditTxt.setText("");
-            nameEditTxt.setText("");
-        } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
-        }
-
-        db.close();
-        retrieve();
-    }
-
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        layout.setBackgroundResource(id);
+        Picasso.get()
+                .load(id)
+                .centerCrop()
+                .into(layout);
     }
 
     @Override
@@ -171,7 +161,7 @@ public class OtherDevicesActivity extends AppCompatActivity {
             case 201: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(new Intent(OtherDevicesActivity.this, ScanActivity.class));
+                    startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
                     Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
@@ -186,5 +176,4 @@ public class OtherDevicesActivity extends AppCompatActivity {
         retrieve();
         setBackground();
     }
-
 }

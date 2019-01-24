@@ -27,7 +27,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="0dp"
             android:baselineAligned="false"
-            android:text="@string/qr_not_detected"
+            android:text="@string/scan_invalid"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="20sp"
@@ -43,8 +43,8 @@
             android:layout_marginTop="500dp"
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="6dp"
-            android:background="@drawable/button_bg"
-            android:text="@string/qr_select"
+            android:background="@drawable/btn_bg"
+            android:text="@string/scan_select"
             android:textAlignment="center" />
 
     </RelativeLayout>

@@ -4,73 +4,77 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.Database.DBAdapter;
+import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
+import com.github.kko7.manaflux_android.Helpers.DatabaseHelper;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
 public class EditActivity extends AppCompatActivity {
 
-    Intent i;
-    String address;
-    String name;
-    int id;
 
+    private static final String TAG = EditActivity.class.getSimpleName();
+    String address, name;
+    int id;
+    Intent intent;
     EditText addressTxt, nameTxt;
-    ImageButton closeBtn, saveBtn;
-    Button deleteBtn, selectBtn;
-    LinearLayout layout;
+    ImageButton closeButton, saveButton;
+    Button deleteButton, selectButton;
+    CustomLayout layout;
     PrefsHelper prefsHelper;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        i = getIntent();
+        Log.d(TAG, "onCreate: Started.");
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         prefsHelper = PrefsHelper.getInstance(this);
-        saveBtn = findViewById(R.id.save_button);
-        closeBtn = findViewById(R.id.close_button);
-        deleteBtn = findViewById(R.id.delete_button);
-        selectBtn = findViewById(R.id.select_button);
+        dbHelper = new DatabaseHelper(this);
+        saveButton = findViewById(R.id.save_button);
+        closeButton = findViewById(R.id.close_button);
+        deleteButton = findViewById(R.id.delete_button);
+        selectButton = findViewById(R.id.select_button);
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
         layout = findViewById(R.id.edit_layout);
-        address = Objects.requireNonNull(i.getExtras()).getString("ADDRESS");
-        name = Objects.requireNonNull(Objects.requireNonNull(i).getExtras()).getString("NAME");
-        id = i.getExtras().getInt("ID");
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        intent = getIntent();
+        address = Objects.requireNonNull(intent.getExtras()).getString("ADDRESS");
+        name = Objects.requireNonNull(Objects.requireNonNull(intent).getExtras()).getString("NAME");
+        id = intent.getExtras().getInt("ID");
+        addressTxt.setText(address);
+        nameTxt.setText(name);
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                update(id, nameTxt.getText().toString(), addressTxt.getText().toString());
+                dbHelper.update(id, nameTxt.getText().toString(), addressTxt.getText().toString());
             }
         });
-
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delete(id);
+                dbHelper.delete(id);
             }
         });
-
-        closeBtn.setOnClickListener(new View.OnClickListener() {
+        closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        selectBtn.setOnClickListener(new View.OnClickListener() {
+        selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 prefsHelper.saveString("deviceIP", address);
@@ -78,45 +82,16 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(new Intent(EditActivity.this, MainActivity.class));
             }
         });
-
-        addressTxt.setText(address);
-        nameTxt.setText(name);
-
         setBackground();
-    }
-
-    void update(int id, String newAddress, String newName) {
-        DBAdapter db = new DBAdapter(this);
-        db.openDB();
-        long result = db.UPDATE(id, newAddress, newName);
-
-        if (result > 0) {
-            Toast.makeText(getApplicationContext(), getString(R.string.db_success), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
-        }
-
-        db.close();
-    }
-
-    void delete(int id) {
-        DBAdapter db = new DBAdapter(this);
-        db.openDB();
-        long result = db.DELETE(id);
-
-        if (result >= 0) {
-            finish();
-        } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
-        }
-
-        db.close();
     }
 
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        layout.setBackgroundResource(id);
+        Picasso.get()
+                .load(id)
+                .centerCrop()
+                .into(layout);
     }
 
     @Override
@@ -124,5 +99,4 @@ public class EditActivity extends AppCompatActivity {
         super.onResume();
         setBackground();
     }
-
 }

@@ -8,9 +8,10 @@ import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.UserInterface.LanDevicesActivity;
 import com.github.kko7.manaflux_android.UserInterface.LoadActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
-    Intent intent;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,22 +20,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void checkDevice() {
-        try {
-            PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
-            String deviceIP = prefsHelper.getString("deviceIP");
-            String deviceNAME = prefsHelper.getString("deviceNAME");
+        PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
+        String deviceIP = prefsHelper.getString("deviceIP");
+        String deviceNAME = prefsHelper.getString("deviceNAME");
+        String authToken = prefsHelper.getString("auth-token");
 
-            if (deviceIP == null || deviceIP.equals("") || deviceNAME == null || deviceNAME.equals("")) {
-                intent = new Intent(MainActivity.this, LanDevicesActivity.class);
-            } else {
-                intent = new Intent(MainActivity.this, LoadActivity.class);
-            }
-
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (authToken == null || authToken.equals("") || authToken.length() != 32) {
+            String newToken = generateToken();
+            prefsHelper.saveString("auth-token", newToken);
         }
 
+        if (deviceIP == null || deviceIP.equals("") || deviceNAME == null || deviceNAME.equals("")) {
+            startActivity(new Intent(MainActivity.this, LanDevicesActivity.class));
+        } else {
+            startActivity(new Intent(MainActivity.this, LoadActivity.class));
+        }
     }
 
+    protected String generateToken() {
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] token = new byte[16];
+        secureRandom.nextBytes(token);
+        return new BigInteger(1, token).toString(16);
+    }
 }

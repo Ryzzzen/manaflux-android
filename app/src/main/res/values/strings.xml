@@ -2,9 +2,11 @@
     <string name="app_name">Manaflux</string>
     <string name="app_title">MANAFLUX</string>
 
-    <string name="qr_save">SAVE IP</string>
-    <string name="qr_select">SELECT IP</string>
-    <string name="qr_not_detected">No QR Detected</string>
+    <string name="scan_save">SAVE</string>
+    <string name="scan_select">SELECT</string>
+    <string name="scan_invalid">Invalid QR code</string>
+    <string name="scan_not_detected">No QR code detected</string>
+    <string name="scan_stop">To prevent memory leaks barcode scanner has been stopped</string>
 
     <string name="edit_title">Edit/Add PC</string>
     <string name="edit_save">SAVE</string>
@@ -30,10 +32,10 @@
     <string name="select_other">Other devices</string>
     <string name="select_refresh">Refresh</string>
 
-    <string name="other_devices">Other devices</string>
-    <string name="other_add">Add</string>
-    <string name="other_scan">SCAN</string>
-    <string name="other_permission">Camera permission is needed</string>
+    <string name="save_devices">Saved devices</string>
+    <string name="save_add">Add</string>
+    <string name="save_scan">SCAN</string>
+    <string name="save_permission">Camera permission is needed</string>
 
     <string name="settings_background">Background</string>
     <string name="settings_title">Settings</string>
@@ -43,6 +45,8 @@
 
     <string name="error_again">Try again</string>
     <string name="error_unexpected">Unexpected error</string>
+    <string name="error_details">Details</string>
+    <string name="error_restart">Restart</string>
 
     <string name="background_default">Default</string>
     <string name="background_red">Red</string>
@@ -53,7 +57,7 @@
 
     <string name="db_fail">Unable to save</string>
     <string name="db_success">"Updated Successfully"</string>
-    <string name="error_details">Details</string>
+
     <string name="menu_profile">Profile</string>
     <string name="menu_statistics">Statistics</string>
     <string name="menu_settings">Settings</string>

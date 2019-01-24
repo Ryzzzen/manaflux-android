@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.Connection;
+package com.github.kko7.manaflux_android.Services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.github.kko7.manaflux_android.Connection.HttpPost;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
@@ -17,7 +18,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Objects;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    private static final String TAG = "FirebaseMessaging";
+    private static final String TAG = FirebaseMessagingService.class.getSimpleName();
     PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
 
     public FirebaseMessagingService() {
@@ -27,10 +28,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(RemoteMessage remoteMessage) {
         String title = Objects.requireNonNull(remoteMessage.getNotification()).getTitle();
         String message = remoteMessage.getNotification().getBody();
-        Log.d(TAG, "onMessageReceived: Message Received: \n" +
-                "Title: " + title + "\n" +
-                "Message: " + message);
-
         sendNotification(title, message);
     }
 
@@ -42,15 +39,13 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void saveToken(String token) {
         try {
-            HttpPost httpPost = new HttpPost("http://" + prefsHelper.getString("deviceIP") + ":4500/phone-token", token);
-            httpPost.run();
+            HttpPost httpPost = new HttpPost("http://" + prefsHelper.getString("deviceIP") + ":4500/phone-token", token, prefsHelper.getString("auth-token"));
+            httpPost.run(5, 5);
         } catch (Exception e) {
-            e.printStackTrace();
-            Log.d(TAG, "Cant send token");
+            Log.d(TAG, "Failed to send token");
         } finally {
             prefsHelper.saveString("phone-token", token);
         }
-
     }
 
     private void sendNotification(String title, String messageBody) {
@@ -68,7 +63,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
-
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#636e72</color>
-    <color name="colorPrimaryDark">#2d3436</color>
+    <color name="colorPrimary">#ff757575</color>
+    <color name="colorPrimaryDark">#ff212121</color>
     <color name="colorAccent">#dfe6e9</color>
-    <color name="listPressed">#b2bec3</color>
-    <color name="listDefault">#ffffff</color>
 </resources>

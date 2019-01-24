@@ -14,14 +14,13 @@ public class DBAdapter {
         helper = new DBHelper(ctx);
     }
 
-    public DBAdapter openDB() {
+    public void openDB() {
         try {
             db = helper.getWritableDatabase();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return this;
     }
 
     public void close() {
@@ -33,14 +32,17 @@ public class DBAdapter {
 
     }
 
+    public Cursor getAllDevices() {
+        String[] columns = {Constants.ROW_ID, Constants.ADDRESS, Constants.NAME};
+        return db.query(Constants.TB_NAME, columns, null, null, null, null, null);
+    }
+
     public long ADD(String address, String name) {
         try {
             ContentValues cv = new ContentValues();
             cv.put(Constants.ADDRESS, address);
             cv.put(Constants.NAME, name);
-
             return db.insert(Constants.TB_NAME, Constants.ROW_ID, cv);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,20 +50,12 @@ public class DBAdapter {
         return 0;
     }
 
-    public Cursor getAllDevices() {
-        String[] columns = {Constants.ROW_ID, Constants.ADDRESS, Constants.NAME};
-
-        return db.query(Constants.TB_NAME, columns, null, null, null, null, null);
-    }
-
     public long UPDATE(int id, String address, String name) {
         try {
             ContentValues cv = new ContentValues();
             cv.put(Constants.ADDRESS, address);
             cv.put(Constants.NAME, name);
-
             return db.update(Constants.TB_NAME, cv, Constants.ROW_ID + " =?", new String[]{String.valueOf(id)});
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

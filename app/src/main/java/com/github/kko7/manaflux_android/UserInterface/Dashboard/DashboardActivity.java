@@ -1,5 +1,6 @@
 package com.github.kko7.manaflux_android.UserInterface.Dashboard;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -7,25 +8,28 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.github.kko7.manaflux_android.R;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    Fragment newFragment = new ProfileFragment();
+    private static final String TAG = DashboardActivity.class.getSimpleName();
     int currentFragment = 0, selectedFragment;
+    Fragment newFragment = new ProfileFragment();
     private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        changeFragment(newFragment);
+        Log.d(TAG, "onCreate: Started");
 
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mDrawerLayout = findViewById(R.id.drawer_layout);
-
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -40,7 +44,6 @@ public class DashboardActivity extends AppCompatActivity {
                                 selectedFragment = 1;
                                 break;
                         }
-
                         if (currentFragment != selectedFragment) {
                             currentFragment = selectedFragment;
                             changeFragment(newFragment);
@@ -50,6 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+        changeFragment(newFragment);
     }
 
     private void changeFragment(Fragment fragment) {

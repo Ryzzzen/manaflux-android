@@ -13,7 +13,6 @@ public class Holder extends RecyclerView.ViewHolder implements View.OnClickListe
 
     Holder(View itemView) {
         super(itemView);
-
         addressTxt = itemView.findViewById(R.id.addressTxt_row);
         nameTxt = itemView.findViewById(R.id.nameTxt_row);
         itemView.setOnClickListener(this);

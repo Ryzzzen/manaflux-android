@@ -27,7 +27,6 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         @SuppressLint("InflateParams") View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_model, null);
-
         return new Holder(v);
     }
 
@@ -39,15 +38,11 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-
                 Intent i = new Intent(c, EditActivity.class);
-
                 i.putExtra("ADDRESS", devices.get(pos).getAddress());
                 i.putExtra("NAME", devices.get(pos).getName());
                 i.putExtra("ID", devices.get(pos).getId());
-
                 c.startActivity(i);
-
             }
         });
 

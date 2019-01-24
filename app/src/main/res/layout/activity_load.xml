@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.kko7.manaflux_android.CustomElements.CustomLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/load_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/default_bg">
 
     <com.github.kko7.manaflux_android.CustomElements.GifView
         android:id="@+id/loading_gif"
@@ -14,7 +15,7 @@
         android:layout_marginEnd="150dp"
         android:visibility="visible" />
 
-    <RelativeLayout
+    <com.github.kko7.manaflux_android.CustomElements.CustomLayout
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,23 +69,21 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="80dp"
-            android:background="@drawable/button_bg"
+            android:background="@drawable/btn_bg"
             android:padding="5dp"
             android:text="@string/error_again" />
 
-        <!-- static text -->
         <com.github.kko7.manaflux_android.CustomElements.ButtonView
-            android:id="@+id/details_button"
+            android:id="@+id/second_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/refresh_button"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="20dp"
             android:layout_toStartOf="@+id/refresh_button"
-            android:background="@drawable/button_bg"
+            android:background="@drawable/btn_bg"
             android:padding="5dp"
-            android:text="@string/error_details"
             android:textAlignment="center"
             tools:ignore="RelativeOverlap" />
-    </RelativeLayout>
-</RelativeLayout>
+    </com.github.kko7.manaflux_android.CustomElements.CustomLayout>
+</com.github.kko7.manaflux_android.CustomElements.CustomLayout>

@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.Database.DBAdapter;
+import com.github.kko7.manaflux_android.Helpers.DatabaseHelper;
 import com.github.kko7.manaflux_android.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -29,34 +29,36 @@ public class ScanActivity extends AppCompatActivity {
 
     private static final String TAG = "ScanActivity";
     private static final int CAMERA_PERMISSION = 201;
-    public BarcodeDetector qrDetector;
+    CameraSource cameraSource;
+    String name, ip;
+    boolean isCorrect = false;
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
-    boolean isCorrect = false;
     Button btnAction;
-    String name, ip;
-    private CameraSource cameraSource;
+    DatabaseHelper dbHelper;
+    BarcodeDetector qrDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+        Log.d(TAG, "onCreate: Started");
 
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        dbHelper = new DatabaseHelper(this);
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.buttonAction);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isCorrect) {
-                    save(ip, name);
+                    dbHelper.save(ip, name);
                 }
             }
         });
     }
-
 
     private void initialiseDetectorsAndSources() {
         Log.d(TAG, "Barcode scanner started");
@@ -106,7 +108,7 @@ public class ScanActivity extends AppCompatActivity {
         qrDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.scan_stop), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -114,24 +116,21 @@ public class ScanActivity extends AppCompatActivity {
                 final SparseArray<Barcode> qr = detections.getDetectedItems();
                 if (qr.size() != 0) {
 
-
                     txtBarcodeValue.post(new Runnable() {
 
                         @Override
                         public void run() {
-
                             String data = String.valueOf((qr.valueAt(0).displayValue));
-                            Log.d(TAG, data);
 
                             if (data.equals("")) {
-                                Toast.makeText(getApplicationContext(), "Invalid data", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), getString(R.string.scan_invalid), Toast.LENGTH_LONG).show();
                             } else {
                                 txtBarcodeValue.removeCallbacks(null);
                                 String[] data1 = data.split(":", 2);
                                 ip = data1[0];
                                 name = data1[1];
                                 isCorrect = true;
-                                btnAction.setText(getString(R.string.qr_save));
+                                btnAction.setText(getString(R.string.scan_save));
                                 txtBarcodeValue.setText(data);
                             }
                         }
@@ -139,20 +138,6 @@ public class ScanActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void save(String address, String name) {
-        DBAdapter db = new DBAdapter(this);
-        db.openDB();
-        long result = db.ADD(address, name);
-
-        if (result > 0) {
-            finish();
-        } else {
-            Toast.makeText(getApplicationContext(), "Unable To Insert", Toast.LENGTH_SHORT).show();
-        }
-
-        db.close();
     }
 
     @Override
@@ -166,5 +151,4 @@ public class ScanActivity extends AppCompatActivity {
         super.onResume();
         initialiseDetectorsAndSources();
     }
-
 }

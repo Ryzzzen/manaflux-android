@@ -10,16 +10,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.Connection.HttpGet;
 import com.github.kko7.manaflux_android.Connection.HttpListener;
 import com.github.kko7.manaflux_android.Connection.HttpPost;
+import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.UserInterface.Dashboard.DashboardActivity;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -33,37 +34,38 @@ import java.util.Objects;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public class LoadActivity extends AppCompatActivity implements HttpListener {
+public class LoadActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoadActivity";
-    PrefsHelper prefsHelper;
-    RelativeLayout layout, error_layout;
-    TextView error_line1, error_line2, details;
-    Button refreshButton, detailsButton;
+    private static final String TAG = LoadActivity.class.getSimpleName();
     String ip, name, token;
+    CustomLayout layout, error_layout;
+    TextView error_line1, error_line2, details, title;
+    Button refreshButton, secondButton;
     Dialog d;
-    HttpPost httpPost;
     GifView loading_gif;
+    PrefsHelper prefsHelper;
+    HttpPost httpPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
-        Log.d(TAG, "onCreate: Started.");
+        Log.d(TAG, "onCreate: Started");
 
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         prefsHelper = PrefsHelper.getInstance(this);
         layout = findViewById(R.id.load_layout);
         error_layout = findViewById(R.id.error_layout);
         error_line1 = findViewById(R.id.text_error1);
         error_line2 = findViewById(R.id.text_error2);
+        title = findViewById(R.id.error_title);
         refreshButton = findViewById(R.id.refresh_button);
-        detailsButton = findViewById(R.id.details_button);
+        secondButton = findViewById(R.id.second_button);
         loading_gif = findViewById(R.id.loading_gif);
         loading_gif.startGif(R.mipmap.loading);
         ip = prefsHelper.getString("deviceIP");
         name = prefsHelper.getString("deviceNAME");
         token = prefsHelper.getString("phone-token");
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +73,6 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
                 start();
             }
         });
-
         setBackground();
         start();
     }
@@ -80,80 +81,78 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
         loading_gif.setVisibility(View.VISIBLE);
         error_layout.setVisibility(View.GONE);
         try {
-            HttpGet httpGet = new HttpGet("http://" + ip + ":4500/summoner", this);
-            httpGet.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            HttpGet httpGet = new HttpGet("http://" + ip + ":4500/summoner", new HttpListener() {
+                @Override
+                public void onResponse(final Call call, final Response response) {
+                    try {
+                        if (response.isSuccessful()) {
+                            httpPost = new HttpPost("http://" + ip + ":4500/phone-token", token, prefsHelper.getString("auth-token"));
+                            httpPost.run(5, 5);
 
-    private void setBackground() {
-        String value = prefsHelper.getBackground("background");
-        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        layout.setBackgroundResource(id);
-    }
+                            JSONObject data = new JSONObject(Objects.requireNonNull(response.body()).string());
+                            prefsHelper.saveString("summonerName", data.getString("summonerName"));
+                            prefsHelper.saveString("summonerLevel", data.getString("summonerLevel"));
+                            startActivity(new Intent(LoadActivity.this, DashboardActivity.class));
+                        } else if (response.code() == 401 || response.code() == 403) {
+                            HttpPost sendAuth = new HttpPost("http://" + ip + ":4500/phone-auth", prefsHelper.getString("auth-token"), null);
+                            sendAuth.run(20, 20);
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showError("Message: " + response.message(), "Code: " + String.valueOf(response.code()));
+                                    secondButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            showDetails(/* String.valueOf(response) +*/ String.valueOf(call.request()));
+                                        }
+                                    });
+                                }
+                            });
+                        }
 
-    @Override
-    public void onResponse(final Call call, final Response response) {
-        try {
-            if (!response.isSuccessful()) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showError("Message: " + response.message(), "Code: " + String.valueOf(response.code()));
-                        detailsButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                showDetails(String.valueOf(response));
-                            }
-                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                });
-            } else {
-                httpPost = new HttpPost("http://" + ip + ":4500/phone-token", token);
-                httpPost.run();
-                JSONObject data = new JSONObject(Objects.requireNonNull(response.body()).string());
-                prefsHelper.saveString("summonerName", data.getString("summonerName"));
-                prefsHelper.saveString("summonerLevel", data.getString("summonerLevel"));
-                //TODO Add more
-                startActivity(new Intent(LoadActivity.this, DashboardActivity.class));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onFailure(final Call call, final IOException exception) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        exception.printStackTrace(pw);
-        final String sStackTrace = sw.toString();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String error1, error2;
-                if (exception instanceof SocketTimeoutException) {
-                    error1 = "Connect timed out";
-                    error2 = "";
-                } else if (exception instanceof UnknownHostException) {
-                    error1 = "Unable to resolve host";
-                    error2 = "Host: " + call.request().url().host();
-                } else {
-                    error1 = "Other exception";
-                    error2 = "Contact developer";
                 }
-                showError(error1, error2);
 
-                detailsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                @Override
+                public void onFailure(final Call call, final IOException exception) {
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    exception.printStackTrace(pw);
+                    final String sStackTrace = sw.toString();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            title.setVisibility(View.VISIBLE);
+                            String error1, error2;
+                            if (exception instanceof SocketTimeoutException) {
+                                error1 = "Connect timed out";
+                                error2 = "";
+                            } else if (exception instanceof UnknownHostException) {
+                                error1 = "Unable to resolve host";
+                                error2 = "Host: " + call.request().url().host();
+                            } else {
+                                error1 = "Other exception";
+                                error2 = "Contact developer";
+                            }
+                            showError(error1, error2);
 
-                        showDetails(sStackTrace);
-                    }
-                });
-            }
-        });
+                            secondButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    showDetails(sStackTrace);
+                                }
+                            });
+                        }
+                    });
+                }
+            }, prefsHelper.getString("auth-token"));
+            httpGet.run(5, 5);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -168,15 +167,29 @@ public class LoadActivity extends AppCompatActivity implements HttpListener {
     private void showDetails(String text) {
         d = new Dialog(this);
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.error_dialog);
+        d.setContentView(R.layout.dialog_details);
         details = d.findViewById(R.id.details_long);
         details.setText(text);
         d.show();
+    }
+
+    private void setBackground() {
+        String value = prefsHelper.getBackground("background");
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        Picasso.get()
+                .load(id)
+                .centerCrop()
+                .into(layout);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setBackground();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

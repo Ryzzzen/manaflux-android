@@ -18,7 +18,6 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

@@ -3,38 +3,41 @@ package com.github.kko7.manaflux_android.UserInterface.Dashboard;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
-
-import java.util.Objects;
+import com.squareup.picasso.Picasso;
 
 public class SettingsFragment extends Fragment {
 
+    private static final String TAG = SettingsFragment.class.getSimpleName();
     PrefsHelper prefsHelper;
     Button deleteDeviceBtn, deleteAllBtn;
     Spinner spinner;
-    RelativeLayout layout;
+    CustomLayout layout;
 
     public SettingsFragment() {
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.settings_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
+        Log.d(TAG, "onView: Created");
+
         prefsHelper = PrefsHelper.getInstance(view.getContext());
         deleteDeviceBtn = view.findViewById(R.id.delete_device);
         deleteAllBtn = view.findViewById(R.id.delete_all);
@@ -101,8 +104,11 @@ public class SettingsFragment extends Fragment {
 
                 }
                 String value = prefsHelper.getBackground("background");
-                int resID = getResources().getIdentifier(value + "_bg", "mipmap", Objects.requireNonNull(getActivity()).getPackageName());
-                layout.setBackgroundResource(resID);
+                int res = getResources().getIdentifier(value + "_bg", "mipmap", view.getContext().getPackageName());
+                Picasso.get()
+                        .load(res)
+                        .centerCrop()
+                        .into(layout);
             }
 
             @Override

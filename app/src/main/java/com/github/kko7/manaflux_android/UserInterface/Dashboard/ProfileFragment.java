@@ -15,6 +15,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 }
