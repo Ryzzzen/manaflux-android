@@ -11,8 +11,8 @@ import android.util.Log;
 
 import com.github.kko7.manaflux_android.Connection.HttpPost;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
+import com.github.kko7.manaflux_android.UserInterface.LoadActivity;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Objects;
@@ -49,7 +49,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
 
     private void sendNotification(String title, String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoadActivity.class);
+        intent.putExtra("class", "ChampionSelect");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

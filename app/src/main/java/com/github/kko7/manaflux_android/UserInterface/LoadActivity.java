@@ -66,7 +66,6 @@ public class LoadActivity extends AppCompatActivity {
         ip = prefsHelper.getString("deviceIP");
         name = prefsHelper.getString("deviceNAME");
         token = prefsHelper.getString("phone-token");
-
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +91,7 @@ public class LoadActivity extends AppCompatActivity {
                             JSONObject data = new JSONObject(Objects.requireNonNull(response.body()).string());
                             prefsHelper.saveString("summonerName", data.getString("summonerName"));
                             prefsHelper.saveString("summonerLevel", data.getString("summonerLevel"));
-                            startActivity(new Intent(LoadActivity.this, DashboardActivity.class));
+                            startActivity(new Intent(LoadActivity.this, getIntent().getStringExtra("class").equals("ChampionSelect") ? ChampionSelectActivity.class : DashboardActivity.class));
                         } else if (response.code() == 401 || response.code() == 403) {
                             HttpPost sendAuth = new HttpPost("http://" + ip + ":4500/phone-auth", prefsHelper.getString("auth-token"), null);
                             sendAuth.run(20, 20);
@@ -104,7 +103,7 @@ public class LoadActivity extends AppCompatActivity {
                                     secondButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            showDetails(/* String.valueOf(response) +*/ String.valueOf(call.request()));
+                                            showDetails(String.valueOf(response));
                                         }
                                     });
                                 }
@@ -139,12 +138,14 @@ public class LoadActivity extends AppCompatActivity {
                             }
                             showError(error1, error2);
 
+                            secondButton.setText(getString(R.string.error_details));
                             secondButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     showDetails(sStackTrace);
                                 }
                             });
+
                         }
                     });
                 }
@@ -178,7 +179,6 @@ public class LoadActivity extends AppCompatActivity {
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         Picasso.get()
                 .load(id)
-                .centerCrop()
                 .into(layout);
     }
 
