@@ -90,7 +90,6 @@ public class EditActivity extends AppCompatActivity {
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         Picasso.get()
                 .load(id)
-                .centerCrop()
                 .into(layout);
     }
 

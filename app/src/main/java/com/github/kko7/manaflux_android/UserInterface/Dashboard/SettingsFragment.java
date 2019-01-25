@@ -107,7 +107,6 @@ public class SettingsFragment extends Fragment {
                 int res = getResources().getIdentifier(value + "_bg", "mipmap", view.getContext().getPackageName());
                 Picasso.get()
                         .load(res)
-                        .centerCrop()
                         .into(layout);
             }
 
