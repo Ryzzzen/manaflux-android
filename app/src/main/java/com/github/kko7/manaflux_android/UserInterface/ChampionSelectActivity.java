@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.github.kko7.manaflux_android.R;
 
-public class ChampionSelect extends AppCompatActivity {
+public class ChampionSelectActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState){

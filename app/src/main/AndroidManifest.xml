@@ -64,7 +64,9 @@
             tools:ignore="InnerclassSeparator" />
         <activity android:name=".UserInterface.LanDevicesActivity"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UserInterface.ChampionSelect" />
+        <activity
+            android:name=".UserInterface.ChampionSelectActivity"
+            tools:ignore="InnerclassSeparator" />
 
         <service
             android:name=".Services.FirebaseMessagingService"
