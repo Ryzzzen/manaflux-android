@@ -1,6 +1,5 @@
 package com.github.kko7.manaflux_android.Helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -34,9 +33,7 @@ public class DatabaseHelper {
         db.openDB();
         long result = db.DELETE(id);
 
-        if (result >= 0) {
-            ((Activity) context).finish();
-        } else {
+        if (!(result >= 0)) {
             Toast.makeText(context, context.getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
         }
 
@@ -48,9 +45,7 @@ public class DatabaseHelper {
         db.openDB();
         long result = db.ADD(address, name);
 
-        if (result > 0) {
-            ((Activity) context).finish();
-        } else {
+        if (!(result > 0)) {
             Toast.makeText(context, context.getString(R.string.db_fail), Toast.LENGTH_SHORT).show();
         }
 

@@ -60,12 +60,14 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dbHelper.update(id, nameTxt.getText().toString(), addressTxt.getText().toString());
+                finish();
             }
         });
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dbHelper.delete(id);
+                finish();
             }
         });
         closeButton.setOnClickListener(new View.OnClickListener() {
