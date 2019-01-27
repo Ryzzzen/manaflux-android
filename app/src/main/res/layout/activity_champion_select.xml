@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.github.kko7.manaflux_android.CustomElements.CustomLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/champion_select_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/default_bg">
 
+    <com.github.kko7.manaflux_android.CustomElements.CircularImageView
+        android:id="@+id/champion_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="90dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/test" />
+
+    <com.github.kko7.manaflux_android.CustomElements.TextView
+        android:id="@+id/champion_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/champion_image"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        tools:text="Nautilus" />
+
+    <Spinner
+        android:id="@+id/position_spinner"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="90dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="120dp" />
+
     <Button
-        android:id="@+id/spellButton"
+        android:id="@+id/spell_button1"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_alignParentStart="true"
@@ -15,7 +51,7 @@
         android:layout_marginBottom="20dp" />
 
     <Button
-        android:id="@+id/spellButton2"
+        android:id="@+id/spell_button2"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_alignParentStart="true"
@@ -24,7 +60,7 @@
         android:layout_marginBottom="20dp" />
 
     <Spinner
-        android:id="@+id/runes"
+        android:id="@+id/runes_spinner"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
@@ -32,17 +68,4 @@
         android:layout_marginStart="151dp"
         android:layout_marginBottom="29dp" />
 
-    <com.github.kko7.manaflux_android.CustomElements.CircularImageView
-        android:id="@+id/profile_image_round_corner"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="141dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:padding="2dp"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/test" />
 </com.github.kko7.manaflux_android.CustomElements.CustomLayout>
