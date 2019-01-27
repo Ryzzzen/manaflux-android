@@ -68,13 +68,6 @@
             android:name=".UserInterface.ChampionSelectActivity"
             tools:ignore="InnerclassSeparator" />
 
-        <service
-            android:name=".Services.FirebaseMessagingService"
-            tools:ignore="ExportedService,InnerclassSeparator">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>
