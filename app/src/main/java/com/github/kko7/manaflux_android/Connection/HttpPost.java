@@ -1,5 +1,9 @@
 package com.github.kko7.manaflux_android.Connection;
 
+import android.content.Context;
+
+import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
@@ -11,12 +15,13 @@ import okhttp3.Response;
 public class HttpPost {
     private static final MediaType MEDIA_TYPE_PLAIN = MediaType.get("text/plain; charset=utf-8");
     private String url;
-    private String token, authToken;
+    private String body;
+    private Context context;
 
-    public HttpPost(String url, String token, String authToken) {
+    public HttpPost(String url, String body, Context context) {
         this.url = url;
-        this.token = token;
-        this.authToken = authToken;
+        this.body = body;
+        this.context = context;
     }
 
     public void run(int connectTimeout, int readTimeout) throws Exception {
@@ -30,8 +35,8 @@ public class HttpPost {
 
         Request request = new Request.Builder()
                 .url(url)
-                .post(RequestBody.create(MEDIA_TYPE_PLAIN, token))
-                .addHeader("authorization", authToken)
+                .post(RequestBody.create(MEDIA_TYPE_PLAIN, body))
+                .addHeader("authorization", PrefsHelper.getInstance(context).getString("auth-token"))
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
