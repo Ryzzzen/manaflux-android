@@ -36,7 +36,7 @@ public class HttpPost {
         Request request = new Request.Builder()
                 .url(url)
                 .post(RequestBody.create(MEDIA_TYPE_PLAIN, body))
-                .addHeader("authorization", PrefsHelper.getInstance(context).getString("auth-token"))
+                .addHeader("authorization", "Basic " + PrefsHelper.getInstance(context).getString("auth-token"))
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
