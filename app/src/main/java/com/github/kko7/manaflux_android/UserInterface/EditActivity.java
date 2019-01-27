@@ -79,8 +79,8 @@ public class EditActivity extends AppCompatActivity {
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefsHelper.saveString("deviceIP", address);
-                prefsHelper.saveString("deviceNAME", name);
+                prefsHelper.saveString("device-ip", address);
+                prefsHelper.saveString("device-name", name);
                 startActivity(new Intent(EditActivity.this, MainActivity.class));
             }
         });

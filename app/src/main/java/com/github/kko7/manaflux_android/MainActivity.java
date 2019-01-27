@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void checkDevice() {
         PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
-        String deviceIP = prefsHelper.getString("deviceIP");
-        String deviceNAME = prefsHelper.getString("deviceNAME");
+        String deviceIp = prefsHelper.getString("device-ip");
+        String deviceName = prefsHelper.getString("device-name");
         String authToken = prefsHelper.getString("auth-token");
 
         if (authToken == null || authToken.equals("") || authToken.length() != 32) {
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             prefsHelper.saveString("auth-token", newToken);
         }
 
-        if (deviceIP == null || deviceIP.equals("") || deviceNAME == null || deviceNAME.equals("")) {
+        if (deviceIp == null || deviceIp.equals("") || deviceName == null || deviceName.equals("")) {
             startActivity(new Intent(MainActivity.this, LanDevicesActivity.class));
         } else {
             startActivity(new Intent(MainActivity.this, LoadActivity.class));
