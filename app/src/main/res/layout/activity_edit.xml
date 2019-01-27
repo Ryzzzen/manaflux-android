@@ -5,8 +5,7 @@
     android:id="@+id/edit_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/default_bg"
-    android:orientation="vertical">
+    android:background="@mipmap/default_bg">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -52,7 +51,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="100dp"
         android:orientation="horizontal">
 
         <EditText
@@ -73,7 +73,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="7dp"
-            android:background="@drawable/btn_bg"
+            android:background="@drawable/btn_default"
             android:text="@string/edit_select"
             android:textAlignment="center"
             android:textAllCaps="true" />
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="190dp"
         android:ems="10"
         android:hint="@string/edit_pc"
         android:importantForAutofill="no"
@@ -97,9 +97,9 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="290dp"
         android:layout_marginEnd="120dp"
-        android:background="@drawable/btn_bg"
+        android:background="@drawable/btn_default"
         android:text="@string/edit_delete" />
 
 </com.github.kko7.manaflux_android.CustomElements.CustomLayout>
