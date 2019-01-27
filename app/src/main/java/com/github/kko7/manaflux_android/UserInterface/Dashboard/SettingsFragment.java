@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
-import com.squareup.picasso.Picasso;
 
 public class SettingsFragment extends Fragment {
 
@@ -24,7 +23,7 @@ public class SettingsFragment extends Fragment {
     PrefsHelper prefsHelper;
     Button deleteDeviceBtn, deleteAllBtn;
     Spinner spinner;
-    CustomLayout layout;
+    RelativeLayout layout;
 
     public SettingsFragment() {
     }
@@ -105,9 +104,7 @@ public class SettingsFragment extends Fragment {
                 }
                 String value = prefsHelper.getBackground("background");
                 int res = getResources().getIdentifier(value + "_bg", "mipmap", view.getContext().getPackageName());
-                Picasso.get()
-                        .load(res)
-                        .into(layout);
+                layout.setBackgroundResource(res);
             }
 
             @Override

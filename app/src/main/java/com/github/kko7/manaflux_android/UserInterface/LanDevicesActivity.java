@@ -7,16 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
-import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
-import com.squareup.picasso.Picasso;
 
 public class LanDevicesActivity extends AppCompatActivity {
 
     private static final String TAG = LanDevicesActivity.class.getSimpleName();
-    CustomLayout layout;
+    RelativeLayout layout;
     PrefsHelper prefsHelper;
     Button savedButton;
 
@@ -43,9 +42,7 @@ public class LanDevicesActivity extends AppCompatActivity {
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        Picasso.get()
-                .load(id)
-                .into(layout);
+        layout.setBackgroundResource(id);
     }
 
     @Override

@@ -19,16 +19,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.Database.Adapter;
 import com.github.kko7.manaflux_android.Database.DBAdapter;
 import com.github.kko7.manaflux_android.Database.Device;
 import com.github.kko7.manaflux_android.Helpers.DatabaseHelper;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,7 +40,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
     EditText nameEditTxt, addressEditTxt;
     RecyclerView mRecyclerView;
     DatabaseHelper dbHelper;
-    CustomLayout layout;
+    RelativeLayout layout;
     PrefsHelper prefsHelper;
     Adapter adapter;
     Dialog dialog;
@@ -95,6 +94,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
                     Toast.makeText(SavedDevicesActivity.this, getString(R.string.dialog_null), Toast.LENGTH_SHORT).show();
                 } else {
                     dbHelper.save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
+                    retrieve();
                     dialog.hide();
                 }
 
@@ -149,9 +149,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        Picasso.get()
-                .load(id)
-                .into(layout);
+        layout.setBackgroundResource(id);
     }
 
     @Override

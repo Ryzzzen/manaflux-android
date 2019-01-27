@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.kko7.manaflux_android.CustomElements.CustomLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_layout"
@@ -102,4 +102,4 @@
         android:background="@drawable/btn_default"
         android:text="@string/edit_delete" />
 
-</com.github.kko7.manaflux_android.CustomElements.CustomLayout>
+</RelativeLayout>

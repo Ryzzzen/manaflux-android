@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.kko7.manaflux_android.CustomElements.CustomLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/load_layout"
     android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="150dp"
         android:visibility="visible" />
 
-    <com.github.kko7.manaflux_android.CustomElements.CustomLayout
+    <RelativeLayout
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -85,5 +85,5 @@
             android:padding="5dp"
             android:textAlignment="center"
             tools:ignore="RelativeOverlap" />
-    </com.github.kko7.manaflux_android.CustomElements.CustomLayout>
-</com.github.kko7.manaflux_android.CustomElements.CustomLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -12,17 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.Connection.HttpGet;
 import com.github.kko7.manaflux_android.Connection.HttpListener;
 import com.github.kko7.manaflux_android.Connection.HttpPost;
-import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.UserInterface.Dashboard.DashboardActivity;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -41,7 +40,7 @@ public class LoadActivity extends AppCompatActivity {
     private static final String TAG = LoadActivity.class.getSimpleName();
     int count = 0;
     String ip, name, token;
-    CustomLayout layout, errorLayout;
+    RelativeLayout layout, errorLayout;
     TextView errorLine1, errorLine2, details, title;
     Button againButton, secondButton;
     GifView loadingGif;
@@ -200,9 +199,8 @@ public class LoadActivity extends AppCompatActivity {
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        Picasso.get()
-                .load(id)
-                .into(layout);
+        errorLayout.setBackgroundResource(id);
+        layout.setBackgroundResource(id);
     }
 
     @Override

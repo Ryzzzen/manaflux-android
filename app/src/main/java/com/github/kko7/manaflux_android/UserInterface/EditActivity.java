@@ -9,13 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
-import com.github.kko7.manaflux_android.CustomElements.CustomLayout;
 import com.github.kko7.manaflux_android.Helpers.DatabaseHelper;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -29,7 +28,7 @@ public class EditActivity extends AppCompatActivity {
     EditText addressTxt, nameTxt;
     ImageButton closeButton, saveButton;
     Button deleteButton, selectButton;
-    CustomLayout layout;
+    RelativeLayout layout;
     PrefsHelper prefsHelper;
     DatabaseHelper dbHelper;
 
@@ -90,9 +89,7 @@ public class EditActivity extends AppCompatActivity {
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
-        Picasso.get()
-                .load(id)
-                .into(layout);
+        layout.setBackgroundResource(id);
     }
 
     @Override
