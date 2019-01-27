@@ -55,6 +55,7 @@ public class ScanActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isCorrect) {
                     dbHelper.save(ip, name);
+                    finish();
                 }
             }
         });
