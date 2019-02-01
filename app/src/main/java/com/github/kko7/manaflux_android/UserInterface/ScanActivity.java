@@ -31,7 +31,7 @@ public class ScanActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION = 201;
     CameraSource cameraSource;
     String name, ip;
-    boolean isCorrect = false;
+    Boolean isCorrect = false;
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
     Button btnAction;

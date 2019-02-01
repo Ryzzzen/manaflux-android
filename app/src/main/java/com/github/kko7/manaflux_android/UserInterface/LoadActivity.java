@@ -36,7 +36,7 @@ import retrofit2.Response;
 public class LoadActivity extends AppCompatActivity {
 
     private static final String TAG = LoadActivity.class.getSimpleName();
-    int count = 0;
+    Integer count = 0;
     String ip, name, token;
     RelativeLayout layout, errorLayout;
     TextView errorLine1, errorLine2, details, title;
@@ -77,7 +77,8 @@ public class LoadActivity extends AppCompatActivity {
         });
         context = this;
         setBackground();
-        start();
+        //start();
+        startActivity(new Intent(this, DashboardActivity.class));
     }
 
     private void start() {
@@ -203,10 +204,8 @@ public class LoadActivity extends AppCompatActivity {
                         showDetails(sStackTrace);
                     }
                 });
-
             }
         });
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -221,7 +220,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
-        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        Integer id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         errorLayout.setBackgroundResource(id);
         layout.setBackgroundResource(id);
     }

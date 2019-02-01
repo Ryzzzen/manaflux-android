@@ -126,7 +126,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
         Cursor c = db.getAllDevices();
 
         while (c.moveToNext()) {
-            int id = c.getInt(0);
+            Integer id = c.getInt(0);
             String address = c.getString(1);
             String name = c.getString(2);
 
@@ -148,7 +148,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
 
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
-        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        Integer id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);
     }
 

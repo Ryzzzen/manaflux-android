@@ -23,7 +23,7 @@ public class EditActivity extends AppCompatActivity {
 
     private static final String TAG = EditActivity.class.getSimpleName();
     String address, name;
-    int id;
+    Integer id;
     Intent intent;
     EditText addressTxt, nameTxt;
     ImageButton closeButton, saveButton;
@@ -88,7 +88,7 @@ public class EditActivity extends AppCompatActivity {
 
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
-        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        Integer id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);
     }
 
