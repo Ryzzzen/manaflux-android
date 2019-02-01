@@ -77,7 +77,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void initList() {
-        ArrayAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, positions);
+        ArrayAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, positions);
         Spinner positionsSpinner = findViewById(R.id.position_spinner);
         positionsSpinner.setAdapter(adapter);
         positionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -90,7 +90,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(v.getContext(), getString(R.string.champion_select_changed) + positions[position], Toast.LENGTH_SHORT).show();
-
                         } else {
                             Toast.makeText(v.getContext(), getString(R.string.champion_select_error), Toast.LENGTH_SHORT).show();
                         }
