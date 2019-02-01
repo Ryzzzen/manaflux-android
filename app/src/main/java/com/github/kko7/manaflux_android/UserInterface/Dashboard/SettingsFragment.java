@@ -62,7 +62,7 @@ public class SettingsFragment extends Fragment {
                 getString(R.string.background_red), //red
                 getString(R.string.background_purple), //purple
                 getString(R.string.background_green), //green
-                getString(R.string.background_purple), //purple
+                getString(R.string.background_gray), //purple
                 getString(R.string.background_dark_red)}; // dark red
         ArrayAdapter adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
