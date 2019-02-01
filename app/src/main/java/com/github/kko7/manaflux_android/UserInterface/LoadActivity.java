@@ -102,10 +102,23 @@ public class LoadActivity extends AppCompatActivity {
                         final ApiData data = response.body();
                         assert data != null;
                         try {
-                            if (response.isSuccessful()) {
+                            if (response.isSuccessful() && data.getSuccess()) {
                                 prefsHelper.saveString("summonerName", data.getSummonerName());
                                 prefsHelper.saveInt("summonerLevel", data.getSummonerLevel());
                                 startActivity(new Intent(LoadActivity.this, newClass));
+                            } else if (!data.getSuccess()) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showError(data.getError(), data.getErrorCode());
+                                        secondButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                showDetails(String.valueOf(response));
+                                            }
+                                        });
+                                    }
+                                });
                             } else if (response.code() == 401 || response.code() == 403) {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
                                 authentify.enqueue(new Callback<ApiData>() {
