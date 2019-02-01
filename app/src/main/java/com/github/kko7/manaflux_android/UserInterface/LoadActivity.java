@@ -86,12 +86,7 @@ public class LoadActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     showError("Auth error", "Too many attempts");
-                    secondButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            showDetails("TODO");
-                        }
-                    });
+                    secondButton.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -104,7 +99,7 @@ public class LoadActivity extends AppCompatActivity {
                 getSummoner.enqueue(new Callback<ApiData>() {
                     @Override
                     public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
-                        ApiData data = response.body();
+                        final ApiData data = response.body();
                         assert data != null;
                         try {
                             if (response.isSuccessful()) {

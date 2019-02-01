@@ -84,6 +84,8 @@
             android:background="@drawable/btn_default"
             android:padding="5dp"
             android:textAlignment="center"
-            tools:ignore="RelativeOverlap" />
+            android:visibility="visible"
+            tools:ignore="RelativeOverlap"
+            tools:text="Details" />
     </RelativeLayout>
 </RelativeLayout>
