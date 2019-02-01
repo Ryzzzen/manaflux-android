@@ -58,7 +58,7 @@
             android:layout_alignParentTop="false"
             android:layout_marginTop="155dp"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textSize="22sp"
             tools:text="Code: 404" />
 
         <com.github.kko7.manaflux_android.CustomElements.ButtonView
