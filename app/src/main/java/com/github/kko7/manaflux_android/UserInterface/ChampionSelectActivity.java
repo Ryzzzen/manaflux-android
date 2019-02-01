@@ -20,7 +20,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
     PrefsHelper prefsHelper;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_champion_select);
         Log.d(TAG, "onCreate: Started");
