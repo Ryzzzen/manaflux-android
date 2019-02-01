@@ -75,8 +75,7 @@ public class LoadActivity extends AppCompatActivity {
             }
         });
         setBackground();
-        if (BuildConfig.DEBUG)
-            startActivity(new Intent(LoadActivity.this, ChampionSelectActivity.class));
+        if (BuildConfig.DEBUG) startActivity(new Intent(this, ChampionSelectActivity.class));
         else start();
     }
 
@@ -106,19 +105,6 @@ public class LoadActivity extends AppCompatActivity {
                                 prefsHelper.saveString("summonerName", data.getSummonerName());
                                 prefsHelper.saveInt("summonerLevel", data.getSummonerLevel());
                                 startActivity(new Intent(LoadActivity.this, newClass));
-                            } else if (!data.getSuccess()) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showError(data.getError(), data.getErrorCode());
-                                        secondButton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                showDetails(String.valueOf(response));
-                                            }
-                                        });
-                                    }
-                                });
                             } else if (response.code() == 401 || response.code() == 403) {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
                                 authentify.enqueue(new Callback<ApiData>() {
@@ -135,6 +121,19 @@ public class LoadActivity extends AppCompatActivity {
                                     }
                                 });
                                 start();
+                            } else if (!data.getSuccess()) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showError(data.getError(), data.getErrorCode());
+                                        secondButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                showDetails(String.valueOf(response));
+                                            }
+                                        });
+                                    }
+                                });
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -230,7 +229,5 @@ public class LoadActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setBackground();
-        count = 0;
-        start();
     }
 }
