@@ -104,10 +104,10 @@ public class LoadActivity extends AppCompatActivity {
                 getSummoner.enqueue(new Callback<ApiData>() {
                     @Override
                     public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
+                        ApiData data = response.body();
+                        assert data != null;
                         try {
                             if (response.isSuccessful()) {
-                                ApiData data = response.body();
-                                assert data != null;
                                 prefsHelper.saveString("summonerName", data.getSummonerName());
                                 prefsHelper.saveInt("summonerLevel", data.getSummonerLevel());
                                 startActivity(new Intent(LoadActivity.this, newClass));
