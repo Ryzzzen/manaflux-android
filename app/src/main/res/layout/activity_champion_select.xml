@@ -78,7 +78,8 @@
     <RelativeLayout
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
             android:id="@+id/errorCode"
@@ -87,7 +88,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="93dp"
-            android:textSize="24sp"
+            android:textSize="22sp"
             tools:text="SUMMONER_NOT_CONNECTED" />
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
