@@ -105,7 +105,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //TODO
             }
         });
     }
