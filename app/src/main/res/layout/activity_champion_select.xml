@@ -4,13 +4,14 @@
     android:id="@+id/champion_select_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/default_bg">
+    android:background="@mipmap/default_bg"
+    android:visibility="visible">
 
     <RelativeLayout
         android:id="@+id/select_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.github.kko7.manaflux_android.CustomElements.CircularImageView
             android:id="@+id/champion_image"
