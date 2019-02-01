@@ -1,9 +1,9 @@
 package com.github.kko7.manaflux_android.Database;
 
 public class Device {
-    private String name;
-    private String address;
-    private Integer id;
+    private final String name;
+    private final String address;
+    private final Integer id;
 
     public Device(String name, String address, Integer id) {
         this.address = address;
