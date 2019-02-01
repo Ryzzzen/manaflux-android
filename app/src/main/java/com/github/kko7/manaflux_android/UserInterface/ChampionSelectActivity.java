@@ -127,7 +127,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     error2 = "Host: " + call.request().url().host();
                 } else if (throwable instanceof UnknownHostException) {
                     error1 = "Unable to resolve host";
-                    error2 = "Host: " + call.request().url();
+                    error2 = "Host: " + call.request().url().host();
                 } else {
                     error1 = "Other exception";
                     error2 = "Contact developer";
