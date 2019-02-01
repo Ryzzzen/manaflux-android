@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 public class ApiData {
 
     @SerializedName("success")
-    private Boolean success;
+    private final Boolean success;
     @SerializedName("error")
-    private String error;
+    private final String error;
     @SerializedName("errorCode")
-    private String errorCode;
+    private final String errorCode;
     @SerializedName("authentified")
-    private Boolean authentified;
+    private final Boolean authentified;
     @SerializedName("summonerName")
-    private String summonerName;
+    private final String summonerName;
     @SerializedName("summonerLevel")
-    private Integer summonerLevel;
+    private final Integer summonerLevel;
     @SerializedName("positions")
-    private String[] positions;
+    private final String[] positions;
     @SerializedName("position")
     private String position;
 

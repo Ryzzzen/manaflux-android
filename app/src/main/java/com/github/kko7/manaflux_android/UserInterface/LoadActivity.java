@@ -2,7 +2,6 @@ package com.github.kko7.manaflux_android.UserInterface;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -17,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.kko7.manaflux_android.BuildConfig;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiData;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
@@ -37,15 +37,16 @@ import retrofit2.Response;
 public class LoadActivity extends AppCompatActivity {
 
     private static final String TAG = LoadActivity.class.getSimpleName();
-    Integer count = 0;
-    String ip, name, token;
-    RelativeLayout layout, errorLayout;
-    TextView errorLine1, errorLine2, details, title;
-    Button againButton, secondButton;
-    GifView loadingGif;
-    PrefsHelper prefsHelper;
-    Context context;
-    Class newClass;
+    private Integer count = 0;
+    private RelativeLayout layout;
+    private RelativeLayout errorLayout;
+    private TextView errorLine1;
+    private TextView errorLine2;
+    private TextView title;
+    private Button secondButton;
+    private GifView loadingGif;
+    private PrefsHelper prefsHelper;
+    private Class newClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +61,10 @@ public class LoadActivity extends AppCompatActivity {
         errorLine1 = findViewById(R.id.text_error1);
         errorLine2 = findViewById(R.id.text_error2);
         title = findViewById(R.id.error_title);
-        againButton = findViewById(R.id.refresh_button);
+        Button againButton = findViewById(R.id.refresh_button);
         secondButton = findViewById(R.id.second_button);
         loadingGif = findViewById(R.id.loading_gif);
         loadingGif.startGif(R.mipmap.loading);
-        ip = prefsHelper.getString("device-ip");
-        name = prefsHelper.getString("device-name");
-        token = prefsHelper.getString("phone-token");
         if (getIntent().getStringExtra("class") == null) newClass = DashboardActivity.class;
         else newClass = ChampionSelectActivity.class;
         againButton.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +74,10 @@ public class LoadActivity extends AppCompatActivity {
                 start();
             }
         });
-        context = this;
         setBackground();
-        start();
+        if (BuildConfig.DEBUG)
+            startActivity(new Intent(LoadActivity.this, ChampionSelectActivity.class));
+        else start();
     }
 
     private void start() {
@@ -193,7 +192,7 @@ public class LoadActivity extends AppCompatActivity {
                     error2 = "";
                 } else if (throwable instanceof UnknownHostException) {
                     error1 = "Unable to resolve host";
-                    error2 = "Host: " + call.request().url();
+                    error2 = "Host: " + call.request().url().host();
                 } else {
                     error1 = "Other exception";
                     error2 = "Contact developer";
@@ -215,7 +214,7 @@ public class LoadActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_details);
-        details = dialog.findViewById(R.id.details_long);
+        TextView details = dialog.findViewById(R.id.details_long);
         details.setText(text);
         dialog.show();
     }

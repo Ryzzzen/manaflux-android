@@ -22,15 +22,14 @@ public class EditActivity extends AppCompatActivity {
 
 
     private static final String TAG = EditActivity.class.getSimpleName();
-    String address, name;
-    Integer id;
-    Intent intent;
-    EditText addressTxt, nameTxt;
-    ImageButton closeButton, saveButton;
-    Button deleteButton, selectButton;
-    RelativeLayout layout;
-    PrefsHelper prefsHelper;
-    DatabaseHelper dbHelper;
+    private String address;
+    private String name;
+    private Integer id;
+    private EditText addressTxt;
+    private EditText nameTxt;
+    private RelativeLayout layout;
+    private PrefsHelper prefsHelper;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +40,14 @@ public class EditActivity extends AppCompatActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         prefsHelper = PrefsHelper.getInstance(this);
         dbHelper = new DatabaseHelper(this);
-        saveButton = findViewById(R.id.save_button);
-        closeButton = findViewById(R.id.close_button);
-        deleteButton = findViewById(R.id.delete_button);
-        selectButton = findViewById(R.id.select_button);
+        ImageButton saveButton = findViewById(R.id.save_button);
+        ImageButton closeButton = findViewById(R.id.close_button);
+        Button deleteButton = findViewById(R.id.delete_button);
+        Button selectButton = findViewById(R.id.select_button);
+        Intent intent = getIntent();
         addressTxt = findViewById(R.id.address_edit);
         nameTxt = findViewById(R.id.name_edit);
         layout = findViewById(R.id.edit_layout);
-        intent = getIntent();
         address = Objects.requireNonNull(intent.getExtras()).getString("ADDRESS");
         name = Objects.requireNonNull(Objects.requireNonNull(intent).getExtras()).getString("NAME");
         id = intent.getExtras().getInt("ID");

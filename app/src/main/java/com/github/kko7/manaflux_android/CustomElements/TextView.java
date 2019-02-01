@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 
 public class TextView extends android.support.v7.widget.AppCompatTextView {
+
     public TextView(Context context) {
         super(context);
         setFont();

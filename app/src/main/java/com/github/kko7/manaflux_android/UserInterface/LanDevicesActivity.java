@@ -15,9 +15,8 @@ import com.github.kko7.manaflux_android.R;
 public class LanDevicesActivity extends AppCompatActivity {
 
     private static final String TAG = LanDevicesActivity.class.getSimpleName();
-    RelativeLayout layout;
-    PrefsHelper prefsHelper;
-    Button savedButton;
+    private RelativeLayout layout;
+    private PrefsHelper prefsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,7 @@ public class LanDevicesActivity extends AppCompatActivity {
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         prefsHelper = PrefsHelper.getInstance(this);
-        savedButton = findViewById(R.id.saved_button);
+        Button savedButton = findViewById(R.id.saved_button);
         layout = findViewById(R.id.lan_devices_layout);
 
         savedButton.setOnClickListener(new View.OnClickListener() {

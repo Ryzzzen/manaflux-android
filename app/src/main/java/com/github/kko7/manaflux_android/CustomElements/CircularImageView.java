@@ -26,7 +26,7 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
         super(context, attrs, defStyle);
     }
 
-    public static Bitmap getRoundBitmap(Bitmap bmp, int radius) {
+    private static Bitmap getRoundBitmap(Bitmap bmp, int radius) {
         Bitmap sBmp;
 
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {

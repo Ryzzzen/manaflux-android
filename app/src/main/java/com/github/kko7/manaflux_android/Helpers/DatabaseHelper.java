@@ -8,7 +8,7 @@ import com.github.kko7.manaflux_android.R;
 
 public class DatabaseHelper {
 
-    private Context context;
+    private final Context context;
 
     public DatabaseHelper(Context context) {
         this.context = context;

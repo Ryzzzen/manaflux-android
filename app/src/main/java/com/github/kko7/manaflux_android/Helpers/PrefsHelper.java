@@ -7,7 +7,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PrefsHelper {
     private static PrefsHelper prefsHelper;
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     private PrefsHelper(Context context) {
         sharedPreferences = context.getSharedPreferences("Settings", MODE_PRIVATE);

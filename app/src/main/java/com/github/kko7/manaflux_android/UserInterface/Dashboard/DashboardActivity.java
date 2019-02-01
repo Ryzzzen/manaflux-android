@@ -16,8 +16,9 @@ import com.github.kko7.manaflux_android.R;
 public class DashboardActivity extends AppCompatActivity {
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
-    Integer currentFragment = 0, selectedFragment;
-    Fragment newFragment = new ProfileFragment();
+    private Integer currentFragment = 0;
+    private Integer selectedFragment;
+    private Fragment newFragment = new ProfileFragment();
     private DrawerLayout mDrawerLayout;
 
     @Override

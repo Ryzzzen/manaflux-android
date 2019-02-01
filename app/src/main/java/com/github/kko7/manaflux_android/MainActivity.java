@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         checkDevice();
     }
 
-    protected void checkDevice() {
+    private void checkDevice() {
         PrefsHelper prefsHelper = PrefsHelper.getInstance(this);
         String deviceIp = prefsHelper.getString("device-ip");
         String deviceName = prefsHelper.getString("device-name");
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected String generateToken() {
+    private String generateToken() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] token = new byte[16];
         secureRandom.nextBytes(token);

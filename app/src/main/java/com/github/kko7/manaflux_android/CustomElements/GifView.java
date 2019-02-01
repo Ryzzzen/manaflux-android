@@ -30,7 +30,8 @@ public class GifView extends View {
     @SuppressLint("ResourceType")
     private void init(Context context, int resource) {
         setFocusable(true);
-        InputStream gifInputStream = context.getResources()
+        InputStream gifInputStream = context
+                .getResources()
                 .openRawResource(resource);
 
         gifMovie = Movie.decodeStream(gifInputStream);
@@ -58,9 +59,6 @@ public class GifView extends View {
         if (gifMovie != null) {
 
             int dur = gifMovie.duration();
-            if (dur == 0) {
-                dur = 1000;
-            }
 
             int relTime = (int) ((now - mMovieStart) % dur);
 

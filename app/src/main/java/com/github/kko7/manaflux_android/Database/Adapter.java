@@ -15,11 +15,11 @@ import com.github.kko7.manaflux_android.UserInterface.EditActivity;
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Holder> {
-    private Context c;
-    private ArrayList<Device> devices;
+    private final Context context;
+    private final ArrayList<Device> devices;
 
-    public Adapter(Context ctx, ArrayList<Device> devices) {
-        this.c = ctx;
+    public Adapter(Context context, ArrayList<Device> devices) {
+        this.context = context;
         this.devices = devices;
     }
 
@@ -37,15 +37,14 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
-            public void onItemClick(View v, int pos) {
-                Intent i = new Intent(c, EditActivity.class);
+            public void onItemClick(int pos) {
+                Intent i = new Intent(context, EditActivity.class);
                 i.putExtra("ADDRESS", devices.get(pos).getAddress());
                 i.putExtra("NAME", devices.get(pos).getName());
                 i.putExtra("ID", devices.get(pos).getId());
-                c.startActivity(i);
+                context.startActivity(i);
             }
         });
-
     }
 
     @Override

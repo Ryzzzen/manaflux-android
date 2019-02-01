@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DBAdapter {
     private SQLiteDatabase db;
-    private DBHelper helper;
+    private final DBHelper helper;
 
-    public DBAdapter(Context ctx) {
-        helper = new DBHelper(ctx);
+    public DBAdapter(Context context) {
+        helper = new DBHelper(context);
     }
 
     public void openDB() {
@@ -33,15 +33,15 @@ public class DBAdapter {
     }
 
     public Cursor getAllDevices() {
-        String[] columns = {Constants.ROW_ID, Constants.ADDRESS, Constants.NAME};
+        String[] columns = {Constants.ROW_ID, Constants.ROW_ADDRESS, Constants.ROW_NAME};
         return db.query(Constants.TB_NAME, columns, null, null, null, null, null);
     }
 
     public long ADD(String address, String name) {
         try {
             ContentValues cv = new ContentValues();
-            cv.put(Constants.ADDRESS, address);
-            cv.put(Constants.NAME, name);
+            cv.put(Constants.ROW_ADDRESS, address);
+            cv.put(Constants.ROW_NAME, name);
             return db.insert(Constants.TB_NAME, Constants.ROW_ID, cv);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,8 +53,8 @@ public class DBAdapter {
     public long UPDATE(int id, String address, String name) {
         try {
             ContentValues cv = new ContentValues();
-            cv.put(Constants.ADDRESS, address);
-            cv.put(Constants.NAME, name);
+            cv.put(Constants.ROW_ADDRESS, address);
+            cv.put(Constants.ROW_NAME, name);
             return db.update(Constants.TB_NAME, cv, Constants.ROW_ID + " =?", new String[]{String.valueOf(id)});
         } catch (SQLException e) {
             e.printStackTrace();

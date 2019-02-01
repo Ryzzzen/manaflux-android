@@ -29,14 +29,14 @@ public class ScanActivity extends AppCompatActivity {
 
     private static final String TAG = "ScanActivity";
     private static final int CAMERA_PERMISSION = 201;
-    CameraSource cameraSource;
-    String name, ip;
-    Boolean isCorrect = false;
-    SurfaceView surfaceView;
-    TextView txtBarcodeValue;
-    Button btnAction;
-    DatabaseHelper dbHelper;
-    BarcodeDetector qrDetector;
+    private CameraSource cameraSource;
+    private String name;
+    private String ip;
+    private Boolean isCorrect = false;
+    private SurfaceView surfaceView;
+    private TextView txtBarcodeValue;
+    private Button btnAction;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class ScanActivity extends AppCompatActivity {
     private void initialiseDetectorsAndSources() {
         Log.d(TAG, "Barcode scanner started");
 
-        qrDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector qrDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 

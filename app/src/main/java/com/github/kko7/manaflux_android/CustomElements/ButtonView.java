@@ -9,7 +9,6 @@ public class ButtonView extends android.support.v7.widget.AppCompatButton {
     public ButtonView(Context context) {
         super(context);
         setFont();
-
     }
 
     public ButtonView(Context context, AttributeSet attrs) {

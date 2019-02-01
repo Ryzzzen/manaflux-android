@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private Context context;
+    private final Context context;
 
     public ApiClient(Context context) {
         this.context = context;

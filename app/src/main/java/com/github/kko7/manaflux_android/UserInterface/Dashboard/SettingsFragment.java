@@ -20,10 +20,8 @@ import com.github.kko7.manaflux_android.R;
 public class SettingsFragment extends Fragment {
 
     private static final String TAG = SettingsFragment.class.getSimpleName();
-    PrefsHelper prefsHelper;
-    Button deleteDeviceBtn, deleteAllBtn;
-    Spinner spinner;
-    RelativeLayout layout;
+    private PrefsHelper prefsHelper;
+    private RelativeLayout layout;
 
     public SettingsFragment() {
     }
@@ -38,9 +36,9 @@ public class SettingsFragment extends Fragment {
         Log.d(TAG, "onView: Created");
 
         prefsHelper = PrefsHelper.getInstance(view.getContext());
-        deleteDeviceBtn = view.findViewById(R.id.delete_device);
-        deleteAllBtn = view.findViewById(R.id.delete_all);
-        spinner = view.findViewById(R.id.spinner);
+        Button deleteDeviceBtn = view.findViewById(R.id.delete_device);
+        Button deleteAllBtn = view.findViewById(R.id.delete_all);
+        Spinner spinner = view.findViewById(R.id.spinner);
         layout = view.findViewById(R.id.settings_layout);
 
         deleteDeviceBtn.setOnClickListener(new View.OnClickListener() {

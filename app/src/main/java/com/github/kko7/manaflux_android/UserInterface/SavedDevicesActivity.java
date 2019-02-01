@@ -34,16 +34,15 @@ import java.util.ArrayList;
 public class SavedDevicesActivity extends AppCompatActivity {
 
     private static final String TAG = SavedDevicesActivity.class.getSimpleName();
-    ArrayList<Device> devices = new ArrayList<>();
-    Button addButton, scanButton;
-    Button saveBtn; //dialog
-    EditText nameEditTxt, addressEditTxt;
-    RecyclerView mRecyclerView;
-    DatabaseHelper dbHelper;
-    RelativeLayout layout;
-    PrefsHelper prefsHelper;
-    Adapter adapter;
-    Dialog dialog;
+    private final ArrayList<Device> devices = new ArrayList<>();
+    private EditText nameEditTxt;
+    private EditText addressEditTxt;
+    private RecyclerView mRecyclerView;
+    private DatabaseHelper dbHelper;
+    private RelativeLayout layout;
+    private PrefsHelper prefsHelper;
+    private Adapter adapter;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +51,12 @@ public class SavedDevicesActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Started.");
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        Button addButton = findViewById(R.id.add_button);
+        Button scanButton = findViewById(R.id.scan_button);
         dbHelper = new DatabaseHelper(this);
         prefsHelper = PrefsHelper.getInstance(this);
         mRecyclerView = findViewById(R.id.otherList);
         layout = findViewById(R.id.other_layout);
-        addButton = findViewById(R.id.add_button);
-        scanButton = findViewById(R.id.scan_button);
         adapter = new Adapter(this, devices);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -85,7 +84,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
 
         addressEditTxt = dialog.findViewById(R.id.addressEditTxt);
         nameEditTxt = dialog.findViewById(R.id.nameEditTxt);
-        saveBtn = dialog.findViewById(R.id.saveBtn);
+        Button saveBtn = dialog.findViewById(R.id.saveBtn);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,10 +128,9 @@ public class SavedDevicesActivity extends AppCompatActivity {
             Integer id = c.getInt(0);
             String address = c.getString(1);
             String name = c.getString(2);
+            Device device = new Device(address, name, id);
 
-            Device p = new Device(address, name, id);
-
-            devices.add(p);
+            devices.add(device);
         }
 
         if (!(devices.size() < 1)) {
