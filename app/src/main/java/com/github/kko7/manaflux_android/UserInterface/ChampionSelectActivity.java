@@ -52,20 +52,44 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void start() {
+        final TextView championName = findViewById(R.id.champion_name);
         layout.setVisibility(View.VISIBLE);
         errorLayout.setVisibility(View.GONE);
         final ApiInterface client = new ApiClient(this).getClient();
-        Call<ApiData> getPositions = client.getPositions();
-        getPositions.enqueue(new Callback<ApiData>() {
+        Call<ApiData> getCurrentChampion = client.getCurrentChampion();
+        getCurrentChampion.enqueue(new Callback<ApiData>() {
             @Override
             public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
-                ApiData data = response.body();
-                assert data != null;
-                if (response.isSuccessful() && data.getSuccess()) {
-                    positions = data.getPositions();
-                    initList();
+                final ApiData currentChampion = response.body();
+                assert currentChampion != null;
+                if (response.isSuccessful()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            championName.setText(currentChampion.getChampionName());
+                        }
+                    });
+                    Call<ApiData> getPositions = client.getPositions();
+                    getPositions.enqueue(new Callback<ApiData>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                            ApiData data = response.body();
+                            assert data != null;
+                            if (response.isSuccessful() && data.getSuccess()) {
+                                positions = data.getPositions();
+                                initList();
+                            } else {
+                                showError(data.getErrorCode(), data.getError());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
+                            showException(call, throwable);
+                        }
+                    });
                 } else {
-                    showError(data.getErrorCode(), data.getError());
+                    showError(currentChampion.getErrorCode(), currentChampion.getError());
                 }
             }
 

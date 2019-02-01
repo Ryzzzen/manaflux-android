@@ -19,6 +19,9 @@ public interface ApiInterface {
     @GET("/api/v1/actions/positions")
     Call<ApiData> getPositions();
 
+    @GET("/api/v1/actions/current-champion")
+    Call<ApiData> getCurrentChampion();
+
     @POST("/api/v1/actions/positions/{position}")
     Call<ApiData> setPosition(@Path("position") Integer position);
 

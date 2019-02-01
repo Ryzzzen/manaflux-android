@@ -18,10 +18,12 @@ public class ApiData {
     private Integer summonerLevel;
     @SerializedName("positions")
     private String[] positions;
-    @SerializedName("position")
-    private String position;
+    @SerializedName("championName")
+    private String championName;
+    @SerializedName("championId")
+    private String championId;
 
-    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String[] positions, String position) {
+    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String[] positions, String championName, String championId) {
         this.success = success;
         this.error = error;
         this.errorCode = errorCode;
@@ -29,7 +31,8 @@ public class ApiData {
         this.summonerName = summonerName;
         this.summonerLevel = summonerLevel;
         this.positions = positions;
-        this.position = position;
+        this.championName = championName;
+        this.championId = championId;
     }
 
     public Boolean getSuccess() {
@@ -60,11 +63,11 @@ public class ApiData {
         return positions;
     }
 
-    public String getPosition() {
-        return position;
+    public String getChampionName() {
+        return championName;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public String getChampionId() {
+        return championId;
     }
 }
