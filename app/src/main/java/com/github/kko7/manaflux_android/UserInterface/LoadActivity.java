@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,25 +16,22 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.kko7.manaflux_android.Connection.HttpGet;
-import com.github.kko7.manaflux_android.Connection.HttpListener;
-import com.github.kko7.manaflux_android.Connection.HttpPost;
+import com.github.kko7.manaflux_android.Connection.ApiClient;
+import com.github.kko7.manaflux_android.Connection.ApiData;
+import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.UserInterface.Dashboard.DashboardActivity;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.Objects;
 
-import okhttp3.Call;
-import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoadActivity extends AppCompatActivity {
 
@@ -83,7 +81,6 @@ public class LoadActivity extends AppCompatActivity {
     }
 
     private void start() {
-        Log.d(TAG, String.valueOf(count));
         if (count >= 3) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -101,18 +98,32 @@ public class LoadActivity extends AppCompatActivity {
             try {
                 loadingGif.setVisibility(View.VISIBLE);
                 errorLayout.setVisibility(View.GONE);
-                HttpGet httpGet = new HttpGet("http://" + ip + ":4500/api/v1/summoner", new HttpListener() {
+                final ApiInterface client = new ApiClient(this).getClient();
+
+                Call<ApiData> getSummoner = client.getSummoner();
+                getSummoner.enqueue(new Callback<ApiData>() {
                     @Override
-                    public void onResponse(final Call call, final Response response) {
+                    public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
                         try {
                             if (response.isSuccessful()) {
-                                JSONObject data = new JSONObject(Objects.requireNonNull(response.body()).string());
-                                prefsHelper.saveString("summonerName", data.getString("summonerName"));
-                                prefsHelper.saveString("summonerLevel", data.getString("summonerLevel"));
+                                ApiData data = response.body();
+                                assert data != null;
+                                prefsHelper.saveString("summonerName", data.getSummonerName());
+                                prefsHelper.saveInt("summonerLevel", data.getSummonerLevel());
                                 startActivity(new Intent(LoadActivity.this, newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
-                                HttpPost sendAuth = new HttpPost("http://" + ip + ":4500/api/v1/authentify/Android/" + Build.DEVICE, Build.MODEL, context);
-                                sendAuth.run(5, 5);
+                                final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
+                                authentify.enqueue(new Callback<ApiData>() {
+                                    @Override
+                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                        start();
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
+                                        showException(call, t);
+                                    }
+                                });
                                 start();
                             } else {
                                 runOnUiThread(new Runnable() {
@@ -135,40 +146,10 @@ public class LoadActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(final Call call, final IOException exception) {
-                        StringWriter sw = new StringWriter();
-                        PrintWriter pw = new PrintWriter(sw);
-                        exception.printStackTrace(pw);
-                        final String sStackTrace = sw.toString();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                title.setVisibility(View.VISIBLE);
-                                String error1, error2;
-                                if (exception instanceof SocketTimeoutException) {
-                                    error1 = "Connect timed out";
-                                    error2 = "";
-                                } else if (exception instanceof UnknownHostException) {
-                                    error1 = "Unable to resolve host";
-                                    error2 = "Host: " + call.request().url().host();
-                                } else {
-                                    error1 = "Other exception";
-                                    error2 = "Contact developer";
-                                }
-                                showError(error1, error2);
-
-                                secondButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        showDetails(sStackTrace);
-                                    }
-                                });
-
-                            }
-                        });
+                    public void onFailure(@NonNull final Call<ApiData> call, @NonNull final Throwable throwable) {
+                        showException(call, throwable);
                     }
-                }, context);
-                httpGet.run(5, 5);
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -184,6 +165,40 @@ public class LoadActivity extends AppCompatActivity {
         loadingGif.setVisibility(View.GONE);
         errorLine1.setText(message1);
         errorLine2.setText(message2);
+    }
+
+    private void showException(final Call call, final Throwable throwable) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        throwable.printStackTrace(pw);
+        final String sStackTrace = sw.toString();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                title.setVisibility(View.VISIBLE);
+                String error1, error2;
+                if (throwable instanceof SocketTimeoutException) {
+                    error1 = "Connect timed out";
+                    error2 = "";
+                } else if (throwable instanceof UnknownHostException) {
+                    error1 = "Unable to resolve host";
+                    error2 = "Host: " + call.request().url().host();
+                } else {
+                    error1 = "Other exception";
+                    error2 = "Contact developer";
+                }
+                showError(error1, error2);
+
+                secondButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDetails(sStackTrace);
+                    }
+                });
+
+            }
+        });
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -209,10 +224,5 @@ public class LoadActivity extends AppCompatActivity {
         setBackground();
         count = 0;
         start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }
