@@ -1,7 +1,5 @@
 package com.github.kko7.manaflux_android.Connection;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -19,10 +17,10 @@ public interface ApiInterface {
     Call<ApiData> getSummoner();
 
     @GET("/api/v1/actions/positions")
-    Call<List<ApiData>> getPositions();
+    Call<ApiData> getPositions();
 
     @POST("/api/v1/actions/positions/{position}")
-    Call<ApiData> setPosition(@Path("position") String position);
+    Call<ApiData> setPosition(@Path("position") Integer position);
 
     @POST("/api/v1/actions/summoner-spells/load")
     Call<ApiData> getSpells();
