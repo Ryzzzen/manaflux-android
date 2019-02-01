@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiData;
@@ -124,6 +125,8 @@ public class LoadActivity extends AppCompatActivity {
                                 authentify.enqueue(new Callback<ApiData>() {
                                     @Override
                                     public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                        if (data.getAuthentified())
+                                            Toast.makeText(LoadActivity.this, getString(R.string.error_auth_success), Toast.LENGTH_SHORT).show();
                                         start();
                                     }
 
@@ -190,7 +193,7 @@ public class LoadActivity extends AppCompatActivity {
                     error2 = "";
                 } else if (throwable instanceof UnknownHostException) {
                     error1 = "Unable to resolve host";
-                    error2 = "Host: " + call.request().url().host();
+                    error2 = "Host: " + call.request().url();
                 } else {
                     error1 = "Other exception";
                     error2 = "Contact developer";

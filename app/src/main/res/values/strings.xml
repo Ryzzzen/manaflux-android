@@ -6,7 +6,7 @@
     <string name="scan_select">SELECT</string>
     <string name="scan_invalid">Invalid QR code</string>
     <string name="scan_not_detected">No QR code detected</string>
-    <string name="scan_stop">To prevent memory leaks barcode scanner has been stopped</string>
+    <string name="scan_stop">Scanner has been stopped</string>
 
     <string name="edit_title">Edit/Add PC</string>
     <string name="edit_save">SAVE</string>
@@ -47,6 +47,7 @@
     <string name="error_unexpected">Unexpected error</string>
     <string name="error_details">Details</string>
     <string name="error_restart">Restart</string>
+    <string name="error_auth_success">Device successfully authentified</string>
 
     <string name="background_default">Default</string>
     <string name="background_red">Red</string>
