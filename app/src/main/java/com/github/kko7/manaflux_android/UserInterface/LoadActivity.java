@@ -77,8 +77,7 @@ public class LoadActivity extends AppCompatActivity {
         });
         context = this;
         setBackground();
-        //start();
-        startActivity(new Intent(this, DashboardActivity.class));
+        start();
     }
 
     private void start() {
