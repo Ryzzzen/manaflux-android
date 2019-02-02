@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -16,8 +17,10 @@ import android.widget.Toast;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiData;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
+import com.github.kko7.manaflux_android.Connection.HeartbeatData;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
 import com.github.kko7.manaflux_android.R;
+import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -52,25 +55,22 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void start() {
-        final TextView championName = findViewById(R.id.champion_name);
         layout.setVisibility(View.VISIBLE);
         errorLayout.setVisibility(View.GONE);
+
+        final TextView championName = findViewById(R.id.champion_name);
+        final ImageView championImage = findViewById(R.id.champion_image);
         final ApiInterface client = new ApiClient(this).getClient();
-        Call<ApiData> getCurrentChampion = client.getCurrentChampion();
-        getCurrentChampion.enqueue(new Callback<ApiData>() {
+        final Call<HeartbeatData> heartbeatApi = client.getHeartbeat();
+        final Call<ApiData> positionsApi = client.getPositions();
+
+        heartbeatApi.enqueue(new Callback<HeartbeatData>() {
             @Override
-            public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
-                final ApiData currentChampion = response.body();
-                assert currentChampion != null;
+            public void onResponse(@NonNull Call<HeartbeatData> call, @NonNull Response<HeartbeatData> response) {
+                final HeartbeatData responseBody = response.body();
+                assert responseBody != null;
                 if (response.isSuccessful()) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            championName.setText(currentChampion.getChampionName());
-                        }
-                    });
-                    Call<ApiData> getPositions = client.getPositions();
-                    getPositions.enqueue(new Callback<ApiData>() {
+                    positionsApi.enqueue(new Callback<ApiData>() {
                         @Override
                         public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
                             ApiData data = response.body();
@@ -88,13 +88,21 @@ public class ChampionSelectActivity extends AppCompatActivity {
                             showException(call, throwable);
                         }
                     });
-                } else {
-                    showError(currentChampion.getErrorCode(), currentChampion.getError());
+                    Picasso.get()
+                            .load(responseBody.getChampionImg().replace("localhost", call.request().url().host()))
+                            .placeholder(R.mipmap.test)
+                            .into(championImage);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            championName.setText(responseBody.getChampionName());
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
+            public void onFailure(@NonNull Call<HeartbeatData> call, @NonNull Throwable throwable) {
                 showException(call, throwable);
             }
         });
