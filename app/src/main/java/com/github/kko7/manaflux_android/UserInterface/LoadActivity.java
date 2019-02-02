@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.BuildConfig;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiData;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
@@ -75,8 +74,7 @@ public class LoadActivity extends AppCompatActivity {
             }
         });
         setBackground();
-        if (BuildConfig.DEBUG) startActivity(new Intent(this, ChampionSelectActivity.class));
-        else start();
+        start();
     }
 
     private void start() {
