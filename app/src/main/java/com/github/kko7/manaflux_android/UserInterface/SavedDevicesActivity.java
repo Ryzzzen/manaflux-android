@@ -156,8 +156,8 @@ public class SavedDevicesActivity extends AppCompatActivity {
             case 201: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
                     Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
                 }
