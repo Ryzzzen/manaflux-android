@@ -11,16 +11,13 @@ public interface ApiInterface {
     Call<ApiData> authentifyDevice(@Path("deviceName") String deviceName);
 
     @GET("/api/v1/heartbeat")
-    Call<ApiData> getHeartbeat();
+    Call<HeartbeatData> getHeartbeat();
 
     @GET("/api/v1/summoner")
     Call<ApiData> getSummoner();
 
     @GET("/api/v1/actions/positions")
     Call<ApiData> getPositions();
-
-    @GET("/api/v1/actions/current-champion")
-    Call<ApiData> getCurrentChampion();
 
     @POST("/api/v1/actions/positions/{position}")
     Call<ApiData> setPosition(@Path("position") Integer position);
