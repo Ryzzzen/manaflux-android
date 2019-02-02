@@ -54,11 +54,14 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isCorrect) {
+                    cameraSource.stop();
                     dbHelper.save(ip, name);
                     finish();
                 }
             }
         });
+
+        initialiseDetectorsAndSources();
     }
 
     private void initialiseDetectorsAndSources() {
