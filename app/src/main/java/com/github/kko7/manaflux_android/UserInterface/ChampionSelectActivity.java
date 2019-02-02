@@ -70,6 +70,16 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 final HeartbeatData responseBody = response.body();
                 assert responseBody != null;
                 if (response.isSuccessful()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            championName.setText(responseBody.getChampionName());
+                        }
+                    });
+                    Picasso.get()
+                            .load(responseBody.getChampionImg().replace("localhost", call.request().url().host()))
+                            .placeholder(R.mipmap.test)
+                            .into(championImage);
                     positionsApi.enqueue(new Callback<ApiData>() {
                         @Override
                         public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
@@ -86,16 +96,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
                             showException(call, throwable);
-                        }
-                    });
-                    Picasso.get()
-                            .load(responseBody.getChampionImg().replace("localhost", call.request().url().host()))
-                            .placeholder(R.mipmap.test)
-                            .into(championImage);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            championName.setText(responseBody.getChampionName());
                         }
                     });
                 }
