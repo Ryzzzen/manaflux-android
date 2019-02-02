@@ -60,12 +60,12 @@ public class LoadActivity extends AppCompatActivity {
         errorLine1 = findViewById(R.id.text_error1);
         errorLine2 = findViewById(R.id.text_error2);
         title = findViewById(R.id.error_title);
-        Button againButton = findViewById(R.id.refresh_button);
         secondButton = findViewById(R.id.second_button);
         loadingGif = findViewById(R.id.loading_gif);
         loadingGif.startGif(R.mipmap.loading);
         if (getIntent().getStringExtra("class") == null) newClass = DashboardActivity.class;
         else newClass = ChampionSelectActivity.class;
+        Button againButton = findViewById(R.id.refresh_button);
         againButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +102,7 @@ public class LoadActivity extends AppCompatActivity {
                             if (response.isSuccessful() && data.getSuccess()) {
                                 prefsHelper.saveString("summonerName", data.getSummonerName());
                                 prefsHelper.saveInt("summonerLevel", data.getSummonerLevel());
-                                startActivity(new Intent(LoadActivity.this, newClass));
+                                startActivity(new Intent(getBaseContext(), newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
                                 authentify.enqueue(new Callback<ApiData>() {
