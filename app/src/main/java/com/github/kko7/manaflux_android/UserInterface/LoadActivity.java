@@ -108,7 +108,8 @@ public class LoadActivity extends AppCompatActivity {
                                 authentify.enqueue(new Callback<ApiData>() {
                                     @Override
                                     public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
-                                        if (data.getAuthentified())
+                                        assert response.body() != null;
+                                        if (response.body().getAuthentified())
                                             Toast.makeText(LoadActivity.this, getString(R.string.error_auth_success), Toast.LENGTH_SHORT).show();
                                         start();
                                     }
