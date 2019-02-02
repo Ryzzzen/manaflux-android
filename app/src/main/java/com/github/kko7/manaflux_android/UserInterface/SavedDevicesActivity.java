@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,8 +50,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Started.");
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Button addButton = findViewById(R.id.add_button);
-        Button scanButton = findViewById(R.id.scan_button);
+
         dbHelper = new DatabaseHelper(this);
         prefsHelper = PrefsHelper.getInstance(this);
         mRecyclerView = findViewById(R.id.otherList);
@@ -61,6 +59,8 @@ public class SavedDevicesActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        Button addButton = findViewById(R.id.add_button);
+        Button scanButton = findViewById(R.id.scan_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,8 +84,8 @@ public class SavedDevicesActivity extends AppCompatActivity {
 
         addressEditTxt = dialog.findViewById(R.id.addressEditTxt);
         nameEditTxt = dialog.findViewById(R.id.nameEditTxt);
-        Button saveBtn = dialog.findViewById(R.id.saveBtn);
 
+        Button saveBtn = dialog.findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,18 +103,11 @@ public class SavedDevicesActivity extends AppCompatActivity {
     }
 
     private void startScan() {
-        if (ContextCompat.checkSelfPermission(SavedDevicesActivity.this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(SavedDevicesActivity.this,
-                    Manifest.permission.CAMERA)) {
-                Toast.makeText(SavedDevicesActivity.this, getString(R.string.save_permission), Toast.LENGTH_SHORT).show();
-            } else {
-                ActivityCompat.requestPermissions(SavedDevicesActivity.this,
-                        new String[]{Manifest.permission.CAMERA}, 201);
-            }
-        } else {
+        if (ActivityCompat.checkSelfPermission(SavedDevicesActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
+        } else {
+            ActivityCompat.requestPermissions(SavedDevicesActivity.this, new
+                    String[]{Manifest.permission.CAMERA}, 201);
         }
     }
 
@@ -129,7 +122,6 @@ public class SavedDevicesActivity extends AppCompatActivity {
             String address = c.getString(1);
             String name = c.getString(2);
             Device device = new Device(address, name, id);
-
             devices.add(device);
         }
 
@@ -156,10 +148,10 @@ public class SavedDevicesActivity extends AppCompatActivity {
             case 201: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
                 } else {
-                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                 }
             }
         }

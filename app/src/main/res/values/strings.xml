@@ -57,7 +57,10 @@
     <string name="background_dark_red">Dark red</string>
 
     <string name="db_fail">Unable to save</string>
-    <string name="db_success">"Updated Successfully"</string>
+    <string name="db_success">Updated Successfully</string>
+
+    <string name="permission_granted">Permission granted</string>
+    <string name="permission_denied">Permission denied</string>
 
     <string name="menu_profile">Profile</string>
     <string name="menu_statistics">Statistics</string>

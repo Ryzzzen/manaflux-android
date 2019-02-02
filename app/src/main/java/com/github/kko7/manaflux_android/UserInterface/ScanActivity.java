@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
@@ -60,8 +59,6 @@ public class ScanActivity extends AppCompatActivity {
                 }
             }
         });
-
-        initialiseDetectorsAndSources();
     }
 
     private void initialiseDetectorsAndSources() {
@@ -80,18 +77,11 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) {
-
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(ScanActivity.this,
-                                Manifest.permission.CAMERA)) {
-                            Toast.makeText(ScanActivity.this, "Camera permission is needed for scanner", Toast.LENGTH_SHORT).show();
-                        } else {
-                            ActivityCompat.requestPermissions(ScanActivity.this,
-                                    new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
-                        }
-                    } else {
+                    if (ActivityCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
+                    } else {
+                        ActivityCompat.requestPermissions(ScanActivity.this, new
+                                String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
                     }
 
                 } catch (IOException e) {
