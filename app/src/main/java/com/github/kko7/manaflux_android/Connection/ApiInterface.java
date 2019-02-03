@@ -21,11 +21,4 @@ public interface ApiInterface {
 
     @POST("/api/v1/actions/positions/{position}")
     Call<ApiData> setPosition(@Path("position") Integer position);
-
-    @POST("/api/v1/actions/summoner-spells/load")
-    Call<ApiData> getSpells();
-
-    @POST("/api/v1/actions/runes/load")
-    Call<ApiData> getRunes();
-
 }

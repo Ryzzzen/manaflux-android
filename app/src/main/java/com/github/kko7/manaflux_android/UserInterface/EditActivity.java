@@ -20,7 +20,6 @@ import java.util.Objects;
 
 public class EditActivity extends AppCompatActivity {
 
-
     private static final String TAG = EditActivity.class.getSimpleName();
     private String address;
     private String name;
