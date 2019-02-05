@@ -1,12 +1,16 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -92,10 +96,15 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                 initList();
                                 spellsApi.enqueue(new Callback<ApiData>() {
                                     @Override
-                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
                                         assert response.body() != null;
                                         if(response.isSuccessful() && response.body().getSuccess()) {
-                                            //TODO
+                                            spellButton1.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    showDialog(response.body().getSummonerSpells());
+                                                }
+                                            });
                                         } else {
                                             showError(response.body().getErrorCode(), response.body().getError());
                                         }
@@ -156,6 +165,30 @@ public class ChampionSelectActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+
+    private void setRunes(View v) {
+
+    }
+
+    private void showDialog(String[] data) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_spells);
+        RecyclerView recyclerView = dialog.findViewById(R.id.spells_list);
+        SpellsAdapter adapter;
+        int numberOfColumns = 6;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        adapter = new SpellsAdapter(this, data);
+        adapter.setClickListener(new SpellsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //TODO
+
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        dialog.show();
     }
 
     @SuppressLint("SetTextI18n")
