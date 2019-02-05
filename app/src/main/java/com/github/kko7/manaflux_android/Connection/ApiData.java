@@ -18,8 +18,11 @@ public class ApiData {
     private Integer summonerLevel;
     @SerializedName("positions")
     private String[] positions;
+    @SerializedName("summonerSpells")
+    private String[] summonerSpells;
 
-    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String[] positions) {
+    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String[] positions, String[] summonerSpells) {
+
         this.success = success;
         this.error = error;
         this.errorCode = errorCode;
@@ -27,6 +30,7 @@ public class ApiData {
         this.summonerName = summonerName;
         this.summonerLevel = summonerLevel;
         this.positions = positions;
+        this.summonerSpells = summonerSpells;
     }
 
     public Boolean getSuccess() {
@@ -55,5 +59,9 @@ public class ApiData {
 
     public String[] getPositions() {
         return positions;
+    }
+
+    public String[] getSummonerSpells() {
+        return summonerSpells;
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -39,7 +40,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private RelativeLayout errorLayout;
     private RelativeLayout layout;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +60,12 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
         final TextView championName = findViewById(R.id.champion_name);
         final ImageView championImage = findViewById(R.id.champion_image);
+        final Button spellButton1 = findViewById(R.id.spell_button1);
+        final Button spellButton2 = findViewById(R.id.spell_button2);
         final ApiInterface client = new ApiClient(this).getClient();
         final Call<HeartbeatData> heartbeatApi = client.getHeartbeat();
         final Call<ApiData> positionsApi = client.getPositions();
+        final Call<ApiData> spellsApi = client.getSpells();
 
         heartbeatApi.enqueue(new Callback<HeartbeatData>() {
             @Override
@@ -83,13 +86,28 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     positionsApi.enqueue(new Callback<ApiData>() {
                         @Override
                         public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
-                            ApiData data = response.body();
-                            assert data != null;
-                            if (response.isSuccessful() && data.getSuccess()) {
-                                positions = data.getPositions();
+                            assert response.body() != null;
+                            if (response.isSuccessful() && response.body().getSuccess()) {
+                                positions = response.body().getPositions();
                                 initList();
+                                spellsApi.enqueue(new Callback<ApiData>() {
+                                    @Override
+                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                        assert response.body() != null;
+                                        if(response.isSuccessful() && response.body().getSuccess()) {
+                                            //TODO
+                                        } else {
+                                            showError(response.body().getErrorCode(), response.body().getError());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
+                                        showException(call, throwable);
+                                    }
+                                });
                             } else {
-                                showError(data.getErrorCode(), data.getError());
+                                showError(response.body().getErrorCode(), response.body().getError());
                             }
                         }
 

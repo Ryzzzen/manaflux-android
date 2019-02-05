@@ -4,14 +4,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class HeartbeatData {
 
+    @SerializedName("inChampionSelect")
+    private Boolean inChampionSelect;
     @SerializedName("name")
     private String championName;
     @SerializedName("img")
     private String championImg;
 
-    public HeartbeatData(String championName, String championImg) {
+    public HeartbeatData(Boolean inChampionSelect, String championName, String championImg) {
+        this.inChampionSelect = inChampionSelect;
         this.championName = championName;
         this.championImg = championImg;
+    }
+
+    public Boolean getInChampionSelect() {
+        return inChampionSelect;
     }
 
     public String getChampionName() {
