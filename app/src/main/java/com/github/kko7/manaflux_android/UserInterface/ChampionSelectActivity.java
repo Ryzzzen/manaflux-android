@@ -1,30 +1,36 @@
 package com.github.kko7.manaflux_android.UserInterface;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Connection.ApiClient;
-import com.github.kko7.manaflux_android.Connection.ApiData;
+import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.Connection.HeartbeatData;
+import com.github.kko7.manaflux_android.Models.Spells;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
 import com.github.kko7.manaflux_android.R;
 import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -39,8 +45,12 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private Context context;
     private TextView code;
     private TextView error;
+    private ImageButton spellButton1;
+    private ImageButton spellButton2;
     private RelativeLayout errorLayout;
     private RelativeLayout layout;
+    private int spell1 = 1, spell2 = 3;
+    Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,12 +73,12 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
         final TextView championName = findViewById(R.id.champion_name);
         final ImageView championImage = findViewById(R.id.champion_image);
-        final Button spellButton1 = findViewById(R.id.spell_button1);
-        final Button spellButton2 = findViewById(R.id.spell_button2);
         final ApiInterface client = new ApiClient(this).getClient();
         final Call<HeartbeatData> heartbeatApi = client.getHeartbeat();
         final Call<ApiData> positionsApi = client.getPositions();
         final Call<ApiData> spellsApi = client.getSpells();
+        spellButton1 = findViewById(R.id.spell_button1);
+        spellButton2 = findViewById(R.id.spell_button2);
 
         heartbeatApi.enqueue(new Callback<HeartbeatData>() {
             @Override
@@ -95,10 +105,21 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                 initList();
                                 spellsApi.enqueue(new Callback<ApiData>() {
                                     @Override
-                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
                                         assert response.body() != null;
                                         if(response.isSuccessful() && response.body().getSuccess()) {
-                                            //TODO
+                                            spellButton1.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    showDialog(v, response.body().getSummonerSpells());
+                                                }
+                                            });
+                                            spellButton2.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    showDialog(v, response.body().getSummonerSpells());
+                                                }
+                                            });
                                         } else {
                                             showError(response.body().getErrorCode(), response.body().getError());
                                         }
@@ -159,6 +180,53 @@ public class ChampionSelectActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+
+    private void showDialog(final View v, ArrayList<Spells> data) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_spells);
+        RecyclerView recyclerView = dialog.findViewById(R.id.spells_list);
+        SpellsAdapter adapter;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 6));
+        adapter = new SpellsAdapter(this, data);
+        adapter.setClickListener(new SpellsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                final ApiInterface client = new ApiClient(view.getContext()).getClient();
+                Call<ApiData> setSpellsApi;
+                RequestBody body;
+                if(v.getId() == R.id.spell_button1) {
+                    spell1 = position;
+                    body = RequestBody.create(MediaType.parse("text/plain"), position + "," + spell2);
+                } else {
+                    spell2 = position;
+                    body = RequestBody.create(MediaType.parse("text/plain"), spell1 + "," + position);
+                }
+                setSpellsApi = client.setSpells(body);
+                if(spell1 == spell2) {
+                    Toast.makeText(getApplicationContext(), "Bad spells", Toast.LENGTH_SHORT).show();
+                } else setSpellsApi.enqueue(new Callback<ApiData>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                        assert response.body() != null;
+                        if(response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Changed spell", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        } else {
+                            showError(response.body().getErrorCode(), response.body().getError());
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
+                        showException(call, t);
+                    }
+                });
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        dialog.show();
     }
 
     @SuppressLint("SetTextI18n")

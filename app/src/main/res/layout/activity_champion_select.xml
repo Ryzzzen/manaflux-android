@@ -38,7 +38,17 @@
             android:textSize="30sp"
             tools:text="Nautilus" />
 
-        <Button
+        <ImageButton
+            android:id="@+id/spell_button1"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="20dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
             android:id="@+id/spell_button2"
             android:layout_width="55dp"
             android:layout_height="55dp"
@@ -55,15 +65,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="159dp"
             android:layout_marginBottom="31dp" />
-
-        <Button
-            android:id="@+id/spell_button1"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="20dp" />
     </RelativeLayout>
 
     <RelativeLayout

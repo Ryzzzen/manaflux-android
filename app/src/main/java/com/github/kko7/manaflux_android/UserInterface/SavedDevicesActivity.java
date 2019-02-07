@@ -41,7 +41,6 @@ public class SavedDevicesActivity extends AppCompatActivity {
     private RelativeLayout layout;
     private PrefsHelper prefsHelper;
     private Adapter adapter;
-    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +77,14 @@ public class SavedDevicesActivity extends AppCompatActivity {
     }
 
     private void showDialog() {
-        dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(this);
+        Button saveBtn = dialog.findViewById(R.id.saveBtn);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_add_device);
 
         addressEditTxt = dialog.findViewById(R.id.addressEditTxt);
         nameEditTxt = dialog.findViewById(R.id.nameEditTxt);
 
-        Button saveBtn = dialog.findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
