@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Connection.ApiClient;
-import com.github.kko7.manaflux_android.Connection.ApiData;
+import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
@@ -97,8 +97,8 @@ public class LoadActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
                         final ApiData data = response.body();
-                        assert data != null;
                         try {
+                            assert data != null;
                             if (response.isSuccessful() && data.getSuccess()) {
                                 prefsHelper.saveString("summonerName", data.getSummonerName());
                                 prefsHelper.saveInt("summonerLevel", data.getSummonerLevel());
