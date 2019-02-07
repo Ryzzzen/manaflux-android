@@ -137,7 +137,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
 
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
-        Integer id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);
     }
 

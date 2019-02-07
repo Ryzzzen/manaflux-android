@@ -50,7 +50,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private RelativeLayout errorLayout;
     private RelativeLayout layout;
     private int spell1 = 1, spell2 = 3;
-    Dialog dialog;
+    private Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

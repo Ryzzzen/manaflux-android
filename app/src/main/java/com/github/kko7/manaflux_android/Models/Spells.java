@@ -2,9 +2,9 @@ package com.github.kko7.manaflux_android.Models;
 
 
 public class Spells {
-    int id;
-    String name;
-    String path;
+    private int id;
+    private String name;
+    private String path;
 
     public int getSpellId() {
         return id;

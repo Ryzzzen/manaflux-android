@@ -219,7 +219,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private void setBackground() {
         String value = prefsHelper.getBackground("background");
-        Integer id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
+        int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         errorLayout.setBackgroundResource(id);
         layout.setBackgroundResource(id);
     }

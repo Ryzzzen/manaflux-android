@@ -101,7 +101,7 @@ public class SettingsFragment extends Fragment {
 
                 }
                 String value = prefsHelper.getBackground("background");
-                Integer res = getResources().getIdentifier(value + "_bg", "mipmap", view.getContext().getPackageName());
+                int res = getResources().getIdentifier(value + "_bg", "mipmap", view.getContext().getPackageName());
                 layout.setBackgroundResource(res);
             }
 
