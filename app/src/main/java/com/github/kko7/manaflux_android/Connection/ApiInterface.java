@@ -1,5 +1,8 @@
 package com.github.kko7.manaflux_android.Connection;
 
+import com.github.kko7.manaflux_android.Models.ApiData;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -11,21 +14,21 @@ public interface ApiInterface {
     @POST("/api/v1/authentify/Android/{deviceName}")
     Call<ApiData> authentifyDevice(@Path("deviceName") String deviceName);
 
-    @GET("/api/v1/heartbeat")
+    @GET("/api/v1/me/heartbeat")
     Call<HeartbeatData> getHeartbeat();
 
-    @GET("/api/v1/summoner")
+    @GET("/api/v1/me/summoner")
     Call<ApiData> getSummoner();
 
-    @GET("/api/v1/actions/positions")
+    @GET("/api/v1/me/positions")
     Call<ApiData> getPositions();
 
-    @POST("/api/v1/actions/positions/{position}")
+    @POST("/api/v1/me/actions/positions/{position}")
     Call<ApiData> setPosition(@Path("position") Integer position);
 
-    @GET("/api/v1/actions/summoner-spells")
+    @GET("/api/v1/public/summoner-spells")
     Call<ApiData> getSpells();
 
-    @POST("/api/v1/actions/summoner-spells")
-    Call<ApiData> setSpells(@Body String spells);
+    @POST("/api/v1/me/actions/summoner-spells")
+    Call<ApiData> setSpells(@Body RequestBody spells);
 }

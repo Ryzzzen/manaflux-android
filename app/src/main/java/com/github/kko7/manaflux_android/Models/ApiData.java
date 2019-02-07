@@ -1,6 +1,8 @@
-package com.github.kko7.manaflux_android.Connection;
+package com.github.kko7.manaflux_android.Models;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class ApiData {
 
@@ -19,9 +21,9 @@ public class ApiData {
     @SerializedName("positions")
     private String[] positions;
     @SerializedName("summonerSpells")
-    private String[] summonerSpells;
+    private ArrayList<Spells> summonerSpells;
 
-    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String[] positions, String[] summonerSpells) {
+    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String[] positions, ArrayList<Spells> summonerSpells) {
 
         this.success = success;
         this.error = error;
@@ -61,7 +63,7 @@ public class ApiData {
         return positions;
     }
 
-    public String[] getSummonerSpells() {
+    public ArrayList<Spells> getSummonerSpells() {
         return summonerSpells;
     }
 }
