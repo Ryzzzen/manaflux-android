@@ -26,6 +26,8 @@ import com.squareup.picasso.Picasso;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,6 +49,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Started");
 
         context = this;
+        dialog = new Dialog(this);
         code = findViewById(R.id.errorCode);
         error = findViewById(R.id.error);
         layout = findViewById(R.id.select_layout);
@@ -170,6 +173,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                dialog.dismiss();
                 String error1, error2;
                 if (throwable instanceof SocketTimeoutException) {
                     error1 = "Connect timed out";
