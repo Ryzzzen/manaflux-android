@@ -74,7 +74,8 @@ public class LoadActivity extends AppCompatActivity {
             }
         });
         setBackground();
-        start();
+        //start();
+        startActivity(new Intent(LoadActivity.this, ChampionSelectActivity.class));
     }
 
     private void start() {

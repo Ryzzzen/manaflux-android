@@ -36,8 +36,6 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int res = holder.itemView.getContext().getResources().getIdentifier("test", "mipmap", holder.itemView.getContext().getPackageName());
-        holder.spellButton.setImageResource(res);
         holder.spellName.setText(mData.get(position).getSpellName());
         holder.spellButton.setContentDescription(String.valueOf(mData.get(position).getSpellId()));
         Picasso.get()                                                                                                  //Here goes port

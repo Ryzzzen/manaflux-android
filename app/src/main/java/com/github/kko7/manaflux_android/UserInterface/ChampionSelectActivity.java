@@ -50,7 +50,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private RelativeLayout errorLayout;
     private RelativeLayout layout;
     private int spell1 = 1, spell2 = 3;
-    private Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Started");
 
         context = this;
-        dialog = new Dialog(this);
         code = findViewById(R.id.errorCode);
         error = findViewById(R.id.error);
         layout = findViewById(R.id.select_layout);
@@ -183,12 +181,13 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void showDialog(final View v, ArrayList<Spells> data) {
+        final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_spells);
         RecyclerView recyclerView = dialog.findViewById(R.id.spells_list);
         SpellsAdapter adapter;
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 6));
-        adapter = new SpellsAdapter(this, data);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        adapter = new SpellsAdapter(context, data);
         adapter.setClickListener(new SpellsAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -211,7 +210,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         assert response.body() != null;
                         if(response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Changed spell", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                            dialog.cancel();
                         } else {
                             showError(response.body().getErrorCode(), response.body().getError());
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
@@ -241,7 +240,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                dialog.dismiss();
                 String error1, error2;
                 if (throwable instanceof SocketTimeoutException) {
                     error1 = "Connect timed out";
