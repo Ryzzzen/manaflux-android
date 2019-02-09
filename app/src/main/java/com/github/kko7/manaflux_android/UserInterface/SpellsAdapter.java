@@ -40,6 +40,8 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
         holder.spellButton.setContentDescription(String.valueOf(mData.get(position).getSpellId()));
         Picasso.get()                                                                                                  //Here goes port
                 .load("http://" +PrefsHelper.getInstance(holder.itemView.getContext()).getString("device-ip") + ":3688" + mData.get(position).getPath())
+                .fit()
+                .centerCrop()
                 .into(holder.spellButton);
     }
 
