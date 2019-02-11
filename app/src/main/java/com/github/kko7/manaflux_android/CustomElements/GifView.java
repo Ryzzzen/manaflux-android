@@ -66,8 +66,6 @@ public class GifView extends View {
 
             gifMovie.draw(canvas, 0, 0);
             invalidate();
-
         }
-
     }
 }

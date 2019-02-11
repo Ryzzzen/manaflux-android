@@ -28,5 +28,4 @@ public class ButtonView extends android.support.v7.widget.AppCompatButton {
         Typeface bold = Typeface.createFromAsset(getContext().getAssets(), "fonts/Beaufort_Bold.ttf");
         setTypeface(bold, Typeface.BOLD);
     }
-
 }

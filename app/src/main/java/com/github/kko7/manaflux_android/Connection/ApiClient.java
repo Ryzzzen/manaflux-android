@@ -30,7 +30,10 @@ public class ApiClient {
             @NonNull
             @Override
             public Response intercept(@NonNull Interceptor.Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().addHeader("Authorization", PrefsHelper.getInstance(context).getString("auth-token")).build();
+                Request request = chain.request()
+                        .newBuilder()
+                        .addHeader("Authorization", PrefsHelper.getInstance(context).getString("auth-token"))
+                        .build();
                 return chain.proceed(request);
             }
         });

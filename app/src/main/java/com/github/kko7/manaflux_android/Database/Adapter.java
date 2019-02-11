@@ -26,7 +26,8 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        @SuppressLint("InflateParams") View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_model, null);
+        @SuppressLint("InflateParams") View v =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.list_model, null);
         return new Holder(v);
     }
 

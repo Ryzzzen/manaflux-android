@@ -7,8 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DBAdapter {
-    private SQLiteDatabase db;
     private final DBHelper helper;
+    private SQLiteDatabase db;
 
     public DBAdapter(Context context) {
         helper = new DBHelper(context);
@@ -20,7 +20,6 @@ public class DBAdapter {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void close() {
@@ -29,7 +28,6 @@ public class DBAdapter {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public Cursor getAllDevices() {
@@ -55,7 +53,8 @@ public class DBAdapter {
             ContentValues cv = new ContentValues();
             cv.put(Constants.ROW_ADDRESS, address);
             cv.put(Constants.ROW_NAME, name);
-            return db.update(Constants.TB_NAME, cv, Constants.ROW_ID + " =?", new String[]{String.valueOf(id)});
+            return db.update(Constants.TB_NAME, cv, Constants.ROW_ID + " =?",
+                    new String[]{String.valueOf(id)});
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,12 +64,12 @@ public class DBAdapter {
 
     public long DELETE(int id) {
         try {
-            return db.delete(Constants.TB_NAME, Constants.ROW_ID + " =?", new String[]{String.valueOf(id)});
+            return db.delete(Constants.TB_NAME, Constants.ROW_ID + " =?",
+                    new String[]{String.valueOf(id)});
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return 0;
     }
-
 }

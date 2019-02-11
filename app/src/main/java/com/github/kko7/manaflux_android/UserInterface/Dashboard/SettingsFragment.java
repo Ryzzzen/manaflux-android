@@ -27,7 +27,8 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
@@ -61,8 +62,10 @@ public class SettingsFragment extends Fragment {
                 getString(R.string.background_purple), //purple
                 getString(R.string.background_green), //green
                 getString(R.string.background_gray), //purple
-                getString(R.string.background_dark_red)}; // dark red
-        ArrayAdapter adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+                getString(R.string.background_dark_red)
+        }; // dark red
+        ArrayAdapter adapter =
+                new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
         spinner.setSelection(prefsHelper.getInt("spinner"));
 
@@ -98,10 +101,10 @@ public class SettingsFragment extends Fragment {
                         prefsHelper.saveString("background", "default");
                         prefsHelper.saveInt("spinner", 0);
                         break;
-
                 }
                 String value = prefsHelper.getBackground("background");
-                int res = getResources().getIdentifier(value + "_bg", "mipmap", view.getContext().getPackageName());
+                int res = getResources().getIdentifier(value + "_bg", "mipmap",
+                        view.getContext().getPackageName());
                 layout.setBackgroundResource(res);
             }
 

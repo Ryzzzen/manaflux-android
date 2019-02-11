@@ -39,7 +39,10 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
         holder.spellName.setText(mData.get(position).getSpellName());
         holder.spellButton.setContentDescription(String.valueOf(mData.get(position).getSpellId()));
         Picasso.get()                                                                                                  //Here goes port
-                .load("http://" + PrefsHelper.getInstance(holder.itemView.getContext()).getString("device-ip") + ":3688" + mData.get(position).getPath())
+                .load("http://"
+                        + PrefsHelper.getInstance(holder.itemView.getContext()).getString("device-ip")
+                        + ":3688"
+                        + mData.get(position).getPath())
                 .fit()
                 .centerCrop()
                 .into(holder.spellButton);
@@ -48,6 +51,14 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(View view, int position, int id);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,17 +72,11 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
             spellButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mClickListener.onItemClick(v, Integer.parseInt(String.valueOf(spellButton.getContentDescription())), getAdapterPosition());
+                    mClickListener.onItemClick(v,
+                            Integer.parseInt(String.valueOf(spellButton.getContentDescription())),
+                            getAdapterPosition());
                 }
             });
         }
-    }
-
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    public interface ItemClickListener {
-        void onItemClick(View view, int position, int id);
     }
 }

@@ -88,21 +88,24 @@ public class SavedDevicesActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nameEditTxt.getText().toString().equals("") || addressEditTxt.getText().toString().equals("")) {
-                    Toast.makeText(SavedDevicesActivity.this, getString(R.string.dialog_null), Toast.LENGTH_SHORT).show();
+                if (nameEditTxt.getText().toString().equals("") || addressEditTxt.getText()
+                        .toString()
+                        .equals("")) {
+                    Toast.makeText(SavedDevicesActivity.this, getString(R.string.dialog_null),
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     dbHelper.save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
                     retrieve();
                     dialog.hide();
                 }
-
             }
         });
         dialog.show();
     }
 
     private void startScan() {
-        if (ActivityCompat.checkSelfPermission(SavedDevicesActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(SavedDevicesActivity.this, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
             startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
         } else {
             ActivityCompat.requestPermissions(SavedDevicesActivity.this, new
@@ -142,15 +145,18 @@ public class SavedDevicesActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case 201: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.permission_granted),
+                            Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(SavedDevicesActivity.this, ScanActivity.class));
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.permission_denied),
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         }

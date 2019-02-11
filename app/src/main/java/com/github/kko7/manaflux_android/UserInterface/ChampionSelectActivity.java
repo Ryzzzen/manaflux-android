@@ -21,10 +21,10 @@ import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
-import com.github.kko7.manaflux_android.Models.HeartbeatData;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.Models.ApiData;
+import com.github.kko7.manaflux_android.Models.HeartbeatData;
 import com.github.kko7.manaflux_android.Models.Spells;
 import com.github.kko7.manaflux_android.R;
 import com.squareup.picasso.Picasso;
@@ -82,7 +82,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
         heartbeatApi.enqueue(new Callback<HeartbeatData>() {
             @Override
-            public void onResponse(@NonNull final Call<HeartbeatData> call, @NonNull Response<HeartbeatData> response) {
+            public void onResponse(@NonNull final Call<HeartbeatData> call,
+                                   @NonNull Response<HeartbeatData> response) {
                 final HeartbeatData heartbeatData = response.body();
                 assert heartbeatData != null;
                 if (response.isSuccessful()) {
@@ -91,14 +92,16 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         public void run() {
                             championName.setText(heartbeatData.getChampionName());
                             Picasso.get()
-                                    .load(heartbeatData.getChampionImg().replace("localhost", call.request().url().host()))
+                                    .load(heartbeatData.getChampionImg()
+                                            .replace("localhost", call.request().url().host()))
                                     .placeholder(R.mipmap.test)
                                     .into(championImage);
                         }
                     });
                     positionsApi.enqueue(new Callback<ApiData>() {
                         @Override
-                        public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                        public void onResponse(@NonNull Call<ApiData> call,
+                                               @NonNull Response<ApiData> response) {
                             ApiData positionsData = response.body();
                             assert positionsData != null;
                             if (response.isSuccessful() && positionsData.getSuccess()) {
@@ -106,19 +109,23 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                 initList();
                                 summonerSpellsApi.enqueue(new Callback<ApiData>() {
                                     @Override
-                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
+                                    public void onResponse(@NonNull Call<ApiData> call,
+                                                           @NonNull final Response<ApiData> response) {
                                         final ApiData spellsData = response.body();
                                         assert spellsData != null;
                                         mData = spellsData.getSummonerSpells();
-                                        if(response.isSuccessful() && spellsData.getSuccess()) {
+                                        if (response.isSuccessful() && spellsData.getSuccess()) {
                                             spellsApi.enqueue(new Callback<ApiData>() {
                                                 @Override
-                                                public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                                public void onResponse(@NonNull Call<ApiData> call,
+                                                                       @NonNull Response<ApiData> response) {
                                                     assert response.body() != null;
-                                                    Spells spellById1 = getSpellById(Integer.valueOf(response.body().getSpells()[0]));
+                                                    Spells spellById1 =
+                                                            getSpellById(Integer.valueOf(response.body().getSpells()[0]));
                                                     assert spellById1 != null;
                                                     spell1 = spellById1.getSpellId();
-                                                    Spells spellById2 = getSpellById(Integer.valueOf(response.body().getSpells()[1]));
+                                                    Spells spellById2 =
+                                                            getSpellById(Integer.valueOf(response.body().getSpells()[1]));
                                                     assert spellById2 != null;
                                                     spell2 = spellById2.getSpellId();
                                                     updateButtons(spellButton1, spellById1.getPath());
@@ -126,7 +133,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                                 }
 
                                                 @Override
-                                                public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
+                                                public void onFailure(@NonNull Call<ApiData> call,
+                                                                      @NonNull Throwable throwable) {
                                                     showException(call, throwable);
                                                 }
                                             });
@@ -173,7 +181,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void initList() {
-        ArrayAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, positions);
+        ArrayAdapter adapter =
+                new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, positions);
         Spinner positionsSpinner = findViewById(R.id.position_spinner);
         positionsSpinner.setAdapter(adapter);
         positionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -185,9 +194,12 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(v.getContext(), getString(R.string.champion_select_changed) + positions[position], Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(),
+                                    getString(R.string.champion_select_changed) + positions[position],
+                                    Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(v.getContext(), getString(R.string.champion_select_error), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(), getString(R.string.champion_select_error),
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -217,7 +229,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
             public void onItemClick(final View view, final int position, final int id) {
                 final ApiInterface client = new ApiClient(view.getContext()).getClient();
                 RequestBody body;
-                if(v.getId() == R.id.spell_button1) {
+                if (v.getId() == R.id.spell_button1) {
                     spell1 = position;
                     body = RequestBody.create(MediaType.parse("text/plain"), position + "," + spell2);
                 } else {
@@ -225,32 +237,37 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     body = RequestBody.create(MediaType.parse("text/plain"), spell1 + "," + position);
                 }
                 final Call<ApiData> setSpellsApi = client.setSpells(body);
-                if(spell1 == spell2) {
+                if (spell1 == spell2) {
                     Toast.makeText(getApplicationContext(), "Bad spells", Toast.LENGTH_SHORT).show();
-                } else setSpellsApi.enqueue(new Callback<ApiData>() {
-                    @Override
-                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
-                        assert response.body() != null;
-                        if(response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Changed spell", Toast.LENGTH_SHORT).show();
-                            if(v.getId() == R.id.spell_button1) {
-                                updateButtons(spellButton1, mData.get(id).getPath());
+                } else {
+                    setSpellsApi.enqueue(new Callback<ApiData>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ApiData> call,
+                                               @NonNull Response<ApiData> response) {
+                            assert response.body() != null;
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Changed spell",
+                                        Toast.LENGTH_SHORT).show();
+                                if (v.getId() == R.id.spell_button1) {
+                                    updateButtons(spellButton1, mData.get(id).getPath());
+                                } else {
+                                    updateButtons(spellButton2, mData.get(id).getPath());
+                                }
+
+                                dialog.cancel();
                             } else {
-                                updateButtons(spellButton2, mData.get(id).getPath());
+                                showError(response.body().getErrorCode(), response.body().getError());
+                                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT)
+                                        .show();
                             }
-
-                            dialog.cancel();
-                        } else {
-                            showError(response.body().getErrorCode(), response.body().getError());
-                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
-                        showException(call, t);
-                    }
-                });
+                        @Override
+                        public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
+                            showException(call, t);
+                        }
+                    });
+                }
             }
         });
         recyclerView.setAdapter(adapter);

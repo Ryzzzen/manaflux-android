@@ -25,7 +25,9 @@ public class ApiData {
     @SerializedName("summonerSpells")
     private ArrayList<Spells> summonerSpells;
 
-    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String[] positions, String[] spells, ArrayList<Spells> summonerSpells) {
+    public ApiData(Boolean success, String error, String errorCode, Boolean authentified,
+                   String summonerName, Integer summonerLevel, String[] positions, String[] spells,
+                   ArrayList<Spells> summonerSpells) {
 
         this.success = success;
         this.error = error;

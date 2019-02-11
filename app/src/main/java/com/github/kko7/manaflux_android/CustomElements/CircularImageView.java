@@ -32,14 +32,14 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
             float smallest = Math.min(bmp.getWidth(), bmp.getHeight());
             float factor = smallest / radius;
-            sBmp = Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() / factor), (int) (bmp.getHeight() / factor), false);
+            sBmp = Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() / factor),
+                    (int) (bmp.getHeight() / factor), false);
         } else {
             sBmp = bmp;
         }
 
         Bitmap output = Bitmap.createBitmap(radius, radius,
                 Bitmap.Config.ARGB_8888);
-
 
         Canvas canvas = new Canvas(output);
         final Paint paint = new Paint();
@@ -50,8 +50,8 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
         paint.setDither(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(Color.parseColor("#BAB399"));
-        canvas.drawCircle(radius / 2 + 0.7f,
-                radius / 2 + 0.7f, radius / 2 + 0.1f, paint);
+        canvas.drawCircle((radius >> 1) + 0.7f,
+                (radius >> 1) + 0.7f, (radius >> 1) + 0.1f, paint);
         paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
         canvas.drawBitmap(sBmp, rect, rect, paint);
 
@@ -77,7 +77,5 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
 
         Bitmap roundBitmap = getRoundBitmap(bitmap, w);
         canvas.drawBitmap(roundBitmap, 0, 0, null);
-
     }
-
 }

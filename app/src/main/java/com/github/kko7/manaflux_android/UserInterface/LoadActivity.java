@@ -17,10 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Connection.ApiClient;
-import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.UserInterface.Dashboard.DashboardActivity;
 
@@ -63,8 +63,11 @@ public class LoadActivity extends AppCompatActivity {
         secondButton = findViewById(R.id.second_button);
         loadingGif = findViewById(R.id.loading_gif);
         loadingGif.startGif(R.mipmap.loading);
-        if (getIntent().getStringExtra("class") == null) newClass = DashboardActivity.class;
-        else newClass = ChampionSelectActivity.class;
+      if (getIntent().getStringExtra("class") == null) {
+        newClass = DashboardActivity.class;
+      } else {
+        newClass = ChampionSelectActivity.class;
+      }
         Button againButton = findViewById(R.id.refresh_button);
         againButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +99,8 @@ public class LoadActivity extends AppCompatActivity {
                 Call<ApiData> getSummoner = client.getSummoner();
                 getSummoner.enqueue(new Callback<ApiData>() {
                     @Override
-                    public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
+                    public void onResponse(@NonNull Call<ApiData> call,
+                                           @NonNull final Response<ApiData> response) {
                         final ApiData data = response.body();
                         try {
                             assert data != null;
@@ -108,10 +112,13 @@ public class LoadActivity extends AppCompatActivity {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
                                 authentify.enqueue(new Callback<ApiData>() {
                                     @Override
-                                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                    public void onResponse(@NonNull Call<ApiData> call,
+                                                           @NonNull Response<ApiData> response) {
                                         assert response.body() != null;
-                                        if (response.body().getAuthentified())
-                                            Toast.makeText(LoadActivity.this, getString(R.string.error_auth_success), Toast.LENGTH_SHORT).show();
+                                      if (response.body().getAuthentified()) {
+                                        Toast.makeText(LoadActivity.this, getString(R.string.error_auth_success),
+                                            Toast.LENGTH_SHORT).show();
+                                      }
                                         start();
                                     }
 
@@ -138,7 +145,8 @@ public class LoadActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        showError("Message: " + response.message(), "Code: " + String.valueOf(response.code()));
+                                      showError("Message: " + response.message(),
+                                          "Code: " + String.valueOf(response.code()));
                                         secondButton.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -148,14 +156,14 @@ public class LoadActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull final Call<ApiData> call, @NonNull final Throwable throwable) {
+                    public void onFailure(@NonNull final Call<ApiData> call,
+                                          @NonNull final Throwable throwable) {
                         showException(call, throwable);
                     }
                 });

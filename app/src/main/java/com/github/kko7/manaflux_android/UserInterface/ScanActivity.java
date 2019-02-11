@@ -77,13 +77,13 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
+                            == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
                     } else {
                         ActivityCompat.requestPermissions(ScanActivity.this, new
                                 String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +102,8 @@ public class ScanActivity extends AppCompatActivity {
         qrDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), getString(R.string.scan_stop), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.scan_stop), Toast.LENGTH_SHORT)
+                        .show();
             }
 
             @Override
@@ -117,7 +118,8 @@ public class ScanActivity extends AppCompatActivity {
                             String data = String.valueOf((qr.valueAt(0).displayValue));
 
                             if (data.equals("")) {
-                                Toast.makeText(getApplicationContext(), getString(R.string.scan_invalid), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), getString(R.string.scan_invalid),
+                                        Toast.LENGTH_LONG).show();
                             } else {
                                 txtBarcodeValue.removeCallbacks(null);
                                 String[] data1 = data.split(":", 2);
