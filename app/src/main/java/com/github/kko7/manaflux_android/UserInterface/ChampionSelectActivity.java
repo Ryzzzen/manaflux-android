@@ -115,12 +115,14 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
                                                     assert response.body() != null;
-                                                    Spells spell1 = getSpellById(Integer.valueOf(response.body().getSpells()[0]));
-                                                    assert spell1 != null;
-                                                    Spells spell2 = getSpellById(Integer.valueOf(response.body().getSpells()[1]));
-                                                    assert spell2 != null;
-                                                    updateButtons(spellButton1, spell1.getPath());
-                                                    updateButtons(spellButton2, spell2.getPath());
+                                                    Spells spellById1 = getSpellById(Integer.valueOf(response.body().getSpells()[0]));
+                                                    assert spellById1 != null;
+                                                    spell1 = spellById1.getSpellId();
+                                                    Spells spellById2 = getSpellById(Integer.valueOf(response.body().getSpells()[1]));
+                                                    assert spellById2 != null;
+                                                    spell2 = spellById2.getSpellId();
+                                                    updateButtons(spellButton1, spellById1.getPath());
+                                                    updateButtons(spellButton2, spellById2.getPath());
                                                 }
 
                                                 @Override
