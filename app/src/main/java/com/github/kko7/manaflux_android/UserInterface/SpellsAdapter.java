@@ -38,10 +38,10 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.spellName.setText(mData.get(position).getSpellName());
         holder.spellButton.setContentDescription(String.valueOf(mData.get(position).getSpellId()));
-        Picasso.get()                                                                                                  //Here goes port
+        Picasso.get()
                 .load("http://"
                         + PrefsHelper.getInstance(holder.itemView.getContext()).getString("device-ip")
-                        + ":3688"
+                        + ":3688" //Here goes port
                         + mData.get(position).getPath())
                 .fit()
                 .centerCrop()
