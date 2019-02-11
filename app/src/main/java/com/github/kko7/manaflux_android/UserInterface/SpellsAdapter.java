@@ -61,7 +61,7 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
             spellButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mClickListener.onItemClick(v, Integer.parseInt(String.valueOf(spellButton.getContentDescription())));
+                    mClickListener.onItemClick(v, Integer.parseInt(String.valueOf(spellButton.getContentDescription())), getAdapterPosition());
                 }
             });
         }
@@ -72,6 +72,6 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
     }
 
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position, int id);
     }
 }

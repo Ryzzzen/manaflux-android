@@ -20,11 +20,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Connection.ApiClient;
-import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
-import com.github.kko7.manaflux_android.Connection.HeartbeatData;
-import com.github.kko7.manaflux_android.Models.Spells;
+import com.github.kko7.manaflux_android.Models.HeartbeatData;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
+import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+import com.github.kko7.manaflux_android.Models.ApiData;
+import com.github.kko7.manaflux_android.Models.Spells;
 import com.github.kko7.manaflux_android.R;
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +50,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private ImageButton spellButton2;
     private RelativeLayout errorLayout;
     private RelativeLayout layout;
-    private int spell1 = 1, spell2 = 3;
+    private ArrayList<Spells> mData;
+    private int spell1, spell2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,60 +68,80 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void start() {
-        layout.setVisibility(View.VISIBLE);
-        errorLayout.setVisibility(View.GONE);
-
         final TextView championName = findViewById(R.id.champion_name);
         final ImageView championImage = findViewById(R.id.champion_image);
         final ApiInterface client = new ApiClient(this).getClient();
         final Call<HeartbeatData> heartbeatApi = client.getHeartbeat();
         final Call<ApiData> positionsApi = client.getPositions();
         final Call<ApiData> spellsApi = client.getSpells();
+        final Call<ApiData> summonerSpellsApi = client.getSummonerSpells();
+        layout.setVisibility(View.VISIBLE);
+        errorLayout.setVisibility(View.GONE);
         spellButton1 = findViewById(R.id.spell_button1);
         spellButton2 = findViewById(R.id.spell_button2);
 
         heartbeatApi.enqueue(new Callback<HeartbeatData>() {
             @Override
-            public void onResponse(@NonNull Call<HeartbeatData> call, @NonNull Response<HeartbeatData> response) {
-                final HeartbeatData responseBody = response.body();
-                assert responseBody != null;
+            public void onResponse(@NonNull final Call<HeartbeatData> call, @NonNull Response<HeartbeatData> response) {
+                final HeartbeatData heartbeatData = response.body();
+                assert heartbeatData != null;
                 if (response.isSuccessful()) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            championName.setText(responseBody.getChampionName());
+                            championName.setText(heartbeatData.getChampionName());
+                            Picasso.get()
+                                    .load(heartbeatData.getChampionImg().replace("localhost", call.request().url().host()))
+                                    .placeholder(R.mipmap.test)
+                                    .into(championImage);
                         }
                     });
-                    Picasso.get()
-                            .load(responseBody.getChampionImg().replace("localhost", call.request().url().host()))
-                            .placeholder(R.mipmap.test)
-                            .into(championImage);
                     positionsApi.enqueue(new Callback<ApiData>() {
                         @Override
                         public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
-                            assert response.body() != null;
-                            if (response.isSuccessful() && response.body().getSuccess()) {
-                                positions = response.body().getPositions();
+                            ApiData positionsData = response.body();
+                            assert positionsData != null;
+                            if (response.isSuccessful() && positionsData.getSuccess()) {
+                                positions = positionsData.getPositions();
                                 initList();
-                                spellsApi.enqueue(new Callback<ApiData>() {
+                                summonerSpellsApi.enqueue(new Callback<ApiData>() {
                                     @Override
                                     public void onResponse(@NonNull Call<ApiData> call, @NonNull final Response<ApiData> response) {
-                                        assert response.body() != null;
-                                        if(response.isSuccessful() && response.body().getSuccess()) {
+                                        final ApiData spellsData = response.body();
+                                        assert spellsData != null;
+                                        mData = spellsData.getSummonerSpells();
+                                        if(response.isSuccessful() && spellsData.getSuccess()) {
+                                            spellsApi.enqueue(new Callback<ApiData>() {
+                                                @Override
+                                                public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                                                    assert response.body() != null;
+                                                    Spells spell1 = getSpellById(Integer.valueOf(response.body().getSpells()[0]));
+                                                    assert spell1 != null;
+                                                    Spells spell2 = getSpellById(Integer.valueOf(response.body().getSpells()[1]));
+                                                    assert spell2 != null;
+                                                    updateButtons(spellButton1, spell1.getPath());
+                                                    updateButtons(spellButton2, spell2.getPath());
+                                                }
+
+                                                @Override
+                                                public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
+                                                    showException(call, throwable);
+                                                }
+                                            });
                                             spellButton1.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    showDialog(v, response.body().getSummonerSpells());
+                                                    showDialog(v, spellsData.getSummonerSpells());
                                                 }
                                             });
                                             spellButton2.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    showDialog(v, response.body().getSummonerSpells());
+                                                    showDialog(v, spellsData.getSummonerSpells());
                                                 }
                                             });
                                         } else {
-                                            showError(response.body().getErrorCode(), response.body().getError());
+                                            showError(spellsData.getErrorCode(), spellsData.getError());
                                         }
                                     }
 
@@ -129,7 +151,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                showError(response.body().getErrorCode(), response.body().getError());
+                                showError(positionsData.getErrorCode(), positionsData.getError());
                             }
                         }
 
@@ -190,9 +212,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
         adapter = new SpellsAdapter(context, data);
         adapter.setClickListener(new SpellsAdapter.ItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(final View view, final int position, final int id) {
                 final ApiInterface client = new ApiClient(view.getContext()).getClient();
-                Call<ApiData> setSpellsApi;
                 RequestBody body;
                 if(v.getId() == R.id.spell_button1) {
                     spell1 = position;
@@ -201,7 +222,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     spell2 = position;
                     body = RequestBody.create(MediaType.parse("text/plain"), spell1 + "," + position);
                 }
-                setSpellsApi = client.setSpells(body);
+                final Call<ApiData> setSpellsApi = client.setSpells(body);
                 if(spell1 == spell2) {
                     Toast.makeText(getApplicationContext(), "Bad spells", Toast.LENGTH_SHORT).show();
                 } else setSpellsApi.enqueue(new Callback<ApiData>() {
@@ -210,6 +231,12 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         assert response.body() != null;
                         if(response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Changed spell", Toast.LENGTH_SHORT).show();
+                            if(v.getId() == R.id.spell_button1) {
+                                updateButtons(spellButton1, mData.get(id).getPath());
+                            } else {
+                                updateButtons(spellButton2, mData.get(id).getPath());
+                            }
+
                             dialog.cancel();
                         } else {
                             showError(response.body().getErrorCode(), response.body().getError());
@@ -226,6 +253,23 @@ public class ChampionSelectActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         dialog.show();
+    }
+
+    private void updateButtons(ImageButton button, String path) {
+        Picasso.get()                                                                                //Here goes port
+                .load("http://" + PrefsHelper.getInstance(context).getString("device-ip") + ":3688" + path)
+                .fit()
+                .centerCrop()
+                .into(button);
+    }
+
+    private Spells getSpellById(Integer id) {
+        for (Spells spell : mData) {
+            if (spell.getSpellId() == id) {
+                return spell;
+            }
+        }
+        return null;
     }
 
     @SuppressLint("SetTextI18n")
