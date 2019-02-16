@@ -35,4 +35,7 @@ public interface ApiInterface {
 
     @POST("/api/v1/me/actions/summoner-spells")
     Call<ApiData> setSpells(@Body RequestBody spells);
+
+    @POST("/get")
+    Call<ApiData> testConnection();
 }

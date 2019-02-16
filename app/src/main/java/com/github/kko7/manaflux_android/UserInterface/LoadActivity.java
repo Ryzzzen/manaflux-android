@@ -63,11 +63,11 @@ public class LoadActivity extends AppCompatActivity {
         secondButton = findViewById(R.id.second_button);
         loadingGif = findViewById(R.id.loading_gif);
         loadingGif.startGif(R.mipmap.loading);
-      if (getIntent().getStringExtra("class") == null) {
+        if (!getIntent().getBooleanExtra("class", false)) {
         newClass = DashboardActivity.class;
-      } else {
-        newClass = ChampionSelectActivity.class;
-      }
+        } else {
+            newClass = ChampionSelectActivity.class;
+        }
         Button againButton = findViewById(R.id.refresh_button);
         againButton.setOnClickListener(new View.OnClickListener() {
             @Override

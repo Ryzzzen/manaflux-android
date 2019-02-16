@@ -34,8 +34,6 @@ public class SavedDevicesActivity extends AppCompatActivity {
 
     private static final String TAG = SavedDevicesActivity.class.getSimpleName();
     private final ArrayList<Device> devices = new ArrayList<>();
-    private EditText nameEditTxt;
-    private EditText addressEditTxt;
     private RecyclerView mRecyclerView;
     private DatabaseHelper dbHelper;
     private RelativeLayout layout;
@@ -82,8 +80,8 @@ public class SavedDevicesActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_add_device);
 
-        addressEditTxt = dialog.findViewById(R.id.addressEditTxt);
-        nameEditTxt = dialog.findViewById(R.id.nameEditTxt);
+        final EditText addressEditTxt = dialog.findViewById(R.id.addressEditTxt);
+        final EditText nameEditTxt = dialog.findViewById(R.id.nameEditTxt);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,6 +3,9 @@ package com.github.kko7.manaflux_android.Helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class PrefsHelper {
@@ -32,6 +35,18 @@ public class PrefsHelper {
         prefsEditor.apply();
     }
 
+    public void saveBoolean(String key, Boolean value) {
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putBoolean(key, value);
+        prefsEditor.apply();
+    }
+
+    public void saveStringSet(String key, Set<String> value) {
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putStringSet(key, value);
+        prefsEditor.apply();
+    }
+
     public String getBackground(String key) {
         return sharedPreferences.getString(key, "default");
     }
@@ -40,7 +55,15 @@ public class PrefsHelper {
         return sharedPreferences.getString(key, null);
     }
 
-    public int getInt(String key) {
+    public Integer getInt(String key) {
         return sharedPreferences.getInt(key, 0);
+    }
+
+    public Boolean getBoolean(String key) {
+        return sharedPreferences.getBoolean(key, false);
+    }
+
+    public Set<String> getStringSet(String key) {
+        return sharedPreferences.getStringSet(key, new HashSet<String>());
     }
 }

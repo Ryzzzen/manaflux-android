@@ -3,6 +3,7 @@ package com.github.kko7.manaflux_android.UserInterface;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Models.HeartbeatData;
 import com.github.kko7.manaflux_android.Models.Spells;
 import com.github.kko7.manaflux_android.R;
+import com.github.kko7.manaflux_android.Services.NotificationsService;
 import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
@@ -65,6 +67,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
         layout = findViewById(R.id.select_layout);
         errorLayout = findViewById(R.id.error_layout);
         start();
+        startService(new Intent(ChampionSelectActivity.this, NotificationsService.class));
     }
 
     private void start() {
