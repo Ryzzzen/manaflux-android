@@ -98,7 +98,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 .getObjectObservable(HeartbeatData.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .delay(1000, TimeUnit.SECONDS)
+                .delay(1, TimeUnit.SECONDS)
                 .repeat()
                 .subscribe(new Observer<HeartbeatData>() {
                     @Override
