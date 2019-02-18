@@ -49,6 +49,7 @@ import retrofit2.Response;
 public class ChampionSelectActivity extends AppCompatActivity {
 
     private static final String TAG = ChampionSelectActivity.class.getSimpleName();
+    ArrayList<Spell> mData;
     private String[] positions;
     private Context context;
     private TextView code;
@@ -57,7 +58,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private ImageButton spellButton2;
     private RelativeLayout errorLayout;
     private RelativeLayout layout;
-    ArrayList<Spell> mData;
     private int spell1, spell2;
     private ApiInterface client;
     private Disposable disposable;
@@ -113,7 +113,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     @Override
                     public void onNext(final HeartbeatData heartbeatData) {
                         try {
-                            if(heartbeatData.getInChampionSelect()) {
+                            if (heartbeatData.getInChampionSelect()) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -234,8 +234,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     spell2 = spellById2.getSpellId();
                     updateButtons(spellButton1, spellById1.getPath());
                     updateButtons(spellButton2, spellById2.getPath());
-                }
-                else {
+                } else {
                     showError(response.body().getError(), response.body().getErrorCode());
                 }
             }

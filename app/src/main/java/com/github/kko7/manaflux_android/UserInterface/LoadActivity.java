@@ -64,7 +64,7 @@ public class LoadActivity extends AppCompatActivity {
         loadingGif = findViewById(R.id.loading_gif);
         loadingGif.startGif(R.mipmap.loading);
         if (!getIntent().getBooleanExtra("class", false)) {
-        newClass = DashboardActivity.class;
+            newClass = DashboardActivity.class;
         } else {
             newClass = ChampionSelectActivity.class;
         }
@@ -115,10 +115,10 @@ public class LoadActivity extends AppCompatActivity {
                                     public void onResponse(@NonNull Call<ApiData> call,
                                                            @NonNull Response<ApiData> response) {
                                         assert response.body() != null;
-                                      if (response.body().getAuthentified()) {
-                                        Toast.makeText(LoadActivity.this, getString(R.string.error_auth_success),
-                                            Toast.LENGTH_SHORT).show();
-                                      }
+                                        if (response.body().getAuthentified()) {
+                                            Toast.makeText(LoadActivity.this, getString(R.string.error_auth_success),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
                                         start();
                                     }
 
@@ -145,8 +145,8 @@ public class LoadActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                      showError("Message: " + response.message(),
-                                          "Code: " + String.valueOf(response.code()));
+                                        showError("Message: " + response.message(),
+                                                "Code: " + String.valueOf(response.code()));
                                         secondButton.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
