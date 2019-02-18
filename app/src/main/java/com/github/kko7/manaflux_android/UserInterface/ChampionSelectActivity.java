@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
@@ -27,6 +28,8 @@ import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Models.HeartbeatData;
 import com.github.kko7.manaflux_android.Models.Spell;
 import com.github.kko7.manaflux_android.R;
+import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -37,15 +40,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import com.rx2androidnetworking.Rx2AndroidNetworking;
-import com.androidnetworking.AndroidNetworking;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-
-import com.squareup.picasso.Picasso;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -122,26 +118,26 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         championName.setText(heartbeatData.getChampionName());
-                                        }
+                                        Picasso.get()
+                                                .load(heartbeatData.getChampionImg()
+                                                        .replace("localhost", deviceIp))
+                                                .placeholder(R.mipmap.test)
+                                                .into(championImage);
+                                    }
                                 });
-                                Picasso.get()
-                                        .load(heartbeatData.getChampionImg()
-                                                .replace("localhost", deviceIp))
-                                        .placeholder(R.mipmap.test)
-                                        .into(championImage);
+
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         championName.setText(heartbeatData.getChampionName());
-
+                                        Picasso.get()
+                                                .load(heartbeatData.getChampionImg()
+                                                        .replace("localhost", deviceIp))
+                                                .placeholder(R.mipmap.test)
+                                                .into(championImage);
                                     }
                                 });
-                                Picasso.get()
-                                        .load(heartbeatData.getChampionImg()
-                                                .replace("localhost", deviceIp))
-                                        .placeholder(R.mipmap.test)
-                                        .into(championImage);
                                 Toast.makeText(getApplicationContext(), "Not in champion select", Toast.LENGTH_SHORT).show();
                                 disposable.dispose();
                             }
