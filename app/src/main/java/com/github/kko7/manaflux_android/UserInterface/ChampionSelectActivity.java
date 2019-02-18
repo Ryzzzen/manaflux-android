@@ -31,6 +31,7 @@ import com.github.kko7.manaflux_android.R;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -97,6 +98,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 .getObjectObservable(HeartbeatData.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .delay(1000, TimeUnit.SECONDS)
                 .repeat()
                 .subscribe(new Observer<HeartbeatData>() {
                     @Override
@@ -127,7 +129,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                                 .replace("localhost", deviceIp))
                                         .placeholder(R.mipmap.test)
                                         .into(championImage);
-                                Thread.sleep(1000);
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
