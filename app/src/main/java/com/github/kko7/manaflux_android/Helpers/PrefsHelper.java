@@ -41,12 +41,6 @@ public class PrefsHelper {
         prefsEditor.apply();
     }
 
-    public void saveStringSet(String key, Set<String> value) {
-        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
-        prefsEditor.putStringSet(key, value);
-        prefsEditor.apply();
-    }
-
     public String getBackground(String key) {
         return sharedPreferences.getString(key, "default");
     }
@@ -57,13 +51,5 @@ public class PrefsHelper {
 
     public Integer getInt(String key) {
         return sharedPreferences.getInt(key, 0);
-    }
-
-    public Boolean getBoolean(String key) {
-        return sharedPreferences.getBoolean(key, false);
-    }
-
-    public Set<String> getStringSet(String key) {
-        return sharedPreferences.getStringSet(key, new HashSet<String>());
     }
 }
