@@ -76,13 +76,13 @@ public class SavedDevicesActivity extends AppCompatActivity {
 
     private void showDialog() {
         final Dialog dialog = new Dialog(this);
-        Button saveBtn = dialog.findViewById(R.id.saveBtn);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_add_device);
 
         final EditText addressEditTxt = dialog.findViewById(R.id.addressEditTxt);
         final EditText nameEditTxt = dialog.findViewById(R.id.nameEditTxt);
 
+        Button saveBtn = dialog.findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +94,7 @@ public class SavedDevicesActivity extends AppCompatActivity {
                 } else {
                     dbHelper.save(nameEditTxt.getText().toString(), addressEditTxt.getText().toString());
                     retrieve();
-                    dialog.hide();
+                    dialog.cancel();
                 }
             }
         });
