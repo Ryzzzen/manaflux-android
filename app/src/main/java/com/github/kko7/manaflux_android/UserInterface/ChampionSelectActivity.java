@@ -3,7 +3,6 @@ package com.github.kko7.manaflux_android.UserInterface;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,17 +25,26 @@ import com.github.kko7.manaflux_android.CustomElements.TextView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Models.HeartbeatData;
-import com.github.kko7.manaflux_android.Models.Spells;
+import com.github.kko7.manaflux_android.Models.Spell;
 import com.github.kko7.manaflux_android.R;
-import com.github.kko7.manaflux_android.Services.NotificationsService;
-import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.androidnetworking.AndroidNetworking;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
+import com.squareup.picasso.Picasso;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,8 +60,10 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private ImageButton spellButton2;
     private RelativeLayout errorLayout;
     private RelativeLayout layout;
-    private ArrayList<Spells> mData;
+    ArrayList<Spell> mData;
     private int spell1, spell2;
+    private ApiInterface client;
+    private Disposable disposable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,118 +77,176 @@ public class ChampionSelectActivity extends AppCompatActivity {
         layout = findViewById(R.id.select_layout);
         errorLayout = findViewById(R.id.error_layout);
         start();
-        startService(new Intent(ChampionSelectActivity.this, NotificationsService.class));
     }
 
     private void start() {
+        client = new ApiClient(this).getClient();
         final TextView championName = findViewById(R.id.champion_name);
         final ImageView championImage = findViewById(R.id.champion_image);
-        final ApiInterface client = new ApiClient(this).getClient();
-        final Call<HeartbeatData> heartbeatApi = client.getHeartbeat();
-        final Call<ApiData> positionsApi = client.getPositions();
-        final Call<ApiData> spellsApi = client.getSpells();
-        final Call<ApiData> summonerSpellsApi = client.getSummonerSpells();
+        final String deviceIp = PrefsHelper.getInstance(this).getString("device-ip");
+
         layout.setVisibility(View.VISIBLE);
         errorLayout.setVisibility(View.GONE);
         spellButton1 = findViewById(R.id.spell_button1);
         spellButton2 = findViewById(R.id.spell_button2);
 
-        heartbeatApi.enqueue(new Callback<HeartbeatData>() {
-            @Override
-            public void onResponse(@NonNull final Call<HeartbeatData> call,
-                                   @NonNull Response<HeartbeatData> response) {
-                final HeartbeatData heartbeatData = response.body();
-                assert heartbeatData != null;
-                if (response.isSuccessful()) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            championName.setText(heartbeatData.getChampionName());
-                            Picasso.get()
-                                    .load(heartbeatData.getChampionImg()
-                                            .replace("localhost", call.request().url().host()))
-                                    .placeholder(R.mipmap.test)
-                                    .into(championImage);
+        AndroidNetworking.initialize(getApplicationContext());
+        Rx2AndroidNetworking.get("http://" + deviceIp + ":4500/ap1/v1/me/heartbeat")
+                .addHeaders("Authorization", PrefsHelper.getInstance(this).getString("auth-token"))
+                .build()
+                .getObjectObservable(HeartbeatData.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .repeat()
+                .subscribe(new Observer<HeartbeatData>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        try {
+                            disposable = d;
+                            getSummonerSpells();
+                            Thread.sleep(500);
+                            getPositions();
+                            getCurrentSpells();
+                        } catch (Exception e) {
+                            showError("Internal error", e.getMessage());
                         }
-                    });
-                    positionsApi.enqueue(new Callback<ApiData>() {
-                        @Override
-                        public void onResponse(@NonNull Call<ApiData> call,
-                                               @NonNull Response<ApiData> response) {
-                            ApiData positionsData = response.body();
-                            assert positionsData != null;
-                            if (response.isSuccessful() && positionsData.getSuccess()) {
-                                positions = positionsData.getPositions();
-                                initList();
-                                summonerSpellsApi.enqueue(new Callback<ApiData>() {
-                                    @Override
-                                    public void onResponse(@NonNull Call<ApiData> call,
-                                                           @NonNull final Response<ApiData> response) {
-                                        final ApiData spellsData = response.body();
-                                        assert spellsData != null;
-                                        mData = spellsData.getSummonerSpells();
-                                        if (response.isSuccessful() && spellsData.getSuccess()) {
-                                            spellsApi.enqueue(new Callback<ApiData>() {
-                                                @Override
-                                                public void onResponse(@NonNull Call<ApiData> call,
-                                                                       @NonNull Response<ApiData> response) {
-                                                    assert response.body() != null;
-                                                    Spells spellById1 =
-                                                            getSpellById(Integer.valueOf(response.body().getSpells()[0]));
-                                                    assert spellById1 != null;
-                                                    spell1 = spellById1.getSpellId();
-                                                    Spells spellById2 =
-                                                            getSpellById(Integer.valueOf(response.body().getSpells()[1]));
-                                                    assert spellById2 != null;
-                                                    spell2 = spellById2.getSpellId();
-                                                    updateButtons(spellButton1, spellById1.getPath());
-                                                    updateButtons(spellButton2, spellById2.getPath());
-                                                }
+                    }
 
-                                                @Override
-                                                public void onFailure(@NonNull Call<ApiData> call,
-                                                                      @NonNull Throwable throwable) {
-                                                    showException(call, throwable);
-                                                }
-                                            });
-                                            spellButton1.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    showDialog(v, spellsData.getSummonerSpells());
-                                                }
-                                            });
-                                            spellButton2.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    showDialog(v, spellsData.getSummonerSpells());
-                                                }
-                                            });
-                                        } else {
-                                            showError(spellsData.getErrorCode(), spellsData.getError());
+                    @Override
+                    public void onNext(final HeartbeatData heartbeatData) {
+                        try {
+                            if(heartbeatData.getInChampionSelect()) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        championName.setText(heartbeatData.getChampionName());
                                         }
-                                    }
-
+                                });
+                                Picasso.get()
+                                        .load(heartbeatData.getChampionImg()
+                                                .replace("localhost", deviceIp))
+                                        .placeholder(R.mipmap.test)
+                                        .into(championImage);
+                                Thread.sleep(1000);
+                            } else {
+                                runOnUiThread(new Runnable() {
                                     @Override
-                                    public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
-                                        showException(call, throwable);
+                                    public void run() {
+                                        championName.setText(heartbeatData.getChampionName());
+
                                     }
                                 });
-                            } else {
-                                showError(positionsData.getErrorCode(), positionsData.getError());
+                                Picasso.get()
+                                        .load(heartbeatData.getChampionImg()
+                                                .replace("localhost", deviceIp))
+                                        .placeholder(R.mipmap.test)
+                                        .into(championImage);
+                                Toast.makeText(getApplicationContext(), "Not in champion select", Toast.LENGTH_SHORT).show();
+                                disposable.dispose();
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        showException(deviceIp, e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getSummonerSpells() {
+        final Call<ApiData> summonerSpellsApi = client.getSummonerSpells();
+        summonerSpellsApi.enqueue(new Callback<ApiData>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiData> call,
+                                   @NonNull final Response<ApiData> response) {
+                final ApiData spellsData = response.body();
+                assert spellsData != null;
+                if (response.isSuccessful() && spellsData.getSuccess()) {
+                    mData = spellsData.getSummonerSpells();
+                    spellButton1.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
-                            showException(call, throwable);
+                        public void onClick(View v) {
+                            showDialog(v, spellsData.getSummonerSpells());
                         }
                     });
+                    spellButton2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showDialog(v, spellsData.getSummonerSpells());
+                        }
+                    });
+                } else {
+                    showError(spellsData.getError(), spellsData.getErrorCode());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<HeartbeatData> call, @NonNull Throwable throwable) {
-                showException(call, throwable);
+            public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
+                showException(call.request().url().host(), throwable);
+            }
+        });
+    }
+
+    private void getPositions() {
+        final Call<ApiData> positionsApi = client.getPositions();
+        positionsApi.enqueue(new Callback<ApiData>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiData> call,
+                                   @NonNull Response<ApiData> response) {
+                ApiData positionsData = response.body();
+                assert positionsData != null;
+                if (response.isSuccessful() && positionsData.getSuccess()) {
+                    positions = positionsData.getPositions();
+                    initList();
+                } else {
+                    showError(positionsData.getError(), positionsData.getErrorCode());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable throwable) {
+                showException(call.request().url().host(), throwable);
+            }
+        });
+    }
+
+    private void getCurrentSpells() {
+        final Call<ApiData> spellsApi = client.getCurrentSpells();
+        spellsApi.enqueue(new Callback<ApiData>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiData> call,
+                                   @NonNull Response<ApiData> response) {
+                assert response.body() != null;
+                if (response.isSuccessful() && response.body().getSuccess()) {
+                    Spell spellById1 =
+                            getSpellById(Integer.valueOf(response.body().getSpells()[0]));
+                    assert spellById1 != null;
+                    spell1 = spellById1.getSpellId();
+                    Spell spellById2 =
+                            getSpellById(Integer.valueOf(response.body().getSpells()[1]));
+                    assert spellById2 != null;
+                    spell2 = spellById2.getSpellId();
+                    updateButtons(spellButton1, spellById1.getPath());
+                    updateButtons(spellButton2, spellById2.getPath());
+                }
+                else {
+                    showError(response.body().getError(), response.body().getErrorCode());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiData> call,
+                                  @NonNull Throwable throwable) {
+                showException(call.request().url().host(), throwable);
             }
         });
     }
@@ -191,24 +259,24 @@ public class ChampionSelectActivity extends AppCompatActivity {
         positionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View v, final int position, long id) {
-                final ApiInterface client = new ApiClient(v.getContext()).getClient();
+                final ApiInterface client = new ApiClient(getApplicationContext()).getClient();
                 Call<ApiData> setPosition = client.setPosition(position);
                 setPosition.enqueue(new Callback<ApiData>() {
                     @Override
                     public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(v.getContext(),
+                            Toast.makeText(getApplicationContext(),
                                     getString(R.string.champion_select_changed) + positions[position],
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(v.getContext(), getString(R.string.champion_select_error),
+                            Toast.makeText(getApplicationContext(), getString(R.string.champion_select_error),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
-                        showException(call, t);
+                        showException(call.request().url().host(), t);
                     }
                 });
             }
@@ -219,14 +287,15 @@ public class ChampionSelectActivity extends AppCompatActivity {
         });
     }
 
-    private void showDialog(final View v, ArrayList<Spells> data) {
+    private void showDialog(final View v, ArrayList<Spell> data) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_spells);
+
+        SpellsAdapter adapter = new SpellsAdapter(context, data);
         RecyclerView recyclerView = dialog.findViewById(R.id.spells_list);
-        SpellsAdapter adapter;
         recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        adapter = new SpellsAdapter(context, data);
+
         adapter.setClickListener(new SpellsAdapter.ItemClickListener() {
             @Override
             public void onItemClick(final View view, final int position, final int id) {
@@ -259,7 +328,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
                                 dialog.cancel();
                             } else {
-                                showError(response.body().getErrorCode(), response.body().getError());
+                                showError("HHH", "HHH");
                                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT)
                                         .show();
                             }
@@ -267,7 +336,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
-                            showException(call, t);
+                            showException(call.request().url().host(), t);
                         }
                     });
                 }
@@ -285,8 +354,10 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 .into(button);
     }
 
-    private Spells getSpellById(Integer id) {
-        for (Spells spell : mData) {
+    private Spell getSpellById(Integer id) {
+        System.out.println(id);
+        System.out.println(mData);
+        for (Spell spell : mData) {
             if (spell.getSpellId() == id) {
                 return spell;
             }
@@ -302,17 +373,17 @@ public class ChampionSelectActivity extends AppCompatActivity {
         error.setText(message2);
     }
 
-    private void showException(final Call call, final Throwable throwable) {
+    private void showException(final String string, final Throwable throwable) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 String error1, error2;
                 if (throwable instanceof SocketTimeoutException) {
                     error1 = "Connect timed out";
-                    error2 = "Host: " + call.request().url().host();
+                    error2 = "Host: " + string;
                 } else if (throwable instanceof UnknownHostException) {
                     error1 = "Unable to resolve host";
-                    error2 = "Host: " + call.request().url().host();
+                    error2 = "Host: " + string;
                 } else {
                     error1 = "Other exception";
                     error2 = "Contact developer";
