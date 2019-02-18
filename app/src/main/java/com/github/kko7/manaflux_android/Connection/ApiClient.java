@@ -39,7 +39,7 @@ public class ApiClient {
         });
 
         return new Retrofit.Builder()
-                .baseUrl("http://httpbin.org")
+                .baseUrl("http://" + PrefsHelper.getInstance(context).getString("device-ip") + ":4500/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build()
