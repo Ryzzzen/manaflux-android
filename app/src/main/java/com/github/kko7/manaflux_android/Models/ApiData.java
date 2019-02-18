@@ -23,11 +23,11 @@ public class ApiData {
     @SerializedName("spells")
     private String[] spells;
     @SerializedName("summonerSpells")
-    private ArrayList<Spells> summonerSpells;
+    private ArrayList<Spell> summonerSpells;
 
     public ApiData(Boolean success, String error, String errorCode, Boolean authentified,
                    String summonerName, Integer summonerLevel, String[] positions, String[] spells,
-                   ArrayList<Spells> summonerSpells) {
+                   ArrayList<Spell> summonerSpells) {
 
         this.success = success;
         this.error = error;
@@ -72,7 +72,7 @@ public class ApiData {
         return spells;
     }
 
-    public ArrayList<Spells> getSummonerSpells() {
+    public ArrayList<Spell> getSummonerSpells() {
         return summonerSpells;
     }
 }

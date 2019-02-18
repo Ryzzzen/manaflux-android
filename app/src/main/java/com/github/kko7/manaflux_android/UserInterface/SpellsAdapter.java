@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.Models.Spells;
+import com.github.kko7.manaflux_android.Models.Spell;
 import com.github.kko7.manaflux_android.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder> {
 
-    private ArrayList<Spells> mData;
+    private ArrayList<Spell> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    SpellsAdapter(Context context, ArrayList<Spells> data) {
+    SpellsAdapter(Context context, ArrayList<Spell> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

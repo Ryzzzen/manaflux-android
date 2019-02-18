@@ -1,11 +1,17 @@
 package com.github.kko7.manaflux_android.Models;
 
-public class Spells {
+import com.google.gson.annotations.SerializedName;
+
+public class Spell {
+
+    @SerializedName("id")
     private int id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("path")
     private String path;
 
-    public Spells(int id, String name, String path) {
+    public Spell(int id, String name, String path) {
         this.id = id;
         this.name = name;
         this.path = path;
