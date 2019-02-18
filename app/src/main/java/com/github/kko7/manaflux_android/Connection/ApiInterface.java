@@ -1,7 +1,6 @@
 package com.github.kko7.manaflux_android.Connection;
 
 import com.github.kko7.manaflux_android.Models.ApiData;
-import com.github.kko7.manaflux_android.Models.HeartbeatData;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -15,9 +14,6 @@ public interface ApiInterface {
     @POST("/api/v1/authentify/Android/{deviceName}")
     Call<ApiData> authentifyDevice(@Path("deviceName") String deviceName);
 
-    @GET("/api/v1/me/heartbeat")
-    Call<HeartbeatData> getHeartbeat();
-
     @GET("/api/v1/me/summoner")
     Call<ApiData> getSummoner();
 
@@ -28,14 +24,11 @@ public interface ApiInterface {
     Call<ApiData> setPosition(@Path("position") Integer position);
 
     @GET("/api/v1/me/summoner-spells")
-    Call<ApiData> getSpells();
+    Call<ApiData> getCurrentSpells();
 
     @GET("/api/v1/public/summoner-spells")
     Call<ApiData> getSummonerSpells();
 
     @POST("/api/v1/me/actions/summoner-spells")
     Call<ApiData> setSpells(@Body RequestBody spells);
-
-    @POST("/get")
-    Call<ApiData> testConnection();
 }
