@@ -125,7 +125,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                                 .into(championImage);
                                     }
                                 });
-
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -139,7 +138,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                     }
                                 });
                                 Toast.makeText(getApplicationContext(), "Not in champion select", Toast.LENGTH_SHORT).show();
-                                disposable.dispose();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -157,6 +155,12 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        disposable.dispose();
     }
 
     private void getSummonerSpells() {
