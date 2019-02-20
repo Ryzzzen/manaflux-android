@@ -126,18 +126,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        championName.setText(heartbeatData.getChampionName());
-                                        Picasso.get()
-                                                .load(heartbeatData.getChampionImg()
-                                                        .replace("localhost", deviceIp))
-                                                .placeholder(R.mipmap.test)
-                                                .into(championImage);
-                                    }
-                                });
-                                Toast.makeText(getApplicationContext(), "Not in champion select", Toast.LENGTH_SHORT).show();
+                                showError("Not in champion select", "");
+                                disposable.dispose();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -347,8 +337,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void updateButtons(ImageButton button, String path) {
-        Picasso.get()                                                                                //Here goes port
-                .load("http://" + PrefsHelper.getInstance(context).getString("device-ip") + ":3688" + path)
+        Picasso.get()
+                .load("http://" + PrefsHelper.getInstance(context).getString("device-ip") + ":" + path)
                 .fit()
                 .centerCrop()
                 .into(button);
