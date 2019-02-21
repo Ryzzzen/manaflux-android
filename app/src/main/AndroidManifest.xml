@@ -57,10 +57,6 @@
             android:hardwareAccelerated="true"
             tools:ignore="InnerclassSeparator" />
         <activity
-            android:name=".UserInterface.LoadActivity"
-            android:hardwareAccelerated="false"
-            tools:ignore="InnerclassSeparator" />
-        <activity
             android:name=".UserInterface.LanDevicesActivity"
             android:hardwareAccelerated="true"
             tools:ignore="InnerclassSeparator" />
@@ -68,7 +64,6 @@
             android:name=".UserInterface.ChampionSelectActivity"
             android:hardwareAccelerated="true"
             tools:ignore="InnerclassSeparator" />
-
         <service
             android:name=".Services.NotificationsService"
             tools:ignore="InnerclassSeparator" />
