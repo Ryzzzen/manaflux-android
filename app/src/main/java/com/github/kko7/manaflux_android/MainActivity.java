@@ -117,17 +117,17 @@ public class MainActivity extends AppCompatActivity {
                 errorLayout.setVisibility(View.GONE);
                 final ApiInterface client = new ApiClient(this).getClient();
 
-                Call<ApiData> getSummoner = client.getSummoner();
-                getSummoner.enqueue(new Callback<ApiData>() {
+                Call<ApiData> summoner = client.getSummoner();
+                summoner.enqueue(new Callback<ApiData>() {
                     @Override
                     public void onResponse(@NonNull Call<ApiData> call,
                                            @NonNull final Response<ApiData> response) {
-                        final ApiData data = response.body();
+                        final ApiData summonerData = response.body();
                         try {
-                            assert data != null;
-                            if (response.isSuccessful() && data.getSuccess()) {
-                                prefsHelper.saveString("summonerName", data.getSummonerName());
-                                prefsHelper.saveInt("summonerLevel", data.getSummonerLevel());
+                            assert summonerData != null;
+                            if (response.isSuccessful() && summonerData.getSuccess()) {
+                                prefsHelper.saveString("summonerName", summonerData.getSummonerName());
+                                prefsHelper.saveInt("summonerLevel", summonerData.getSummonerLevel());
                                 startActivity(new Intent(getBaseContext(), newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
@@ -149,11 +149,11 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                                 start();
-                            } else if (!data.getSuccess()) {
+                            } else if (!summonerData.getSuccess()) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        showError(data.getError(), data.getErrorCode());
+                                        showError(summonerData.getError(), summonerData.getErrorCode());
                                         secondButton.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
