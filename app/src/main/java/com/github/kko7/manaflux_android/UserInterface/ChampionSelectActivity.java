@@ -50,7 +50,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
     private static final String TAG = ChampionSelectActivity.class.getSimpleName();
     ArrayList<Spell> mData;
-    private String[] positions;
+    private String[] mPositions;
     private Context context;
     private TextView code;
     private TextView error;
@@ -154,8 +154,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void getSummonerSpells() {
-        final Call<ApiData> summonerSpellsApi = client.getSummonerSpells();
-        summonerSpellsApi.enqueue(new Callback<ApiData>() {
+        final Call<ApiData> summonerSpells = client.getSummonerSpells();
+        summonerSpells.enqueue(new Callback<ApiData>() {
             @Override
             public void onResponse(@NonNull Call<ApiData> call,
                                    @NonNull final Response<ApiData> response) {
@@ -188,15 +188,15 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void getPositions() {
-        final Call<ApiData> positionsApi = client.getPositions();
-        positionsApi.enqueue(new Callback<ApiData>() {
+        final Call<ApiData> positions = client.getPositions();
+        positions.enqueue(new Callback<ApiData>() {
             @Override
             public void onResponse(@NonNull Call<ApiData> call,
                                    @NonNull Response<ApiData> response) {
                 ApiData positionsData = response.body();
                 assert positionsData != null;
                 if (response.isSuccessful() && positionsData.getSuccess()) {
-                    positions = positionsData.getPositions();
+                    mPositions = positionsData.getPositions();
                     initList();
                 } else {
                     showError(positionsData.getError(), positionsData.getErrorCode());
@@ -211,8 +211,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void getCurrentSpells() {
-        final Call<ApiData> spellsApi = client.getCurrentSpells();
-        spellsApi.enqueue(new Callback<ApiData>() {
+        final Call<ApiData> spells = client.getCurrentSpells();
+        spells.enqueue(new Callback<ApiData>() {
             @Override
             public void onResponse(@NonNull Call<ApiData> call,
                                    @NonNull Response<ApiData> response) {
@@ -243,7 +243,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
     private void initList() {
         ArrayAdapter adapter =
-                new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, positions);
+                new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, mPositions);
         Spinner positionsSpinner = findViewById(R.id.position_spinner);
         positionsSpinner.setAdapter(adapter);
         positionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -256,7 +256,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
-                                    getString(R.string.champion_select_changed) + positions[position],
+                                    getString(R.string.champion_select_changed) + mPositions[position],
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplicationContext(), getString(R.string.champion_select_error),
