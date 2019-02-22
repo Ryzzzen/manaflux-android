@@ -46,7 +46,7 @@ import retrofit2.Response;
 public class ChampionSelectActivity extends AppCompatActivity {
 
     private static final String TAG = ChampionSelectActivity.class.getSimpleName();
-    ArrayList<Spell> mData;
+    private ArrayList<Spell> mData;
     private String[] mPositions;
     private Context context;
     private TextView code;
@@ -58,7 +58,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private int spell1, spell2;
     private ApiInterface client;
     private String deviceIp;
-    DataReceiver dataReceiver;
+    private DataReceiver dataReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
