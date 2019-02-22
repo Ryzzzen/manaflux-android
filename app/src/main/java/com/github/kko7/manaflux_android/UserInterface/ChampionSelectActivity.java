@@ -2,7 +2,10 @@ package com.github.kko7.manaflux_android.UserInterface;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,27 +22,21 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.Models.ApiData;
-import com.github.kko7.manaflux_android.Models.HeartbeatData;
 import com.github.kko7.manaflux_android.Models.Spell;
 import com.github.kko7.manaflux_android.R;
-import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.github.kko7.manaflux_android.Services.ChampionSelectService;
 import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.Objects;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -60,7 +57,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private RelativeLayout layout;
     private int spell1, spell2;
     private ApiInterface client;
-    private Disposable disposable;
+    private String deviceIp;
+    DataReceiver dataReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,88 +67,55 @@ public class ChampionSelectActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Started");
 
         context = this;
+        dataReceiver = new DataReceiver();
         code = findViewById(R.id.errorCode);
         error = findViewById(R.id.error);
         layout = findViewById(R.id.select_layout);
         errorLayout = findViewById(R.id.error_layout);
+        deviceIp = PrefsHelper.getInstance(this).getString("device-ip");
+        startService(new Intent(context, ChampionSelectService.class));
+        registerReceiver(dataReceiver, new IntentFilter("GET_CHAMPION_SELECT_DATA"));
         start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(dataReceiver);
     }
 
     private void start() {
         client = new ApiClient(this).getClient();
-        final TextView championName = findViewById(R.id.champion_name);
-        final ImageView championImage = findViewById(R.id.champion_image);
-        final String deviceIp = PrefsHelper.getInstance(this).getString("device-ip");
-
         layout.setVisibility(View.VISIBLE);
         errorLayout.setVisibility(View.GONE);
         spellButton1 = findViewById(R.id.spell_button1);
         spellButton2 = findViewById(R.id.spell_button2);
 
-        AndroidNetworking.initialize(getApplicationContext());
-        Rx2AndroidNetworking.get("http://" + deviceIp + ":4500/ap1/v1/me/heartbeat")
-                .addHeaders("Authorization", PrefsHelper.getInstance(this).getString("auth-token"))
-                .build()
-                .getObjectObservable(HeartbeatData.class)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .delay(1, TimeUnit.SECONDS)
-                .repeat()
-                .subscribe(new Observer<HeartbeatData>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        try {
-                            disposable = d;
-                            getSummonerSpells();
-                            Thread.sleep(500);
-                            getPositions();
-                            getCurrentSpells();
-                        } catch (Exception e) {
-                            showError("Internal error", e.getMessage());
-                        }
-                    }
+        try {
+            getSummonerSpells();
+            Thread.sleep(500);
+            getPositions();
+            getCurrentSpells();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-                    @Override
-                    public void onNext(final HeartbeatData heartbeatData) {
-                        try {
-                            if (heartbeatData.getInChampionSelect()) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        championName.setText(heartbeatData.getChampionName());
-                                        Picasso.get()
-                                                .load(heartbeatData.getChampionImg()
-                                                        .replace("localhost", deviceIp))
-                                                .placeholder(R.mipmap.test)
-                                                .into(championImage);
-                                    }
-                                });
-                            } else {
-                                showError("Not in champion select", "");
-                                disposable.dispose();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                        showException(deviceIp, e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        disposable.dispose();
+    private void updateChampion(final String name, final String img) {
+        final TextView championName = findViewById(R.id.champion_name);
+        final ImageView championImage = findViewById(R.id.champion_image);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                championName.setText(name);
+                Picasso.get()
+                        .load(img
+                                .replace("localhost", deviceIp))
+                        .placeholder(R.mipmap.test)
+                        .into(championImage);
+            }
+        });
     }
 
     private void getSummonerSpells() {
@@ -345,8 +310,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private Spell getSpellById(Integer id) {
-        System.out.println(id);
-        System.out.println(mData);
         for (Spell spell : mData) {
             if (spell.getSpellId() == id) {
                 return spell;
@@ -381,5 +344,19 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 showError(error1, error2);
             }
         });
+    }
+
+    class DataReceiver extends BroadcastReceiver  {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(Objects.requireNonNull(intent.getAction()).equals("GET_CHAMPION_SELECT_DATA"))
+            {
+                String name = intent.getStringExtra("championName");
+                String img = intent.getStringExtra("championImage");
+                updateChampion(name, img);
+                getPositions();
+            }
+        }
     }
 }

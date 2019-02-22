@@ -21,6 +21,7 @@ import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.Models.ApiData;
+import com.github.kko7.manaflux_android.Services.ChampionSelectService;
 import com.github.kko7.manaflux_android.UserInterface.ChampionSelectActivity;
 import com.github.kko7.manaflux_android.UserInterface.Dashboard.DashboardActivity;
 import com.github.kko7.manaflux_android.UserInterface.LanDevicesActivity;
@@ -98,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
         if (deviceIp == null || deviceIp.equals("") || deviceName == null || deviceName.equals("")) {
             startActivity(new Intent(MainActivity.this, LanDevicesActivity.class));
         } else {
-            start();
+            //start();
+            startActivity(new Intent(MainActivity.this, ChampionSelectActivity.class));
         }
     }
 
@@ -128,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
                             if (response.isSuccessful() && summonerData.getSuccess()) {
                                 prefsHelper.saveString("summonerName", summonerData.getSummonerName());
                                 prefsHelper.saveInt("summonerLevel", summonerData.getSummonerLevel());
-                                startActivity(new Intent(getBaseContext(), newClass));
+                                startService(new Intent(MainActivity.this, ChampionSelectService.class));
+                                startActivity(new Intent(getApplicationContext(), newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
                                 authentify.enqueue(new Callback<ApiData>() {
