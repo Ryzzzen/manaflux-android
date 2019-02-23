@@ -1,5 +1,6 @@
 package com.github.kko7.manaflux_android.UserInterface.Dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
 
 public class SettingsFragment extends Fragment {
@@ -45,7 +47,9 @@ public class SettingsFragment extends Fragment {
         deleteDeviceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "Not ready", Toast.LENGTH_SHORT).show();
+                prefsHelper.saveString("device-ip", null);
+                prefsHelper.saveString("device-name", null);
+                startActivity(new Intent(view.getContext(), MainActivity.class));
             }
         });
 
