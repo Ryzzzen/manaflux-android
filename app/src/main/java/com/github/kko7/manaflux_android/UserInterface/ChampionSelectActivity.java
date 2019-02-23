@@ -94,12 +94,10 @@ public class ChampionSelectActivity extends AppCompatActivity {
         try {
             getSummonerSpells();
             Thread.sleep(500);
-            getPositions();
             getCurrentSpells();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     private void updateChampion(final String name, final String img) {
@@ -116,6 +114,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         .into(championImage);
             }
         });
+        getPositions();
     }
 
     private void getSummonerSpells() {
