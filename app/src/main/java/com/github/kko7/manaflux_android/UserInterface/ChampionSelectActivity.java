@@ -28,6 +28,7 @@ import com.github.kko7.manaflux_android.CustomElements.TextView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.Models.ApiData;
 import com.github.kko7.manaflux_android.Models.Spell;
+import com.github.kko7.manaflux_android.Models.SpellsAdapter;
 import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.Services.ChampionSelectService;
 import com.squareup.picasso.Picasso;

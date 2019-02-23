@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.UserInterface;
+package com.github.kko7.manaflux_android.Models;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.Models.Spell;
 import com.github.kko7.manaflux_android.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,7 +21,7 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    SpellsAdapter(Context context, ArrayList<Spell> data) {
+    public SpellsAdapter(Context context, ArrayList<Spell> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -52,7 +51,7 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
         return mData.size();
     }
 
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
