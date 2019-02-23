@@ -1,5 +1,7 @@
 package com.github.kko7.manaflux_android.UserInterface.Dashboard;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
+
+import java.io.File;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 public class SettingsFragment extends Fragment {
 
@@ -56,7 +61,8 @@ public class SettingsFragment extends Fragment {
         deleteAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "Not ready", Toast.LENGTH_LONG).show();
+                deleteCache(view.getContext());
+                clearAppData(view.getContext());
             }
         });
 
@@ -117,5 +123,37 @@ public class SettingsFragment extends Fragment {
                 //TODO
             }
         });
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) { e.printStackTrace();}
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String aChildren : children) {
+                boolean success = deleteDir(new File(dir, aChildren));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+
+    private void clearAppData(Context context) {
+        try {
+            ((ActivityManager)context.getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
