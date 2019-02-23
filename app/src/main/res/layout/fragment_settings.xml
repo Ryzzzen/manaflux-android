@@ -80,7 +80,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="181dp"
+        android:layout_marginTop="180dp"
         android:orientation="horizontal">
 
         <com.github.kko7.manaflux_android.CustomElements.TextView
@@ -100,6 +100,35 @@
             android:layout_marginEnd="45dp"
             android:background="@drawable/btn_default"
             android:text="@string/settings_delete"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="230dp"
+        android:orientation="horizontal">
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/service_title"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:text="@string/settings_service"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/service_open"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/btn_default"
+            android:text="@string/settings_service_open"
             android:textAlignment="center" />
     </LinearLayout>
 
