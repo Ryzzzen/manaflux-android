@@ -72,8 +72,8 @@ public class SettingsFragment extends Fragment {
                 getString(R.string.background_purple), //purple
                 getString(R.string.background_green), //green
                 getString(R.string.background_gray), //purple
-                getString(R.string.background_dark_red)
-        }; // dark red
+                getString(R.string.background_dark_red) //dark red
+        };
         ArrayAdapter adapter =
                 new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
@@ -125,14 +125,14 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    public static void deleteCache(Context context) {
+    private static void deleteCache(Context context) {
         try {
             File dir = context.getCacheDir();
             deleteDir(dir);
         } catch (Exception e) { e.printStackTrace();}
     }
 
-    public static boolean deleteDir(File dir) {
+    private static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             for (String aChildren : children) {
