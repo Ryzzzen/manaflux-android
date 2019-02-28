@@ -128,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             assert summonerData != null;
                             if (response.isSuccessful() && summonerData.getSuccess()) {
-                                prefsHelper.saveString("summonerName", summonerData.getSummonerName());
-                                prefsHelper.saveInt("summonerLevel", summonerData.getSummonerLevel());
+                                prefsHelper.saveString("summoner-name", summonerData.getSummonerName());
+                                prefsHelper.saveInt("summoner-level", summonerData.getSummonerLevel());
                                 startService(new Intent(MainActivity.this, ChampionSelectService.class));
                                 startActivity(new Intent(getApplicationContext(), newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
