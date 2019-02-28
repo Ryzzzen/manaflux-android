@@ -88,10 +88,4 @@ public class EditActivity extends AppCompatActivity {
         int id = getResources().getIdentifier(value + "_bg", "mipmap", getPackageName());
         layout.setBackgroundResource(id);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setBackground();
-    }
 }

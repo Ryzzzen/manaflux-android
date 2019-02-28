@@ -164,6 +164,5 @@ public class SavedDevicesActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         retrieve();
-        setBackground();
     }
 }
