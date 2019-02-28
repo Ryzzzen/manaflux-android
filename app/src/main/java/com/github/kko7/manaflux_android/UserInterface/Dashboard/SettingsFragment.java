@@ -172,7 +172,7 @@ public class SettingsFragment extends Fragment {
     private void showDialog(final Context context) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_add_device);
+        dialog.setContentView(R.layout.dialog_service);
 
         final TextView status = dialog.findViewById(R.id.status_text);
         final Button startButton = dialog.findViewById(R.id.start_service);
