@@ -62,7 +62,6 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void initialiseDetectorsAndSources() {
-        Log.d(TAG, "Barcode scanner started");
 
         BarcodeDetector qrDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)

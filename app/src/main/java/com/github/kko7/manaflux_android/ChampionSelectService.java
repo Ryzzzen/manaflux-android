@@ -130,8 +130,8 @@ public class ChampionSelectService extends Service {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Manaflux")
-                .setContentText("In champion select...")
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.champion_in))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)

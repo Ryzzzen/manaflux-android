@@ -70,4 +70,8 @@
 
     <string name="champion_select_changed">Changed position to: </string>
     <string name="champion_select_error">Something went wrong :(</string>
+    <string name="champion_in">In champion select…</string>
+
+    <string name="on_back_title">Closing Activity</string>
+    <string name="on_back_message">Are you sure you want to close this activity ?</string>
 </resources>
