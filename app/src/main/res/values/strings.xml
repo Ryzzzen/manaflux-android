@@ -74,4 +74,9 @@
 
     <string name="on_back_title">Closing Activity</string>
     <string name="on_back_message">Are you sure you want to close this activity ?</string>
+
+    <string name="service_start">Start</string>
+    <string name="service_stop">Stop</string>
+    <string name="service_running">Service is running</string>
+    <string name="service_not_running">Service is not running</string>
 </resources>

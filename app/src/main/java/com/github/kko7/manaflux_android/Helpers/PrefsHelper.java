@@ -32,6 +32,12 @@ public class PrefsHelper {
         prefsEditor.apply();
     }
 
+    public void saveBoolean(String key, boolean value) {
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putBoolean(key, value);
+        prefsEditor.apply();
+    }
+
     public String getBackground(String key) {
         return sharedPreferences.getString(key, "default");
     }
@@ -42,5 +48,9 @@ public class PrefsHelper {
 
     public Integer getInt(String key) {
         return sharedPreferences.getInt(key, 0);
+    }
+
+    public Boolean getBoolean(String key) {
+        return sharedPreferences.getBoolean(key, false);
     }
 }

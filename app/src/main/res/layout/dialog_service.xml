@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="500dp"
+    android:layout_height="match_parent"
+    android:layout_margin="1dp"
+    android:orientation="horizontal"
+    card_view:cardElevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="7dp" >
+
+        <com.github.kko7.manaflux_android.CustomElements.TextView
+            android:id="@+id/status_text"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <Button
+            android:id="@+id/start_service"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:text="@string/service_start" />
+
+        <Button
+            android:id="@+id/stop_service"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="90dp"
+            android:text="@string/service_stop" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

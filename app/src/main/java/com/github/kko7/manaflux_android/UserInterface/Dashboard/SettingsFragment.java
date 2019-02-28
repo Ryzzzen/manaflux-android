@@ -1,6 +1,7 @@
 package com.github.kko7.manaflux_android.UserInterface.Dashboard;
 
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.github.kko7.manaflux_android.ChampionSelectService;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.UserInterface.MainActivity;
@@ -44,12 +48,13 @@ public class SettingsFragment extends Fragment {
         Log.d(TAG, "onView: Created");
 
         prefsHelper = PrefsHelper.getInstance(view.getContext());
-        Button deleteDeviceBtn = view.findViewById(R.id.delete_device);
-        Button deleteAllBtn = view.findViewById(R.id.delete_all);
+        Button deleteDeviceButton = view.findViewById(R.id.delete_device);
+        Button deleteAllButton = view.findViewById(R.id.delete_all);
+        Button serviceButton = view.findViewById(R.id.service_open);
         Spinner spinner = view.findViewById(R.id.spinner);
         layout = view.findViewById(R.id.settings_layout);
 
-        deleteDeviceBtn.setOnClickListener(new View.OnClickListener() {
+        deleteDeviceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 prefsHelper.saveString("device-ip", null);
@@ -58,11 +63,18 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        deleteAllBtn.setOnClickListener(new View.OnClickListener() {
+        deleteAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteCache(view.getContext());
                 clearAppData(view.getContext());
+            }
+        });
+
+        serviceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(view.getContext());
             }
         });
 
@@ -155,5 +167,38 @@ public class SettingsFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showDialog(final Context context) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_device);
+
+        final TextView status = dialog.findViewById(R.id.status_text);
+        final Button startButton = dialog.findViewById(R.id.start_service);
+        final Button stopButton = dialog.findViewById(R.id.stop_service);
+
+        if(prefsHelper.getBoolean("service-running")) {
+            status.setText(getString(R.string.service_running));
+        } else {
+            status.setText(getString(R.string.service_not_running));
+        }
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefsHelper.saveBoolean("service-running", false);
+                context.stopService(new Intent(context, ChampionSelectService.class));
+            }
+        });
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefsHelper.saveBoolean("service-running", true);
+                context.startService(new Intent(context, ChampionSelectService.class));
+            }
+        });
+        dialog.show();
     }
 }

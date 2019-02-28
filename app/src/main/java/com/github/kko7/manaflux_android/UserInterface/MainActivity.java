@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                             if (response.isSuccessful() && summonerData.getSuccess()) {
                                 prefsHelper.saveString("summoner-name", summonerData.getSummonerName());
                                 prefsHelper.saveInt("summoner-level", summonerData.getSummonerLevel());
+                                prefsHelper.saveBoolean("service-running", true);
                                 startService(new Intent(MainActivity.this, ChampionSelectService.class));
                                 startActivity(new Intent(getApplicationContext(), newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
