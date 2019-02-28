@@ -35,8 +35,9 @@
 
         </provider>
 
-        <activity android:name=".MainActivity"
-            android:hardwareAccelerated="false">
+        <activity android:name=".UserInterface.MainActivity"
+            android:hardwareAccelerated="false"
+            tools:ignore="InnerclassSeparator">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,7 +70,7 @@
             android:hardwareAccelerated="true"
             tools:ignore="InnerclassSeparator" />
         <service
-            android:name=".Services.ChampionSelectService"
+            android:name=".ChampionSelectService"
             tools:ignore="InnerclassSeparator" />
     </application>
 

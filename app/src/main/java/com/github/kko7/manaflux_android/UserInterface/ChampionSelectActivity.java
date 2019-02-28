@@ -22,15 +22,15 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.kko7.manaflux_android.ChampionSelectService;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.Models.ApiData;
-import com.github.kko7.manaflux_android.Models.Spell;
-import com.github.kko7.manaflux_android.Models.SpellsAdapter;
 import com.github.kko7.manaflux_android.R;
-import com.github.kko7.manaflux_android.Services.ChampionSelectService;
+import com.github.kko7.manaflux_android.Spell;
+import com.github.kko7.manaflux_android.SpellsAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;

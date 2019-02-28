@@ -1,5 +1,6 @@
 package com.github.kko7.manaflux_android.Models;
 
+import com.github.kko7.manaflux_android.Spell;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

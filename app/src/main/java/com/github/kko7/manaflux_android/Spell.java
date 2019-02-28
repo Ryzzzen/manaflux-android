@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.Models;
+package com.github.kko7.manaflux_android;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.Models;
+package com.github.kko7.manaflux_android;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

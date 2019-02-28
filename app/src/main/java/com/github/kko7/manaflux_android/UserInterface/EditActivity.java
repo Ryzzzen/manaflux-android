@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 
 import com.github.kko7.manaflux_android.Helpers.DatabaseHelper;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
 
 import java.util.Objects;

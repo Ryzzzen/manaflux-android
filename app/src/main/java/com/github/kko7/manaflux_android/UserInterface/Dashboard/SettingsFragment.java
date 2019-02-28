@@ -17,8 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.R;
+import com.github.kko7.manaflux_android.UserInterface.MainActivity;
 
 import java.io.File;
 

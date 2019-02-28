@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.kko7.manaflux_android.Models.Device;
 import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.UserInterface.EditActivity;
 

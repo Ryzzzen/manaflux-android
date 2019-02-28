@@ -23,9 +23,9 @@ import android.widget.Toast;
 
 import com.github.kko7.manaflux_android.Database.Adapter;
 import com.github.kko7.manaflux_android.Database.DBAdapter;
-import com.github.kko7.manaflux_android.Database.Device;
 import com.github.kko7.manaflux_android.Helpers.DatabaseHelper;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+import com.github.kko7.manaflux_android.Models.Device;
 import com.github.kko7.manaflux_android.R;
 
 import java.util.ArrayList;

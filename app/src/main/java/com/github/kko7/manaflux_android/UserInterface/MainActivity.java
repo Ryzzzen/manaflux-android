@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android;
+package com.github.kko7.manaflux_android.UserInterface;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -18,15 +18,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.kko7.manaflux_android.ChampionSelectService;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
 import com.github.kko7.manaflux_android.Models.ApiData;
-import com.github.kko7.manaflux_android.Services.ChampionSelectService;
-import com.github.kko7.manaflux_android.UserInterface.ChampionSelectActivity;
+import com.github.kko7.manaflux_android.R;
 import com.github.kko7.manaflux_android.UserInterface.Dashboard.DashboardActivity;
-import com.github.kko7.manaflux_android.UserInterface.LanDevicesActivity;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

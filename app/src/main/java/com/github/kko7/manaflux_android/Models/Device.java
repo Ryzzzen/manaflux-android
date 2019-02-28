@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.Database;
+package com.github.kko7.manaflux_android.Models;
 
 public class Device {
     private final String name;
@@ -11,15 +11,15 @@ public class Device {
         this.id = id;
     }
 
-    String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    Integer getId() {
+    public Integer getId() {
         return id;
     }
 }

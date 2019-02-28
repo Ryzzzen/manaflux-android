@@ -1,4 +1,4 @@
-package com.github.kko7.manaflux_android.Services;
+package com.github.kko7.manaflux_android;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -14,9 +14,8 @@ import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
-import com.github.kko7.manaflux_android.MainActivity;
 import com.github.kko7.manaflux_android.Models.HeartbeatData;
-import com.github.kko7.manaflux_android.R;
+import com.github.kko7.manaflux_android.UserInterface.MainActivity;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import java.util.concurrent.TimeUnit;
