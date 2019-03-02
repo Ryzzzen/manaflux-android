@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.ChampionSelectService;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.GifView;
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                                 prefsHelper.saveString("summoner-name", summonerData.getSummonerName());
                                 prefsHelper.saveInt("summoner-level", summonerData.getSummonerLevel());
                                 prefsHelper.saveBoolean("service-running", true);
-                                startService(new Intent(MainActivity.this, ChampionSelectService.class));
                                 startActivity(new Intent(getApplicationContext(), newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
