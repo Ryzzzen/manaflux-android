@@ -79,4 +79,6 @@
     <string name="service_stop">Stop</string>
     <string name="service_running">Service is running</string>
     <string name="service_not_running">Service is not running</string>
+
+    <string name="autostart_title">Autostart</string>
 </resources>
