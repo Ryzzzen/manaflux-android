@@ -111,7 +111,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 Picasso.get()
                         .load(img
                                 .replace("localhost", deviceIp))
-                        .placeholder(R.mipmap.test)
+                        .placeholder(R.mipmap.default_champion)
                         .into(championImage);
             }
         });
