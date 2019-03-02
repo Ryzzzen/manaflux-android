@@ -35,6 +35,7 @@ public class ChampionSelectService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("ChampionSelectService", "onCreate: Started");
         deviceIp = PrefsHelper.getInstance(this).getString("device-ip");
         token = PrefsHelper.getInstance(this).getString("auth-token");
         AndroidNetworking.initialize(this);
