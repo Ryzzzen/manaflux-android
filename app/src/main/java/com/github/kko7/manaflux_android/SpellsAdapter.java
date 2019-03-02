@@ -39,6 +39,7 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.ViewHolder
         Picasso.get()
                 .load("http://"
                         + PrefsHelper.getInstance(holder.itemView.getContext()).getString("device-ip")
+                        + ':'
                         + mData.get(position).getPath())
                 .fit()
                 .centerCrop()
