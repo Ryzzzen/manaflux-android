@@ -15,8 +15,10 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.ChampionSelectService;
@@ -51,6 +53,7 @@ public class SettingsFragment extends Fragment {
         Button deleteDeviceButton = view.findViewById(R.id.delete_device);
         Button deleteAllButton = view.findViewById(R.id.delete_all);
         Button serviceButton = view.findViewById(R.id.service_open);
+        Switch autostartSwitch = view.findViewById(R.id.autostart_switch);
         Spinner spinner = view.findViewById(R.id.spinner);
         layout = view.findViewById(R.id.settings_layout);
 
@@ -68,6 +71,17 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 deleteCache(view.getContext());
                 clearAppData(view.getContext());
+            }
+        });
+
+        autostartSwitch.setChecked(prefsHelper.getBoolean("autostart"));
+        autostartSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    prefsHelper.saveBoolean("autostart", true);
+                } else {
+                    prefsHelper.saveBoolean("autostart", false);
+                }
             }
         });
 
