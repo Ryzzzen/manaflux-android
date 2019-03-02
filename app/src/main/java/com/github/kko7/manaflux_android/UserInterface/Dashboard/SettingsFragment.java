@@ -188,6 +188,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 prefsHelper.saveBoolean("service-running", false);
+                status.setText(getString(R.string.service_not_running));
                 context.stopService(new Intent(context, ChampionSelectService.class));
             }
         });
@@ -196,6 +197,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 prefsHelper.saveBoolean("service-running", true);
+                status.setText(getString(R.string.service_running));
                 context.startService(new Intent(context, ChampionSelectService.class));
             }
         });
