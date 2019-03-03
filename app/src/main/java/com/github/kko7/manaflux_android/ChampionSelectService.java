@@ -58,7 +58,7 @@ public class ChampionSelectService extends Service {
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Rx2AndroidNetworking.get("http://" + deviceIp + ":4500/api/v1/me/heartbeat")
+                Rx2AndroidNetworking.get(deviceIp + "4500/api/v1/me/heartbeat")
                         .addHeaders("Authorization", token)
                         .build()
                         .getObjectObservable(HeartbeatData.class)

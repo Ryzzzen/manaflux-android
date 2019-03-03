@@ -273,7 +273,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         public void onResponse(@NonNull Call<ApiData> call,
                                                @NonNull Response<ApiData> response) {
                             assert response.body() != null;
-                            if (response.isSuccessful()) {
+                            if (response.isSuccessful() && response.body().getSuccess()) {
                                 Toast.makeText(getApplicationContext(), "Changed spell",
                                         Toast.LENGTH_SHORT).show();
                                 if (v.getId() == R.id.spell_button1) {
@@ -284,7 +284,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
                                 dialog.cancel();
                             } else {
-                                showError("HHH", "HHH");
+                                showError("Failed to set spells", "Restart app");
                                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT)
                                         .show();
                             }
@@ -304,7 +304,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
 
     private void updateButtons(ImageButton button, String path) {
         Picasso.get()
-                .load("http://" + PrefsHelper.getInstance(context).getString("device-ip") + ":" + path)
+                .load(PrefsHelper.getInstance(context).getString("device-ip") + path)
                 .fit()
                 .centerCrop()
                 .into(button);
