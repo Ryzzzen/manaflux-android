@@ -110,7 +110,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 championName.setText(name);
                 Picasso.get()
                         .load(img
-                                .replace("localhost", deviceIp))
+                                .replace("http://localhost:", deviceIp))
                         .placeholder(R.mipmap.champion_placeholder)
                         .error(R.mipmap.champion_placeholder)
                         .into(championImage);
@@ -356,7 +356,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 String name = intent.getStringExtra("championName");
                 String img = intent.getStringExtra("championImage");
                 updateChampion(name, img);
-                getPositions();
             }
         }
     }
