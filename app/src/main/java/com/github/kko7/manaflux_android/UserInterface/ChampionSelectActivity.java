@@ -22,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.github.kko7.manaflux_android.ChampionSelectService;
 import com.github.kko7.manaflux_android.Connection.ApiClient;
 import com.github.kko7.manaflux_android.Connection.ApiInterface;
 import com.github.kko7.manaflux_android.CustomElements.TextView;
@@ -74,7 +73,6 @@ public class ChampionSelectActivity extends AppCompatActivity {
         layout = findViewById(R.id.select_layout);
         errorLayout = findViewById(R.id.error_layout);
         deviceIp = PrefsHelper.getInstance(this).getString("device-ip");
-        startService(new Intent(context, ChampionSelectService.class));
         registerReceiver(dataReceiver, new IntentFilter("GET_CHAMPION_SELECT_DATA"));
         start();
     }
