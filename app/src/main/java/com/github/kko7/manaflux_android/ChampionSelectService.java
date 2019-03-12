@@ -69,7 +69,7 @@ public class ChampionSelectService extends Service {
                         .subscribe(new Observer<HeartbeatData>() {
                             @Override
                             public void onSubscribe(Disposable d) {
-
+                                Log.d(ChampionSelectService.class.getSimpleName(), "Subscribed");
                             }
 
                             @Override
