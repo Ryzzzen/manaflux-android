@@ -6,6 +6,7 @@
     android:background="@mipmap/default_bg">
 
     <com.github.kko7.manaflux_android.CustomElements.CircularImageView
+        android:id="@+id/summonerImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
