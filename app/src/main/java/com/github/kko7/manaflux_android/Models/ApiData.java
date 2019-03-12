@@ -19,6 +19,8 @@ public class ApiData {
     private String summonerName;
     @SerializedName("summonerLevel")
     private Integer summonerLevel;
+    @SerializedName("summonerIcon")
+    private String summonerIcon;
     @SerializedName("positions")
     private String[] positions;
     @SerializedName("spells")
@@ -26,16 +28,14 @@ public class ApiData {
     @SerializedName("summonerSpells")
     private ArrayList<Spell> summonerSpells;
 
-    public ApiData(Boolean success, String error, String errorCode, Boolean authentified,
-                   String summonerName, Integer summonerLevel, String[] positions, String[] spells,
-                   ArrayList<Spell> summonerSpells) {
-
+    public ApiData(Boolean success, String error, String errorCode, Boolean authentified, String summonerName, Integer summonerLevel, String summonerIcon, String[] positions, String[] spells, ArrayList<Spell> summonerSpells) {
         this.success = success;
         this.error = error;
         this.errorCode = errorCode;
         this.authentified = authentified;
         this.summonerName = summonerName;
         this.summonerLevel = summonerLevel;
+        this.summonerIcon = summonerIcon;
         this.positions = positions;
         this.spells = spells;
         this.summonerSpells = summonerSpells;
@@ -63,6 +63,10 @@ public class ApiData {
 
     public Integer getSummonerLevel() {
         return summonerLevel;
+    }
+
+    public String getSummonerIcon() {
+        return summonerIcon;
     }
 
     public String[] getPositions() {
