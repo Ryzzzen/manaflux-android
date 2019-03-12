@@ -47,58 +47,57 @@
             app:srcCompat="@drawable/ic_save_white" />
     </RelativeLayout>
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/address_edit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="100dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/address_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginStart="30dp"
-            android:ems="10"
-            android:hint="@string/edit_input"
-            android:importantForAutofill="no"
-            android:inputType=""
-            tools:targetApi="o" />
-
-    </LinearLayout>
+        android:layout_marginEnd="100dp"
+        android:ems="10"
+        android:hint="@string/edit_input"
+        android:importantForAutofill="no"
+        android:inputType=""
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/name_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="190dp"
+        android:layout_marginEnd="100dp"
         android:ems="10"
         android:hint="@string/edit_pc"
         android:importantForAutofill="no"
         android:inputType=""
         tools:targetApi="o" />
 
-    <com.github.kko7.manaflux_android.CustomElements.ButtonView
-        android:id="@+id/delete_button"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="290dp"
-        android:layout_marginEnd="170dp"
-        android:background="@drawable/btn_default"
-        android:text="@string/edit_delete" />
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
 
-    <com.github.kko7.manaflux_android.CustomElements.ButtonView
-        android:id="@+id/select_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
-        android:layout_marginTop="290dp"
-        android:layout_marginEnd="60dp"
-        android:background="@drawable/btn_default"
-        android:text="@string/edit_select"
-        android:textAlignment="center"
-        android:textAllCaps="true" />
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="125dp"
+            android:background="@drawable/btn_default"
+            android:text="@string/edit_delete" />
+
+        <com.github.kko7.manaflux_android.CustomElements.ButtonView
+            android:id="@+id/select_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="125dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/btn_default"
+            android:text="@string/edit_select"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+    </RelativeLayout>
 
 </RelativeLayout>
