@@ -52,6 +52,8 @@ public class ChampionSelectActivity extends AppCompatActivity {
     private ArrayList<Spell> mData;
     private String[] mPositions;
     private Context context;
+    private String currentChampion = "None";
+    private String selectedChampion;
     private TextView code;
     private TextView error;
     private ImageButton spellButton1;
@@ -141,7 +143,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
                         }
                     });
                     set.addAll(mData);
-                    final ArrayList newList = new ArrayList<Spell>(set);
+                    final ArrayList<Spell> newList = new ArrayList<>(set);
                     spellButton1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -221,39 +223,42 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void initList() {
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, mPositions);
-        Spinner positionsSpinner = findViewById(R.id.position_spinner);
-        positionsSpinner.setAdapter(adapter);
-        positionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, final View v, final int position, long id) {
-                final ApiInterface client = new ApiClient(getApplicationContext()).getClient();
-                Call<ApiData> setPosition = client.setPosition(position);
-                setPosition.enqueue(new Callback<ApiData>() {
-                    @Override
-                    public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),
-                                    getString(R.string.champion_select_changed) + mPositions[position],
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), getString(R.string.champion_select_error),
-                                    Toast.LENGTH_SHORT).show();
+        if(!currentChampion.equals(selectedChampion)) {
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, mPositions);
+            Spinner positionsSpinner = findViewById(R.id.position_spinner);
+            positionsSpinner.setAdapter(adapter);
+            positionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, final View v, final int position, long id) {
+                    final ApiInterface client = new ApiClient(getApplicationContext()).getClient();
+                    Call<ApiData> setPosition = client.setPosition(position);
+                    setPosition.enqueue(new Callback<ApiData>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ApiData> call, @NonNull Response<ApiData> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(),
+                                        getString(R.string.champion_select_changed) + mPositions[position],
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), getString(R.string.champion_select_error),
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
-                        showException(call.request().url().host(), t);
-                    }
-                });
-            }
+                        @Override
+                        public void onFailure(@NonNull Call<ApiData> call, @NonNull Throwable t) {
+                            showException(call.request().url().host(), t);
+                        }
+                    });
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
+        currentChampion = selectedChampion;
     }
 
     private void showDialog(final View v, ArrayList<Spell> data) {
@@ -368,6 +373,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
             {
                 String name = intent.getStringExtra("championName");
                 String img = intent.getStringExtra("championImage");
+                selectedChampion = name;
                 updateChampion(name, img);
             }
         }
