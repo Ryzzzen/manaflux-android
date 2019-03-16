@@ -35,7 +35,10 @@ import com.squareup.picasso.Picasso;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -127,16 +130,28 @@ public class ChampionSelectActivity extends AppCompatActivity {
                 assert spellsData != null;
                 if (response.isSuccessful() && spellsData.getSuccess()) {
                     mData = spellsData.getSummonerSpells();
+
+                    Set<Spell> set = new TreeSet<>(new Comparator<Spell>() {
+                        @Override
+                        public int compare(Spell o1, Spell o2) {
+                            if(o1.getSpellId() == o2.getSpellId()){
+                                return 0;
+                            }
+                            return 1;
+                        }
+                    });
+                    set.addAll(mData);
+                    final ArrayList newList = new ArrayList<Spell>(set);
                     spellButton1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            showDialog(v, spellsData.getSummonerSpells());
+                            showDialog(v, newList);
                         }
                     });
                     spellButton2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            showDialog(v, spellsData.getSummonerSpells());
+                            showDialog(v, newList);
                         }
                     });
                 } else {
@@ -206,7 +221,7 @@ public class ChampionSelectActivity extends AppCompatActivity {
     }
 
     private void initList() {
-        ArrayAdapter adapter =
+        ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, mPositions);
         Spinner positionsSpinner = findViewById(R.id.position_spinner);
         positionsSpinner.setAdapter(adapter);
