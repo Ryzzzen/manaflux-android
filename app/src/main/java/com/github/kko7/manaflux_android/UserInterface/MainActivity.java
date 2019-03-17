@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                             if (response.isSuccessful() && summonerData.getSuccess()) {
                                 prefsHelper.saveString("summoner-name", summonerData.getSummonerName());
                                 prefsHelper.saveInt("summoner-level", summonerData.getSummonerLevel());
+                                prefsHelper.saveString("summoner-icon", summonerData.getSummonerIcon());
                                 startActivity(new Intent(getApplicationContext(), newClass));
                             } else if (response.code() == 401 || response.code() == 403) {
                                 final Call<ApiData> authentify = client.authentifyDevice(Build.BOARD);
