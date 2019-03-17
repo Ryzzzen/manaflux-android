@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="200dp"
         android:textSize="24sp"
         tools:text="J4kub KKo7" />
 </RelativeLayout>
