@@ -14,6 +14,8 @@ public class AutostartReceiver extends BroadcastReceiver {
         Intent myIntent = new Intent(context, ChampionSelectService.class);
         if(PrefsHelper.getInstance(context).getBoolean("autostart")) {
             context.startService(myIntent);
+        } else {
+            PrefsHelper.getInstance(context).saveBoolean("service-running", false);
         }
     }
 }
