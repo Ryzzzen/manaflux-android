@@ -21,7 +21,7 @@ public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = DashboardActivity.class.getSimpleName();
     private Integer currentFragment = 0;
     private Integer selectedFragment;
-    private Fragment newFragment = new SettingsFragment();
+    private Fragment newFragment = new ProfileFragment();
     private DrawerLayout mDrawerLayout;
 
     @Override
