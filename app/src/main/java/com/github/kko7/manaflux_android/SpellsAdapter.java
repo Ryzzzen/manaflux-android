@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.kko7.manaflux_android.Helpers.PrefsHelper;
+import com.github.kko7.manaflux_android.Models.Spell;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
