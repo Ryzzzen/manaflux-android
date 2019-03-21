@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (deviceIp == null || deviceIp.equals("") || deviceName == null || deviceName.equals("")) {
-            startActivity(new Intent(MainActivity.this, LanDevicesActivity.class));
+            startActivity(new Intent(MainActivity.this, SavedDevicesActivity.class));
         } else {
             start();
         }

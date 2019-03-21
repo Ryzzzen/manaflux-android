@@ -63,10 +63,6 @@
             android:hardwareAccelerated="true"
             tools:ignore="InnerclassSeparator" />
         <activity
-            android:name=".UserInterface.LanDevicesActivity"
-            android:hardwareAccelerated="true"
-            tools:ignore="InnerclassSeparator" />
-        <activity
             android:name=".UserInterface.ChampionSelectActivity"
             android:hardwareAccelerated="true"
             tools:ignore="InnerclassSeparator" />
